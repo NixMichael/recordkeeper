@@ -354,7 +354,9 @@ const getIndex = async (order, id, res) => {
   let jobNum
 
   const lastRec = await db.select('*').from('index')
-  .orderBy('id', order).limit(recId)
+  .orderBy('id', order)
+  .limit(recId)
+  console.log(id, lastRec[id].department)
   data[3] = lastRec[id].department
   data[4] = lastRec[id].requestedby
   jobNum = lastRec[id].jobnumber
@@ -369,8 +371,11 @@ const getIndex = async (order, id, res) => {
     data[1] = result[0]
   }
 
-  const result = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
-  data[2] = result[0]
+  const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
+  data[2] = issued[0]
+
+  const count = await db('index').count('id')
+  data[5] = count[0].count
 
   res.send(data)
 }
@@ -387,6 +392,7 @@ app.get('/lastrec/:id', (req, res) => {
 })
 
 app.get('/nextrec/:id', (req, res) => {
+  console.log('triggered')
   const {id} = req.params
   console.log(id)
   getIndex('asc', id, res)

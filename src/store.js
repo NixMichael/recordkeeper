@@ -1,12 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
-import { login } from './reducers/userReducers'
+import { logInReducer } from './reducers/userReducers'
 import { screenRoute } from './reducers/routeReducers'
 import { updateCurrentRecordReducer, fieldDataReducer } from './reducers/recordReducers'
 
 const reducers = combineReducers({
-  login,
+  loggedIn: logInReducer,
   screenRoute,
   currentRec: updateCurrentRecordReducer,
   fieldData: fieldDataReducer

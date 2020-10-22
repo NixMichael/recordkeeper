@@ -1,9 +1,9 @@
-export const login = (state = { loggedIn: false }, action) => {
+export const logInReducer = (state = false, action) => {
   switch (action.type) {
     case 'LOGIN_USER':
-      return { loggedIn: true }
+      return true
     case 'LOGOUT_USER':
-      return { loggedIn: false }
+      return false
     default:
       return state
   }

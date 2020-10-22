@@ -19,8 +19,8 @@ const Navigation = () => {
 
   return (
     <div className='navigation'>
-      <button value='switchboard' onClick={(e) => handleClick(e.target.value)}>Switchboard</button>
-      <button value='logout' onClick={(e) => handleClick(e.target.value)}>Logout</button>
+      <div className='button-div' name='switchboard' onClick={(e) => handleClick(e.target.name)}>Switchboard</div>
+      <div className='button-div' name='logout' onClick={(e) => handleClick(e.target.name)}>Logout</div>
     </div>
   )
 }

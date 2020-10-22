@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const PatientMid = () => {
+const PatientRecordMid = () => {
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -67,4 +67,4 @@ const PatientMid = () => {
   )
 }
 
-export default PatientMid
+export default PatientRecordMid

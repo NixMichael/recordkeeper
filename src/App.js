@@ -5,8 +5,8 @@ import RecordKeeper from './screens/RecordKeeper'
 
 function App() {
 
-  const login = useSelector(state => state.login)
-  const { loggedIn } = login
+  const loggedIn = useSelector(state => state.loggedIn)
+  // const { loggedIn } = login
 
   return (
     <>

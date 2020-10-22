@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import '../../styles/recordStyles.scss'
+import '../styles/recordStyles.scss'
 
 const PatientUpper = () => {
 
   const currentRec = useSelector(state => state.currentRec)
-  const { record } = currentRec
+  const { record, recordType } = currentRec
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -35,7 +35,7 @@ const PatientUpper = () => {
         <input type='text' name='jobnumber' value={jobnumber} onChange={(e) => handleChange(e.target.name)}/>
       </div>
       <div>
-        <label>Photographer: </label>
+        <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
         <select name='photographer' value={photographer} onChange={(e) => handleChange(e.target.name)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {

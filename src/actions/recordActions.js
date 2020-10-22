@@ -9,6 +9,7 @@ import {
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
+
   try {
     dispatch({
       type: FETCH_RECORD_REQUEST
@@ -47,5 +48,12 @@ export const fetchFieldData = () => async (dispatch) => {
       type: FIELD_DATA_FAIL,
       payload: error.message
     })
+  }
+}
+
+export const recordCountUpdate = (newCurrentRecordIndex) => {
+  return {
+    type: 'RECORD_COUNT',
+    payload: newCurrentRecordIndex
   }
 }

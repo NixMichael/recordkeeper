@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import PatientUpper from '../components/patientRecord/PatientUpper'
-import PatientMid from '../components/patientRecord/PatientMid'
+import RecordUpper from '../components/RecordUpper'
+import PatientRecordMid from '../components/PatientRecordMid'
 import RecordLower from '../components/RecordLower'
 import Loader from '../components/Loader'
 
@@ -11,15 +11,15 @@ const PatientRecord = () => {
   const { loading } = currentRec
 
   return (
-    <div>
+    <div className='record-fields-background'>
       {loading ? <Loader /> :
-      <>
-      <div className='record-fields-container'>
-        <PatientUpper />
-        <PatientMid />
-        <RecordLower />
-      </div>
-      </>
+        <>
+        <div className='record-fields-container'>
+          <RecordUpper />
+          <PatientRecordMid />
+          <RecordLower />
+        </div>
+        </>
       }
     </div>
   )

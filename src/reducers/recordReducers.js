@@ -7,15 +7,33 @@ import {
   FIELD_DATA_FAIL
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
-export const updateCurrentRecordReducer = (state = { loading: true, record: {}, recordType: '' }, action) => {
+export const updateCurrentRecordReducer = (state = { 
+  loading: true, 
+  record: {}, 
+  recordType: '',
+  currentRecordIndex: 1,
+  recordCount: 1
+}, action) => {
   switch (action.type) {
     case FETCH_RECORD_REQUEST:
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
-      console.log(`Record Type: ${action.payload[0]}`)
-      return { loading: false, record: action.payload[1], recordType: action.payload[0], department: action.payload[3], referrer: action.payload[4] }
+      return {
+        loading: false, 
+        record: action.payload[1], 
+        recordType: action.payload[0], 
+        department: action.payload[3], 
+        referrer: action.payload[4],
+        recordCount: Number(action.payload[5]),
+        currentRecordIndex: action.payload[5] - 1
+      }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }
+    case 'RECORD_COUNT':
+      return { 
+        ...state, 
+        currentRecordIndex: action.payload
+      }
     default:
       return state
   }

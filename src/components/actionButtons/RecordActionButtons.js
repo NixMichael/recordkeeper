@@ -1,18 +1,27 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import '../../styles/buttonStyles.scss'
+import { fetchRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
 
+  const dispatch = useDispatch()
+
   const handleClick = (name) => {
-
     console.log(name)
-
-    // switch (name) {
-    //   case firstRecord:
-    //     // dispatch action
-    //   default:
-    //     // dispatch action
-    // }
+    switch (name) {
+      case 'firstRecord':
+        dispatch(fetchRecord('firstRec'))
+        break
+      case 'lastRecord':
+        dispatch(fetchRecord('lastRec'))
+        break
+      case 'previousRecord':
+        dispatch(fetchRecord('nextRec', 2)) // pass in the record index number here
+        break
+      default:
+        alert('error: record action button dispatch not triggered')
+    }
   }
 
   return (

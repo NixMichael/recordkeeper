@@ -3,12 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { login } from './reducers/userReducers'
 import { screenRoute } from './reducers/routeReducers'
-import { lastRecReducer } from './reducers/recordReducers'
+import { updateCurrentRecordReducer, fieldDataReducer } from './reducers/recordReducers'
 
 const reducers = combineReducers({
   login,
   screenRoute,
-  lastRec: lastRecReducer
+  currentRec: updateCurrentRecordReducer,
+  fieldData: fieldDataReducer
 })
 
 const initialState = {}

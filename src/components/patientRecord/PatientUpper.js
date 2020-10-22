@@ -1,24 +1,25 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import '../../styles/recordStyles.scss'
-import Loader from '../../components/Loader'
-import { fetchLastRec } from '../../actions/recordActions'
 
 const PatientUpper = () => {
 
-  // const dispatch = useDispatch()
+  const currentRec = useSelector(state => state.currentRec)
+  const { record } = currentRec
 
-  // useEffect(() => {
-  //   dispatch(fetchLastRec())
-  // }, [dispatch])
+  const fieldData = useSelector(state => state.fieldData)
+  const { fieldContent } = fieldData
 
-  const lastRec = useSelector(state => state.lastRec)
-  const { loading, record } = lastRec
+  let photographers = []
+
+  if (!fieldData.loading) {
+    photographers = fieldContent[1]
+  }
 
   let jobnumber = 0
   let photographer = '--Please Select--'
 
-  if (!loading) {
+  if (!currentRec.loading) {
     jobnumber = record.jobnumber
     photographer = record.photographer
   }
@@ -37,7 +38,13 @@ const PatientUpper = () => {
         <label>Photographer: </label>
         <select name='photographer' value={photographer} onChange={(e) => handleChange(e.target.name)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
-          <option value='David Randall'>David Randall</option>
+          {
+            photographers.map(user => {
+              return (
+              <option value={user.name} key={user.id}>{user.name}</option>
+              )
+            })
+          }
         </select>
       </div>
     </div>

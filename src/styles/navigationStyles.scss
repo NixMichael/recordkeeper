@@ -1,0 +1,11 @@
+.navigation {
+  width: 100vw;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  background: var(--minor-feature-element-color);
+
+  button {
+    margin-left: 1rem;
+  }
+}

@@ -1,0 +1,43 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(187, 194, 230);
+}
+
+.loginScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 3rem;
+  width: 450px;
+  height: 350px;
+  margin: auto auto;
+  border-radius: 10px;
+  background: var(--feature-element-color);
+  color: white;
+  box-shadow: 0 20px 15px 5px rgba(0, 0, 0, 0.35);
+
+  h2 {
+    text-align: center;
+  }
+
+  div {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    width: 150px;
+    margin: 0 auto;
+  }
+}

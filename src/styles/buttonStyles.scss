@@ -1,0 +1,19 @@
+.record-buttons {
+  width: 90vw;
+  margin: 1rem auto 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.record-button {
+  border-style: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 7px 10px 2px var(--shadow-color);
+  background-color: var(--minor-feature-element-color);
+  color: white;
+
+  &:hover {
+    background-color: var(--feature-element-color-faded);
+  }
+}

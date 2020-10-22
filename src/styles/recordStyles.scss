@@ -1,0 +1,36 @@
+.record-fields-container {
+  width: 90%;
+  min-height: 400px;
+  max-height: 460px;
+  margin: auto;
+  background: var(--feature-element-color);
+}
+
+.patient-record-component {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  padding: 2rem 2rem;
+}
+
+.patient-record-upper {
+  background: var(--feature-element-color-faded);
+}
+
+.record-lower #description {
+  display: flex;
+  align-items: flex-start;
+}
+
+.record-title {
+  width: 90%;
+  font-size: 2rem;
+  color: white;
+  margin: 1rem auto 0.5rem;
+}
+
+textarea {
+  width: 300px;
+  height: 120px;
+  resize: none;
+}

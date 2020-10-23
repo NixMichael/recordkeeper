@@ -347,7 +347,7 @@ app.get('/gettechcost/:cat', (req, res) => {
 })
 
 // FUNCTION TO FETCH A RECORD. CALLED FROM ALL RECORD FETCH ROUTES
-const getIndex = async (order, id, res) => {
+const getRecord = async (order, id, res) => {
 
   let data = []
 
@@ -381,17 +381,17 @@ const getIndex = async (order, id, res) => {
 // FETCH RECORD ROUTES
 app.get('/firstrec/:id', (req, res) => {
   const { id } = req.params
-  getIndex('asc', id, res)
+  getRecord('asc', id, res)
 })
 
 app.get('/lastrec/:id', (req, res) => {
   const { id } = req.params
-  getIndex('desc', id, res)
+  getRecord('desc', id, res)
 })
 
 app.get('/nextrec/:id', (req, res) => {
   const {id} = req.params
-  getIndex('asc', id, res)
+  getRecord('asc', id, res)
 
   // db.select('*').from('index')
   // .orderBy('id', 'asc')

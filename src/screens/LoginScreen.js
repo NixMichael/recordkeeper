@@ -25,7 +25,7 @@ const LoginScreen = () => {
       <label>Password: </label>
       <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
       </div>
-      <button onClick={handleClick}>Log In</button>
+      <button className='menu-button' onClick={handleClick}>Log In</button>
     </div>
   )
 }

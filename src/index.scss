@@ -9,7 +9,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(187, 194, 230);
+  background: var(--main-background-color);
 }
 
 .loginScreen {
@@ -18,9 +18,9 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 1rem 3rem;
+  margin-bottom: 4rem;
   width: 450px;
   height: 350px;
-  margin: auto auto;
   border-radius: 10px;
   background: var(--feature-element-color);
   color: white;
@@ -28,6 +28,7 @@ body {
 
   h2 {
     text-align: center;
+    color: white;
   }
 
   div {
@@ -35,9 +36,16 @@ body {
     display: flex;
     justify-content: space-between;
   }
+}
 
-  button {
-    width: 150px;
-    margin: 0 auto;
+.menu-button {
+  width: 150px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background-color: var(--button-color);
+
+  &:hover, &:focus {
+    background-color: var(--button-color-faded);
   }
 }

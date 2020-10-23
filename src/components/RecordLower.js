@@ -6,7 +6,7 @@ import Issues from './Issues'
 const RecordLower = () => {
 
   const currentRec = useSelector(state => state.currentRec)
-  const { record } = currentRec
+  const { record, readOnly } = currentRec
 
   let description = ''
 
@@ -22,7 +22,7 @@ const RecordLower = () => {
     <div className='patient-record-component record-lower'>
       <div id='description'>
           <label>Description: </label>
-          <textarea id="description" name="description" value={description} onChange={(e) => handleChange(e.target.name)}/>
+          <textarea id="description" name="description" disabled={readOnly} value={description} onChange={(e) => handleChange(e.target.name)}/>
       </div>
       <div className="issuedSection">
           <Issues />

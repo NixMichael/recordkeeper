@@ -7,7 +7,7 @@ const TechRecordMid = () => {
   const { fieldContent } = fieldData
 
   const currentRec = useSelector(state => state.currentRec)
-  const { record, department, referrer } = currentRec
+  const { record, department, referrer, readOnly } = currentRec
 
   let referrers = []
   let departments = []
@@ -37,7 +37,7 @@ const TechRecordMid = () => {
     <div className='patient-record-component patient-record-mid'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' value={requestedBy} onChange={(e) => handleChange(e.target.name)}>
+        <select name='referrer' disabled={readOnly} value={requestedBy} onChange={(e) => handleChange(e.target.name)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (
@@ -48,7 +48,7 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' value={dept} onChange={(e) => handleChange(e.target.name)}>
+        <select name='department' disabled={readOnly} value={dept} onChange={(e) => handleChange(e.target.name)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -59,7 +59,7 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Category: </label>
-        <select name='category' value={category} onChange={(e) => handleChange(e.target.name)}>
+        <select name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target.name)}>
           <option value="--Please Select--">--Please Select--</option>
             {categories.map(category => {
               return (

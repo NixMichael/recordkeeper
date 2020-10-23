@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
-  
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount } = currentRec
+  const { loading, recordCount, readOnly } = currentRec
   const lastRec = recordCount - 1
 
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
@@ -19,7 +18,7 @@ const RecordActionButtons = () => {
   if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
     setCurrentRecordNumber(lastRec)
   }
-},[loading])
+},[loading, currentRecordNumber, lastRec])
 
   console.log('recordCount is:', recordCount, 'lastRec is:', lastRec, 'currentRecordNumber is:', currentRecordNumber)
   
@@ -56,7 +55,6 @@ const RecordActionButtons = () => {
   }
 
   const handleClick = (name) => {
-    console.log(name, recordCount)
     switch (name) {
       case 'firstRecord':
         setCurrentRecordNumber(0)
@@ -71,6 +69,10 @@ const RecordActionButtons = () => {
         break
       case 'nextRecord':
         nextRecord('forward')
+        break
+      case 'edit':
+        let toggle = readOnly ? false : true
+        dispatch(enableRecordEdit(toggle))
         break
       default:
         alert('error: record action button dispatch not triggered')

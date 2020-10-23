@@ -4,21 +4,24 @@
 }
 
 .record-fields-background {
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
   width: 90vw;
   margin: auto;
   background-color: var(--feature-element-color);
   min-height: 400px;
   position: relative;
 
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100px;
-    background-color: var(--hover-highlight-color);
-  }
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100px;
+  //   background-color: var(--hover-highlight-color);
+  // }
 }
 
 .patient-record-component {

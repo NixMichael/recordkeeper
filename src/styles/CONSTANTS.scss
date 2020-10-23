@@ -1,7 +1,10 @@
 :root {
-  --feature-element-color: rgb(120, 157, 196);
-  --feature-element-color-faded: rgb(107, 151, 197);
+  --main-background-color: rgb(34, 66, 100);
+  --feature-element-color: rgb(48, 61, 75);
+  --feature-element-color-faded: rgb(80, 115, 151);
   --minor-feature-element-color: rgb(11, 34, 61);
   --shadow-color: rgba(0,0,0,0.4);
   --hover-highlight-color: rgba(255,255,255,0.2);
+  --button-color: rgb(146, 153, 170);
+  --button-color-faded: rgba(146, 153, 170, 0.6);
 }

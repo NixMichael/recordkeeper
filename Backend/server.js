@@ -393,6 +393,7 @@ app.get('/nextrec/:id', (req, res) => {
   const {id} = req.params
   getRecord('asc', id, res)
 
+  // Original Method
   // db.select('*').from('index')
   // .orderBy('id', 'asc')
   // .then(job => {
@@ -430,41 +431,65 @@ app.get('/nextrec/:id', (req, res) => {
 app.get('/search/:value', (req, res) => {
     const {value} = req.params
 
-    let searchRes = []
+    const searchRecord = async () => {
+      let searchRes = []
 
-    db.select('*').from('index')
-    .where('jobnumber', value)
-    .then((result) => {
-        if (result.length > 0) {
-            searchRes[2] = result[0].type
-            searchRes[3] = result[0].department
-        }
-    })
+      const index = await db.select('*').from('index')
+      .where('jobnumber', value)
+      searchRes[2] = index[0].type
+      searchRes[3] = index[0].department
 
-    db.select('*').from('issued')
-    .where('jobnumber', value)
-    .orderBy('id', 'asc')
-    .then((result) => {
-        searchRes[0] = result.length > 0 && result[0]
-    })
-    .then(() => {
-        searchRes[2] === 'p' ?
-        db.select('*').from('patientjobs')
+      const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
+      searchRes[0] = issued.length > 0 && issued[0]
+
+      if (searchRes[2] === 'p') {
+        const patientRecord = await db.select('*').from('patientjobs')
         .where('jobnumber', value)
-        .then(record => {
-            searchRes[1] = record[0]
-            res.json(searchRes)
-        })
-        .catch(console.log)
-        :
-        db.select('*').from('techjobs')
+        searchRes[1] = patientRecord[0]
+      } else if (searchRes[2] === 't') {
+        const techRecord = await db.select('*').from('techjobs')
         .where('jobnumber', value)
-        .then(record => {
-            searchRes[1] = record[0]
-            res.json(searchRes)
-        })
-        .catch(console.log)
-    })
+        searchRes[1] = techRecord[0]
+      }
+
+      res.json(searchRes)
+    }
+
+    searchRecord()
+
+    // db.select('*').from('index')
+    // .where('jobnumber', value)
+    // .then((result) => {
+    //     if (result.length > 0) {
+    //         searchRes[2] = result[0].type
+    //         searchRes[3] = result[0].department
+    //     }
+    // })
+
+    // db.select('*').from('issued')
+    // .where('jobnumber', value)
+    // .orderBy('id', 'asc')
+    // .then((result) => {
+    //     searchRes[0] = result.length > 0 && result[0]
+    // })
+    // .then(() => {
+    //     searchRes[2] === 'p' ?
+    //     db.select('*').from('patientjobs')
+    //     .where('jobnumber', value)
+    //     .then(record => {
+    //         searchRes[1] = record[0]
+    //         res.json(searchRes)
+    //     })
+    //     .catch(console.log)
+    //     :
+    //     db.select('*').from('techjobs')
+    //     .where('jobnumber', value)
+    //     .then(record => {
+    //         searchRes[1] = record[0]
+    //         res.json(searchRes)
+    //     })
+    //     .catch(console.log)
+    // })
 })
 
 app.get('/fetchFields', (req, res) => {

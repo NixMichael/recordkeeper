@@ -31,6 +31,16 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
   }
 }
 
+export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
+  console.log('Search term:', jobnumber)
+    const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
+    console.log('search returned:', data)
+    dispatch({
+      type: 'SEARCH_BY_JOB_NUMBER',
+      payload: data
+    })
+}
+
 export const fetchFieldData = () => async (dispatch) => {
   try {
     dispatch({
@@ -53,9 +63,16 @@ export const fetchFieldData = () => async (dispatch) => {
   }
 }
 
-export const recordCountUpdate = (newCurrentRecordIndex) => {
+export const enableRecordEdit = (toggle) => {
   return {
-    type: 'RECORD_COUNT',
-    payload: newCurrentRecordIndex
+    type: 'ENABLE_RECORD_EDIT',
+    payload: toggle
+  }
+}
+
+export const updateRecordField = (field, value) => {
+  return {
+    type: 'UPDATE_RECORD_FIELD',
+    payload: [field, value]
   }
 }

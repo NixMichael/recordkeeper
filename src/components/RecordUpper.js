@@ -1,11 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import '../styles/recordStyles.scss'
+import { updateRecordField, fetchRecordByJobNumber } from '../actions/recordActions'
 
 const PatientUpper = () => {
 
+  const dispatch = useDispatch()
+
   const currentRec = useSelector(state => state.currentRec)
-  const { record, recordType } = currentRec
+  const { record, recordType, readOnly } = currentRec
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -24,19 +27,26 @@ const PatientUpper = () => {
     photographer = record.photographer
   }
 
-  const handleChange = (e) => {
-    console.log('Change')
+  const handleJobNumberChange = async ({ name, value }) => {
+    dispatch(updateRecordField(name, value))
+    if (value.length === 8) {
+      dispatch(fetchRecordByJobNumber(value))
+    }
+  }
+
+  const handleChange = ({ name, value }) => {
+    console.log('update field')
   }
 
   return (
     <div className='patient-record-component patient-record-upper'>
       <div>
         <label>Job Number: </label>
-        <input type='text' name='jobnumber' value={jobnumber} onChange={(e) => handleChange(e.target.name)}/>
+        <input type='text' name='jobnumber' value={record.jobnumber} onChange={(e) => handleJobNumberChange(e.target)}/>
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
-        <select name='photographer' value={photographer} onChange={(e) => handleChange(e.target.name)}>
+        <select name='photographer' disabled={readOnly} value={photographer} onChange={(e) => handleChange(e.target)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {
             photographers.map(user => {

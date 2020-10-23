@@ -353,22 +353,18 @@ const getIndex = async (order, id, res) => {
   let data = []
   let jobNum
 
-  const lastRec = await db.select('*').from('index')
-  .orderBy('id', order)
-  .limit(recId)
-  console.log(id, lastRec[id].department)
-  data[3] = lastRec[id].department
-  data[4] = lastRec[id].requestedby
-  jobNum = lastRec[id].jobnumber
+  const index = await db.select('*').from('index').orderBy('id', order).limit(recId)
+  data[0] = index[id].type
+  data[3] = index[id].department
+  data[4] = index[id].requestedby
+  jobNum = index[id].jobnumber
   
-  if (lastRec[0].type === 't') {
-    const result = await db.select('*').from('techjobs').where('jobnumber', jobNum)
-    data[0] = 't'
-    data[1] = result[0]
-  } else if (lastRec[0].type === 'p') {
-    const result = await db.select('*').from('patientjobs').where('jobnumber', jobNum)
-    data[0] = 'p'
-    data[1] = result[0]
+  if (index[0].type === 'p') {
+    const patientjob = await db('patientjobs').where('jobnumber', jobNum).select('*')
+    data[1] = patientjob[0]
+  } else if (index[0].type === 't') {
+    const techjob = await db('techjobs').where('jobnumber', jobNum).select('*')
+    data[1] = techjob[0]
   }
 
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
@@ -392,11 +388,37 @@ app.get('/lastrec/:id', (req, res) => {
 })
 
 app.get('/nextrec/:id', (req, res) => {
-  console.log('triggered')
   const {id} = req.params
-  console.log(id)
-  getIndex('asc', id, res)
-  // let data = []
+  
+  const getNextRecord = async () => {
+
+    let data = []
+    let jobNum
+
+    const index = await db.select('*').from('index').orderBy('id', 'asc')
+    data[0] = index[id].type
+    data[3] = index[id].department
+    data[4] = index[id].requestedby
+    jobNum = index[id].jobnumber
+
+    if (index[id].type === 'p') {
+      const patientjob = await db('patientjobs').where('jobnumber', jobNum).select('*')
+      data[1] = patientjob[0]
+    } else if (index[id].type === 't') {
+      const techjob = await db('techjobs').where('jobnumber', jobNum).select('*')
+      data[1] = techjob[0]
+    }
+
+    const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
+    data[2] = issued[0]
+
+    const count = await db('index').count('id')
+    data[5] = count[0].count
+
+    res.send(data)
+  }
+
+  getNextRecord()
 
   // db.select('*').from('index')
   // .orderBy('id', 'asc')

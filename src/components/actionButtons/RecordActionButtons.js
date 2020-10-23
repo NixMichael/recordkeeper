@@ -1,45 +1,57 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, recordCountUpdate } from '../../actions/recordActions'
+import { fetchRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
-
+  
+  
   const currentRec = useSelector(state => state.currentRec)
-  const { recordCount, currentRecordIndex } = currentRec
+  const { loading, recordCount } = currentRec
   const lastRec = recordCount - 1
 
-  const dispatch = useDispatch()
+  const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
+  console.log('Initial value of currentRecordNumber:', currentRecordNumber)
 
-  const updateRecordCount = (newRecordIndex) => {
-    dispatch(recordCountUpdate(newRecordIndex))
+  useEffect(() => {
+  // set currentRecordNumber value to the last record only on first load
+  // (when finished loading and it's NaN and not 0)
+  if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
+    setCurrentRecordNumber(lastRec)
   }
+},[loading])
+
+  console.log('recordCount is:', recordCount, 'lastRec is:', lastRec, 'currentRecordNumber is:', currentRecordNumber)
+  
+  const dispatch = useDispatch()
 
   const nextRecord = (direction) => {
     let next = 0
 
     if (recordCount > 0) {
+      console.log('currentRecordNumber once loaded:', currentRecordNumber)
       if (direction === 'forward') {
-        if (currentRecordIndex < lastRec) {
-          next = currentRecordIndex + 1
-          updateRecordCount(next)
-        } else if (currentRecordIndex === lastRec) {
+        if (currentRecordNumber < lastRec) {
+          next = currentRecordNumber + 1
+          setCurrentRecordNumber(currentRecordNumber + 1)
+        } else if (currentRecordNumber === lastRec) {
           next = lastRec
-          updateRecordCount(lastRec)
+          setCurrentRecordNumber(lastRec)
         }
       }
 
       if (direction === 'back') {
-        if (currentRecordIndex > 0) {
-          next = currentRecordIndex - 1
-          updateRecordCount(next)
-        } else if ( currentRecordIndex === 0) {
+        if (currentRecordNumber > 0) {
+          next = currentRecordNumber - 1
+          setCurrentRecordNumber(currentRecordNumber - 1)
+        } else if ( currentRecordNumber === 0) {
           next = 0
-          updateRecordCount(0)
+          setCurrentRecordNumber(0)
         }
       }
 
-      dispatch(fetchRecord('nextRec', next)) // pass in the record index number here
+      console.log('Record to fetch:', next, 'Current record number:', currentRecordNumber)
+      dispatch(fetchRecord('nextrec', next)) // pass in the record index number here
     }
   }
 
@@ -47,10 +59,12 @@ const RecordActionButtons = () => {
     console.log(name, recordCount)
     switch (name) {
       case 'firstRecord':
-        dispatch(fetchRecord('firstRec'))
+        setCurrentRecordNumber(0)
+        dispatch(fetchRecord('firstrec'))
         break
       case 'lastRecord':
-        dispatch(fetchRecord('lastRec'))
+        setCurrentRecordNumber(lastRec)
+        dispatch(fetchRecord('lastrec'))
         break
       case 'previousRecord':
         nextRecord('back')

@@ -8,12 +8,7 @@ import {
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const updateCurrentRecordReducer = (state = { 
-  loading: true, 
-  record: {}, 
-  recordType: '',
-  currentRecordIndex: 1,
-  recordCount: 1
-}, action) => {
+  loading: true, record: {}, recordType: '', currentRecordIndex: 1 }, action) => {
   switch (action.type) {
     case FETCH_RECORD_REQUEST:
       return { loading: true }
@@ -24,8 +19,7 @@ export const updateCurrentRecordReducer = (state = {
         recordType: action.payload[0], 
         department: action.payload[3], 
         referrer: action.payload[4],
-        recordCount: Number(action.payload[5]),
-        currentRecordIndex: action.payload[5] - 1
+        recordCount: Number(action.payload[5])
       }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }

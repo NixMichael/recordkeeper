@@ -16,6 +16,8 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
     })
     const { data } = await axios.get(`http://localhost:3004/${whichRecord}/${id}`)
 
+    console.log(data)
+
     dispatch({
       type: FETCH_RECORD_SUCCESS,
       payload: data

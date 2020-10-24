@@ -34,14 +34,20 @@
   padding: 2rem 2rem;
 }
 
-.record-lower #description {
-  display: flex;
-  align-items: flex-start;
-}
-
 .record-mid {
   padding-top: 0;
 }
+
+.record-lower {
+  // flex: 40%;
+  display: flex;
+  padding-top: 0;
+  // padding-bottom: 2rem;
+  #description {
+    display: flex;
+  }
+}
+
 
 .record-title {
   width: 90%;
@@ -52,7 +58,7 @@
 }
 
 textarea {
-  width: 300px;
+  width: 350px;
   height: 120px;
   resize: none;
 }
@@ -63,7 +69,7 @@ label {
 
 input, select {
   min-width: 120px;
-  max-width: 240px;
+  max-width: 200px;
 }
 
 .input-text-number {
@@ -85,4 +91,68 @@ select:disabled {
   border: none;
   border-radius: 4px;
   padding: 0.4rem 0.6rem;
+}
+
+// Issues
+.issued {
+  // min-height: 100%;
+  max-height: 200px;
+  background: rgba(0,0,0,0.2);
+  padding: 1rem;
+  & > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    div {
+      width: 60%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .issued-button {
+      border: 1px solid white;
+      border-radius: 4px;
+      background: none;
+      padding: 0 0.5rem;
+      color: white;
+      cursor: pointer;
+    }
+  }
+  
+}
+
+.issued-section {
+  width: 50%;
+}
+
+.issued-events {
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  & > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &:nth-child(2n + 1) {
+      background: rgba(255,255,255,0.1);
+    }
+
+    p {
+      max-width: 12%;
+
+      &:nth-child(3) {
+        max-width: 15%;
+      }
+    }
+
+    .delete-issue-button {
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: red;
+      color: white;
+    }
+  }
 }

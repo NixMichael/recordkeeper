@@ -21,10 +21,12 @@ body {
   margin-bottom: 4rem;
   width: 450px;
   height: 350px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--feature-element-color);
   color: white;
   box-shadow: 0 20px 15px 5px rgba(0, 0, 0, 0.35);
+  outline: 1px solid white;
+  outline-offset: -10px;
 
   h2 {
     text-align: center;
@@ -35,17 +37,5 @@ body {
     width: 300px;
     display: flex;
     justify-content: space-between;
-  }
-}
-
-.menu-button {
-  width: 150px;
-  margin: 0 auto;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-  background-color: var(--button-color);
-
-  &:hover, &:focus {
-    background-color: var(--button-color-faded);
   }
 }

@@ -24,7 +24,7 @@ const RecordLower = () => {
           <label>Description: </label>
           <textarea id="description" name="description" disabled={readOnly} value={description} onChange={(e) => handleChange(e.target.name)}/>
       </div>
-      <div className="issuedSection">
+      <div className="issued-section">
           <Issues />
       </div>
     </div>

@@ -13,18 +13,18 @@ const PatientUpper = () => {
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
 
-  let photographers = []
+  let users = []
 
   if (!fieldData.loading) {
-    photographers = fieldContent[1]
+    users = fieldContent[1]
   }
 
   let jobnumber = 0
-  let photographer = '--Please Select--'
+  let user = '--Please Select--'
 
   if (!currentRec.loading) {
     jobnumber = record.jobnumber
-    photographer = record.photographer
+    user = recordType === 'p' ? record.photographer : record.designer
   }
 
   const handleJobNumberChange = async ({ name, value }) => {
@@ -42,14 +42,14 @@ const PatientUpper = () => {
     <div className='patient-record-component patient-record-upper'>
       <div>
         <label>Job Number: </label>
-        <input type='text' name='jobnumber' value={record.jobnumber} onChange={(e) => handleJobNumberChange(e.target)}/>
+        <input type='text' name='jobnumber' className='input-text-number' value={record.jobnumber} onChange={(e) => handleJobNumberChange(e.target)}/>
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
-        <select name='photographer' disabled={readOnly} value={photographer} onChange={(e) => handleChange(e.target)}>
+        <select name='user' disabled={readOnly} value={user} onChange={(e) => handleChange(e.target)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {
-            photographers.map(user => {
+            users.map(user => {
               return (
               <option value={user.name} key={user.id}>{user.name}</option>
               )

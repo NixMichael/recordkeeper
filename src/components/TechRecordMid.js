@@ -34,7 +34,7 @@ const TechRecordMid = () => {
   }
 
   return (
-    <div className='patient-record-component patient-record-mid'>
+    <div className='tech-record-component record-mid'>
       <div>
         <label>Requested By: </label>
         <select name='referrer' disabled={readOnly} value={requestedBy} onChange={(e) => handleChange(e.target.name)}>

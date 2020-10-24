@@ -1,6 +1,9 @@
 .record-fields-container {
-  min-height: 400px;
+  min-height: 420px;
   max-height: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .record-fields-background {
@@ -10,7 +13,7 @@
   width: 90vw;
   margin: auto;
   background-color: var(--feature-element-color);
-  min-height: 400px;
+  min-height: 420px;
   position: relative;
 
   // &::before {
@@ -24,7 +27,7 @@
   // }
 }
 
-.patient-record-component {
+.patient-record-component, .tech-record-component {
   display: flex;
   justify-content: space-between;
   color: white;
@@ -34,6 +37,10 @@
 .record-lower #description {
   display: flex;
   align-items: flex-start;
+}
+
+.record-mid {
+  padding-top: 0;
 }
 
 .record-title {
@@ -52,4 +59,30 @@ textarea {
 
 label {
   margin-right: 0.5rem;
+}
+
+input, select {
+  min-width: 120px;
+  max-width: 240px;
+}
+
+.input-text-number {
+  max-width: 100px;
+  text-align: center;
+}
+
+input:disabled {
+  color: black;
+  background: rgb(213, 213, 213);
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+}
+
+select:disabled {
+  color: black;
+  background: rgb(213,213,213);
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
 }

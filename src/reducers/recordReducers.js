@@ -20,7 +20,7 @@ export const updateCurrentRecordReducer = (state = {
         department: action.payload[3], 
         referrer: action.payload[4],
         recordCount: Number(action.payload[5]),
-        readOnly: false
+        readOnly: true
       }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }
@@ -43,7 +43,8 @@ export const updateCurrentRecordReducer = (state = {
     case 'SEARCH_BY_JOB_NUMBER':
       return {
         ...state,
-        record: action.payload[2],
+        record: action.payload[1],
+        recordType: action.payload[2],
         department: action.payload[3]
       }
     default:

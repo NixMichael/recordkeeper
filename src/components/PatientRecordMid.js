@@ -20,22 +20,29 @@ const PatientRecordMid = () => {
   let permission
   let requestedBy
   let dept
+  let hospitalNumber
+  let firstName
+  let lastName
 
   if (!currentRec.loading) {
     permission = record.permission
     requestedBy = referrer
     dept = department
+    hospitalNumber = record.hospitalnumber
+    firstName = record.patientforename
+    lastName = record.patientsurname
   }
 
-  const handleChange = (name) => {
+  const handleChange = ({ name, value }) => {
     console.log('change')
   }
 
   return (
-    <div className='patient-record-component patient-record-mid'>
+    <>
+    <div className='patient-record-component record-mid'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' disabled={readOnly} value={requestedBy} onChange={(e) => handleChange(e.target.name)}>
+        <select name='referrer' disabled={readOnly} value={requestedBy} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (
@@ -46,7 +53,7 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' disabled={readOnly} value={dept} onChange={(e) => handleChange(e.target.name)}>
+        <select name='department' disabled={readOnly} value={dept} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -57,13 +64,28 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Permission for: </label>
-        <select name='permission' disabled={readOnly} value={permission} onChange={(e) => handleChange(e.target.name)}>
+        <select name='permission' disabled={readOnly} value={permission} onChange={(e) => handleChange(e.target)}>
           <option value="Records">Records</option>
           <option value="Teaching">Teaching</option>
           <option value="Publication">Publication</option>
         </select>
       </div>
     </div>
+    <div className='patient-record-component record-mid'>
+      <div>
+        <label>Hospital Number: </label>
+        <input type='text' name='hospitalnumber' className='input-text-number' disabled={readOnly} value={hospitalNumber} onChange={(e) => handleChange(e.target)} />
+      </div>
+      <div>
+        <label>Patient's surname: </label>
+        <input type='text' name='lastname' disabled={readOnly} value={lastName} onChange={(e) => handleChange(e.target)} />
+      </div>
+      <div>
+        <label>Patient's forename: </label>
+        <input type='text' name='firstname' disabled={readOnly} value={firstName} onChange={(e) => handleChange(e.target)} />
+      </div>
+    </div>
+    </>
   )
 }
 

@@ -1,12 +1,14 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, enableRecordEdit } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit, deleteRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount, readOnly } = currentRec
+  const { loading, recordCount, readOnly, recordType, record } = currentRec
+  // const { jobnumber } = record
   const lastRec = recordCount - 1
 
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
@@ -28,7 +30,6 @@ const RecordActionButtons = () => {
     let next = 0
 
     if (recordCount > 0) {
-      console.log('currentRecordNumber once loaded:', currentRecordNumber)
       if (direction === 'forward') {
         if (currentRecordNumber < lastRec) {
           next = currentRecordNumber + 1
@@ -49,8 +50,25 @@ const RecordActionButtons = () => {
         }
       }
 
-      console.log('Record to fetch:', next, 'Current record number:', currentRecordNumber)
       dispatch(fetchRecord('nextrec', next)) // pass in the record index number here
+    }
+  }
+
+  const deleteRecord = async () => {
+    const job = record.jobnumber
+    console.log('job:', job)
+    await axios({
+      method: 'delete',
+      url: 'http://localhost:3004/deleterecord',
+      headers: {'Content-Type': 'application/json'},
+      data: {
+        job, recordType
+      }
+    })
+
+    if (recordCount > 1) {
+      // setCurrentRecordNumber(currentRecordNumber - 1)
+      nextRecord('back')
     }
   }
 
@@ -73,6 +91,10 @@ const RecordActionButtons = () => {
       case 'edit':
         let toggle = readOnly ? false : true
         dispatch(enableRecordEdit(toggle))
+        break
+      case 'delete':
+        deleteRecord()
+        // dispatch(deleteRecord(record.jobnumber, recordType))
         break
       default:
         alert('error: record action button dispatch not triggered')

@@ -32,7 +32,6 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 }
 
 export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
-  console.log('Search term:', jobnumber)
     const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
     console.log('search returned:', data)
     dispatch({
@@ -74,5 +73,26 @@ export const updateRecordField = (field, value) => {
   return {
     type: 'UPDATE_RECORD_FIELD',
     payload: [field, value]
+  }
+}
+
+export const deleteRecord = (job, recordType) => async (dispatch, getState) => {
+  try {
+
+    const data = await axios({
+      method: 'delete',
+      url: 'http://localhost:3004/deleterecord',
+      headers: {'Content-Type': 'application/json'},
+      data: {
+        job, recordType
+      }
+    })
+
+    // dispatch({
+    //   type: 'RECORD_DELETED',
+    //   payload: data
+    // })
+  } catch (error) {
+    console.log(error)
   }
 }

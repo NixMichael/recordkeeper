@@ -18,131 +18,123 @@ app.use(express.json())
 app.use(cors())
 
 
-app.post('/newuser', (req,res) => {
+app.post('/newuser', async (req,res) => {
     const { usertype, initials, name } = req.body
 
-    db('users')
+    await db('users')
     .insert({
         initials: initials,
         name: name,
         usertype: usertype
     })
-    .then(() => {
-        db.select('*')
-        .returning('*')
-        .from('users')
-        .then((newList) => {
-            res.status(200).json(newList)
-        })
-    })
-    .catch(err => console.log('Error', err))
+
+    const newList = await db.select('*').returning('*').from('users')
+    res.status(200).json(newList)
+
+      // .then((newList) => {
+      //     res.status(200).json(newList)
+      // })
+  // .catch(err => console.log('Error', err))
 })
 
-app.post('/newreferrer', (req,res) => {
+app.post('/newreferrer', async (req,res) => {
     const { initials, name } = req.body
 
-    db('referrer')
-    .insert({
-        initials: initials,
-        name: name
-    })
-    .then(() => {
-        db.select('*')
+    await db('referrer')
+          .insert({
+              initials: initials,
+              name: name
+          })
+    
+    const newList = await db.select('*')
         .returning('*')
         .from('referrer')
-        .then((newList) => {
-            res.status(200).json(newList)
-        })
-    })
-    .catch(err => console.log('Error', err))
+
+    res.status(200).json(newList)
+
+    // .catch(err => console.log('Error', err))
 })
 
-app.post('/newdepartment', (req,res) => {
+app.post('/newdepartment', async (req,res) => {
     const { department } = req.body
 
-    db('departments')
-    .insert({
+    await db('departments')
+      .insert({
         departmentname: department,
         headofdepartment: ''
-    })
-    .then(() => {
-        db.select('*')
-        .returning('*')
-        .from('departments')
-        .then((newList) => {
-            res.status(200).json(newList)
-        })
-    })
-    .catch(err => console.log('Error', err))
+      })
+
+    await db.select('*')
+      .returning('*')
+      .from('departments')
+
+    res.status(200).json(newList)
+
+    // .catch(err => console.log('Error', err))
 })
 
-app.post('/newcategory', (req,res) => {
-    const { category, cost } = req.body
+app.post('/newcategory', async (req,res) => {
+  const { category, cost } = req.body
 
-    db('techtype')
+  await db('techtype')
     .insert({
         type: category,
         techtypecost: cost
     })
-    .then(() => {
-        db.select('*')
-        .returning('*')
-        .from('techtype')
-        .then((newList) => {
-            res.status(200).json(newList)
-        })
-    })
-    .catch(err => console.log('Error', err))
+  
+  const newList = await db.select('*')
+  .returning('*')
+  .from('techtype')
+
+  res.status(200).json(newList)
+
+  // .catch(err => console.log('Error', err))
 })
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
     const { seqNum, day, job, permission, requestedBy, department, hospitalNumber, patientSurname, patientForename, description, photographer, issues, type, category, designer} = req.body
 
     let countTotal;
 
-    db('index')
-    .insert({
-        jobnumber: job,
-        requestedby: requestedBy,
-        type: type,
-        sequencenumber: seqNum,
-        day: day,
-        department: department
-    })
-    .then(() => {
-    db('index').count('id')
-        .then(total => {
-            countTotal = total[0].count
+    await db('index')
+      .insert({
+          jobnumber: job,
+          requestedby: requestedBy,
+          type: type,
+          sequencenumber: seqNum,
+          day: day,
+          department: department
+      })
+
+    const total = await db('index').count('id')
+    countTotal = total[0].count
+
+    if (type === 'p') {
+      await db('patientjobs')
+        .returning('*')
+        .insert({
+            jobnumber: job,
+            permission: permission,
+            hospitalnumber: hospitalNumber,
+            patientsurname: patientSurname,
+            patientforename: patientForename,
+            description: description,
+            photographer: photographer
         })
-    })
-    .then(() => {
-    type === 'p' ?
-    db('patientjobs')
-    .returning('*')
-    .insert({
-        jobnumber: job,
-        permission: permission,
-        hospitalnumber: hospitalNumber,
-        patientsurname: patientSurname,
-        patientforename: patientForename,
-        description: description,
-        photographer: photographer
-    })
-    .then(() => {
-        res.send(countTotal)})
-    :
-    db('techjobs')
-    .returning('*')
-    .insert({
-        jobnumber: job,
-        category: category,
-        description: description,
-        quantity: 1,
-        designer: designer
-    })
-    .then(() => {
-        res.send(countTotal)})
-    })
+        res.send(countTotal)
+    } else if (type === 't') {
+      await db('techjobs')
+        .returning('*')
+        .insert({
+            jobnumber: job,
+            category: category,
+            description: description,
+            quantity: 1,
+            designer: designer
+        })
+
+        res.send(countTotal)
+      }
 
     if (issues.length > 0) {
         db('issued')
@@ -158,10 +150,10 @@ app.post('/', (req, res) => {
     }
 })
 
-app.post('/addissued', (req,res) => {
+app.post('/addissued', async (req,res) => {
     const { jobnumber, type, date, notes, qty, cost } = req.body
 
-    db('issued')
+    await db('issued')
     .insert({
         jobnumber: jobnumber,
         type: type,
@@ -170,180 +162,133 @@ app.post('/addissued', (req,res) => {
         qty: qty,
         cost: cost
     })
-    .then(() => {
-        db('issued')
-        .returning('*')
-        .select('*')
-        .where('jobnumber', jobnumber)
-        .orderBy('id', 'asc')
-        .then((updatedIssues) => {
-            res.status(200).json(updatedIssues)
-        })
-        .catch(err => console.log('Error', err))
-    })
+
+    await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
+    //     .then((updatedIssues) => {
+    //         res.status(200).json(updatedIssues)
+    //     })
+    //     .catch(err => console.log('Error', err))
+    // })
 })
 
-app.delete('/deleteissued', (req,res) => {
+app.delete('/deleteissued', async (req,res) => {
 
-    const {id, jobnumber} = req.body
+  const {id, jobnumber} = req.body
 
-    db('issued')
-    .where('id', id)
-    .del()
-    .then(() => {
-        db('issued')
-        .returning('*')
-        .select('*')
-        .where('jobnumber', jobnumber)
-        .orderBy('id', 'asc')
-        .then(updatedIssues => {
-            res.status(200).json(updatedIssues)
-        })
-        .catch(err => console.log(err))
-    })
+  await db('issued').where('id', id).del()
+  await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
+      // .then(updatedIssues => {
+      //     res.status(200).json(updatedIssues)
+      // })
+      // .catch(err => console.log(err))
+  // })
 })
 
-app.put('/editrecord', (req, res) => {
+app.put('/editrecord', async (req, res) => {
 
     const { job, permission, requestedBy, hospitalNumber, patientSurname, patientForename, description, photographer, department, type, category, designer} = req.body
 
-    db('index')
-    .where('jobnumber', job)
-    .update({
+    await db('index').where('jobnumber', job)
+      .update({
         requestedby: requestedBy,
         department: department
-    })
-    .then(() => {
-        type === 'p' ?
-        db('patientjobs')
-            .where('jobnumber', job)
-            .update({
-                permission: permission,
-                hospitalnumber: hospitalNumber,
-                patientsurname: patientSurname,
-                patientforename: patientForename,
-                description: description,
-                photographer: photographer
-            })
-            .then(() => res.status(200).json('Success'))
-            .catch(err => console.log('Error', err))
-            :
-                db('techjobs')
-                .where('jobnumber', job)
-                .update({
+      })
+
+    if (type === 'p') {
+        await db('patientjobs').where('jobnumber', job)
+          .update({
+              permission: permission,
+              hospitalnumber: hospitalNumber,
+              patientsurname: patientSurname,
+              patientforename: patientForename,
+              description: description,
+              photographer: photographer
+          })
+            // .then(() => res.status(200).json('Success'))
+            // .catch(err => console.log('Error', err))
+    } else if (type === 't') {
+                await db('techjobs').where('jobnumber', job)
+                  .update({
                     category: category,
                     description: description,
                     designer: designer
-                })
-                .then(() => res.status(200).json('Success'))
-                .catch(err => console.log('Error', err))
-    })
+                  })
+                // .then(() => res.status(200).json('Success'))
+                // .catch(err => console.log('Error', err))
+    }
 })
 
-app.delete('/deleterecord', (req, res) => {
+app.delete('/deleterecord', async (req, res) => {
     const {job,recordType} = req.body
 
-    db('index').where('jobnumber', job)
-    .del()
-    .then(() => {
-        db('issued').where('jobnumber', job)
-        .del()
-        .then(() => {
-            recordType === 'patientRecord' ?
-            db.select('*').from('patientjobs').where('jobnumber', job)
-            .del()
-            .then(deleted => res.status(200).json(`Deleted: ${deleted}`))
-            .catch(err => console.log(`Erroneous: ${err}`))
-            :
-            db.select('*').from('techjobs').where('jobnumber', job)
-            .del()
-            .then(deleted => res.status(200).json(`Deleted: ${deleted}`))
-            .catch(err => console.log(`Erroneous: ${err}`))
-        })
-    })
-})
+    console.log('DELETION INITIATED', job, recordType)
 
-app.delete('/deleteuser', (req,res) => {
-    const { toDelete } = req.body
+    await db('index').where('jobnumber', job).del()
+    await db('issued').where('jobnumber', job).del()
 
-    for (c = 0; c < toDelete.length; c++) {
-        db.select('*').from('users')
-        .where('name', toDelete[c])
-        .del()
-        .then(() => {
-            if (c === toDelete.length) {
-                db.select('*').from('users')
-                .then((list) => {
-                    res.send(list)
-                })
-            }
-        })
+    if (recordType === 'p') {
+      const deleted = await db.select('*').from('patientjobs').where('jobnumber', job).del()
+      res.status(200).json(`Deleted: ${deleted}`)
+            // .catch(err => console.log(`Erroneous: ${err}`))
+    } else if (recordType === 't') {
+      const deleted = await db.select('*').from('techjobs').where('jobnumber', job).del()
+      res.status(200).json(`Deleted: ${deleted}`)
+            // .catch(err => console.log(`Erroneous: ${err}`))
     }
 })
 
-app.delete('/deletereferrer', (req,res) => {
-    const { toDelete } = req.body
+app.delete('/deleteuser', async (req,res) => {
+  const { toDelete } = req.body
 
-    for (c = 0; c < toDelete.length; c++) {
-        db.select('*').from('referrer')
-        .where('name', toDelete[c])
-        .del()
-        .then(() => {
-            if (c === toDelete.length) {
-                db.select('*').from('referrer')
-                .then((list) => {
-                    res.send(list)
-                })
-            }
-        })
-    }
+  for (c = 0; c < toDelete.length; c++) {
+    await db.select('*').from('users').where('name', toDelete[c]).del()
+
+    // if (c === toDelete.length) {
+      // }
+  }
+  const updatedList = await db.select('*').from('users')
+  res.send(updatedList)
 })
 
-app.delete('/deletedepartment', (req,res) => {
-    const { toDelete } = req.body
+app.delete('/deletereferrer', async (req,res) => {
+  const { toDelete } = req.body
 
-    for (c = 0; c < toDelete.length; c++) {
-        db.select('*').from('departments')
-        .where('departmentname', toDelete[c])
-        .del()
-        .then(() => {
-            if (c === toDelete.length) {
-                db.select('*').from('departments')
-                .then((list) => {
-                    res.send(list)
-                })
-            }
-        })
-    }
+  for (c = 0; c < toDelete.length; c++) {
+    await db.select('*').from('referrer').where('name', toDelete[c]).del()
+  }
+
+  const updatedList = await db.select('*').from('referrer')
+  res.send(updatedList)
 })
 
-app.delete('/deletecategory', (req, res) => {
-    const { toDelete } = req.body
+app.delete('/deletedepartment', async (req,res) => {
+  const { toDelete } = req.body
 
-    for (c = 0; c < toDelete.length; c++) {
-        db.select('*').from('techtype')
-        .where('type', toDelete[c])
-        .del()
-        .then(() => {
-            if (c === toDelete.length) {
-                db.select('*').from('techtype')
-                .then((list) => {
-                    res.send(list)
-                })
-            }
-        })
-    }
+  for (c = 0; c < toDelete.length; c++) {
+    await db.select('*').from('departments').where('departmentname', toDelete[c]).del()
+  }
+
+  const updatedList = await db.select('*').from('departments')
+  res.send(updatedList)
 })
 
-app.get('/gettechcost/:cat', (req, res) => {
-    const {cat} = req.params
+app.delete('/deletecategory', async (req, res) => {
+  const { toDelete } = req.body
 
-    db.select('techtypecost')
-    .from('techtype')
-    .where('type', cat)
-    .then(techtypecost => {
-        res.json(techtypecost[0].techtypecost)
-    })
+  for (c = 0; c < toDelete.length; c++) {
+    await db('techtype').where('type', toDelete[c]).select('*').del()
+  }
+
+  const updatedList = await db('techtype').select('*')
+  res.send(updatedList)
+})
+
+app.get('/gettechcost/:cat', async (req, res) => {
+  const { cat } = req.params
+
+  const result = await db.select('techtypecost').from('techtype').where('type', cat)
+  const techTypeCost = result[0].techtypecost
+  res.send(techTypeCost)
 })
 
 // FUNCTION TO FETCH A RECORD. CALLED FROM ALL RECORD FETCH ROUTES
@@ -392,70 +337,32 @@ app.get('/lastrec/:id', (req, res) => {
 app.get('/nextrec/:id', (req, res) => {
   const {id} = req.params
   getRecord('asc', id, res)
-
-  // Original Method
-  // db.select('*').from('index')
-  // .orderBy('id', 'asc')
-  // .then(job => {
-  //     data[3] = job[id].department
-  //     job[id].type === 'p' ?
-  //         db('patientjobs')
-  //         .where('jobnumber', job[id].jobnumber)
-  //         .select('*')
-  //         .then(patientJob => {
-  //             data[0] = 'p'
-  //             data[1] = patientJob[0]
-  //         })
-  //         :
-  //         db('techjobs')
-  //         .where('jobnumber', job[id].jobnumber)
-  //         .select('*')
-  //         .then(techJob => {
-  //             data[0] = 't'
-  //             data[1] = techJob[0]
-  //         })
-
-  //         db('issued')
-  //         .where('jobnumber', job[id].jobnumber)
-  //         .orderBy('id', 'asc')
-  //         .select('*')
-  //         .then(issueDetails => {
-  //             data[2] = issueDetails
-  //         })
-  //         .then(() => {
-  //             res.send(data)
-  //         })
-  // })
 })
 
-app.get('/search/:value', (req, res) => {
+app.get('/search/:value', async (req, res) => {
     const {value} = req.params
 
-    const searchRecord = async () => {
-      let searchRes = []
+    let searchRes = []
 
-      const index = await db.select('*').from('index')
+    const index = await db.select('*').from('index')
+    .where('jobnumber', value)
+    searchRes[2] = index[0].type
+    searchRes[3] = index[0].department
+
+    const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
+    searchRes[0] = issued.length > 0 && issued[0]
+
+    if (searchRes[2] === 'p') {
+      const patientRecord = await db.select('*').from('patientjobs')
       .where('jobnumber', value)
-      searchRes[2] = index[0].type
-      searchRes[3] = index[0].department
-
-      const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
-      searchRes[0] = issued.length > 0 && issued[0]
-
-      if (searchRes[2] === 'p') {
-        const patientRecord = await db.select('*').from('patientjobs')
-        .where('jobnumber', value)
-        searchRes[1] = patientRecord[0]
-      } else if (searchRes[2] === 't') {
-        const techRecord = await db.select('*').from('techjobs')
-        .where('jobnumber', value)
-        searchRes[1] = techRecord[0]
-      }
-
-      res.json(searchRes)
+      searchRes[1] = patientRecord[0]
+    } else if (searchRes[2] === 't') {
+      const techRecord = await db.select('*').from('techjobs')
+      .where('jobnumber', value)
+      searchRes[1] = techRecord[0]
     }
 
-    searchRecord()
+    res.json(searchRes)
 
     // db.select('*').from('index')
     // .where('jobnumber', value)
@@ -492,85 +399,62 @@ app.get('/search/:value', (req, res) => {
     // })
 })
 
-app.get('/fetchFields', (req, res) => {
+app.get('/fetchFields', async (req, res) => {
   let dropDownContents = []
 
-  const getFields = async () => {
-    const referrer = await db.select('*').from('referrer').orderBy('name', 'asc')
-    const users = await db.select('*').from('users').orderBy('name', 'asc')
-    const techTypes = await db.select('*').from('techtype')
-    const departments = await db.select('*').from('departments')
+  const referrer = await db.select('*').from('referrer').orderBy('name', 'asc')
+  const users = await db.select('*').from('users').orderBy('name', 'asc')
+  const techTypes = await db.select('*').from('techtype')
+  const departments = await db.select('*').from('departments')
 
-    dropDownContents = [referrer, users, techTypes, departments]
+  dropDownContents = [referrer, users, techTypes, departments]
 
-    res.send(dropDownContents)
-  }
-
-  getFields()
+  res.send(dropDownContents)
 })
 
-app.get('/getRecord', (req, res) => {
+app.get('/getRecord', async (req, res) => {
     let dropDownContents = [];
 
-    db.select('*').from('index')
-    .orderBy('id', 'desc').limit(1)
-    .then(previousJob => {
-        if (previousJob[0] !== undefined) {
-            dropDownContents[4] = [previousJob[0].type, previousJob[0].sequencenumber, previousJob[0].day, previousJob[0].department, previousJob[0].jobnumber]
-        }
-    })
-    .then(() => {
-    db('index').count('id')
-    .then(count => {
-        dropDownContents[3] = count[0]
-    })
+    const previousJob = await db.select('*').from('index').orderBy('id', 'desc').limit(1)
 
-    db.select('*').from('referrer')
-    .orderBy('name', 'asc')
-    .then(refs => {
-        dropDownContents[0] = refs
-    })
+    if (previousJob[0] !== undefined) {
+        dropDownContents[4] = [
+          previousJob[0].type, 
+          previousJob[0].sequencenumber, 
+          previousJob[0].day, 
+          previousJob[0].department, 
+          previousJob[0].jobnumber
+        ]
+    }
+
+    const count = await db('index').count('id')
+    dropDownContents[3] = count[0]
+
+    const refs = await db.select('*').from('referrer').orderBy('name', 'asc')
+    dropDownContents[0] = refs
     
-    db.select('*').from('users')
-    .orderBy('name', 'asc')
-    .then(users => {
-        dropDownContents[1] = users
-    })
+    const users = await db.select('*').from('users').orderBy('name', 'asc')
+    dropDownContents[1] = users
 
-    db.select('*').from('techtype')
-    .then(techtypes => {
-        dropDownContents[7] = techtypes
-    })
+    const techtypes = await db.select('*').from('techtype')
+    dropDownContents[7] = techtypes
 
-    db.select('*').from('departments')
-    .then(departments => {
-      dropDownContents[8] = departments
-    })
+    const departments = await db.select('*').from('departments')
+    dropDownContents[8] = departments
     
-    db.select('*').from('patientjobs')
-    .orderBy('id', 'desc').limit(1)
-    .then(job => {
-      dropDownContents[2] = job[0]
-    })
+    const patientjobs = await db.select('*').from('patientjobs').orderBy('id', 'desc').limit(1)
+    dropDownContents[2] = patientjobs[0]
 
-    db.select('*').from('techjobs')
-    .orderBy('id', 'desc').limit(1)
-    .then(job => {
-        dropDownContents[5] = job[0]
-    })
-    db.select('*').from('issued')
-    .where('jobnumber', dropDownContents[4][4])
-    .orderBy('id', 'asc')
-    .then(issuedList => {
-        dropDownContents[9] = issuedList
-    })
-    .then(() => {
-        res.send(dropDownContents)
-    })
-    })
+    const techjobs = await db.select('*').from('techjobs').orderBy('id', 'desc').limit(1)
+    dropDownContents[5] = techjobs[0]
+
+    const issuedList = await db.select('*').from('issued').where('jobnumber', dropDownContents[4][4]).orderBy('id', 'asc')
+    dropDownContents[9] = issuedList
+
+    res.send(dropDownContents)
 })
 
-app.post('/searchrecs', (req, res) => {
+app.post('/searchrecs', async (req, res) => {
 
     // if (req.body.type === 'p') {
         const { type, photographer, permission, hospitalNumber, patientSurname, patientForename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
@@ -582,25 +466,25 @@ app.post('/searchrecs', (req, res) => {
 
     
     if (type === 'p') {
-        db('index')
-        .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
-        .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description')
-        .where('photographer', 'like', `%${photographer}%`)
-        .where('permission', 'like', `%${permission}%`)
-        .where('hospitalnumber', 'like', `%${hospitalNumber}%`)
-        .where('patientsurname', 'ilike', `%${patientSurname}%`)
-        .where('patientforename', 'ilike', `%${patientForename}%`)
-        .where('index.requestedby', 'like', `%${referrer}%`)
-        .where('description', 'ilike', `%${description}%`)
-        .where('department', 'like', `%${department}%`)
-        .where('creationdate', '>=', dateFrom)
-        .where('creationdate', '<=', dateTo)
-        .then(results => {
-            res.json(results)
-        })
-        .catch(console.log)
+        const patientjob = await db('index')
+          .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
+          .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description')
+          .where('photographer', 'like', `%${photographer}%`)
+          .where('permission', 'like', `%${permission}%`)
+          .where('hospitalnumber', 'like', `%${hospitalNumber}%`)
+          .where('patientsurname', 'ilike', `%${patientSurname}%`)
+          .where('patientforename', 'ilike', `%${patientForename}%`)
+          .where('index.requestedby', 'like', `%${referrer}%`)
+          .where('description', 'ilike', `%${description}%`)
+          .where('department', 'like', `%${department}%`)
+          .where('creationdate', '>=', dateFrom)
+          .where('creationdate', '<=', dateTo)
+        
+        res.json(patientjob)
+
+        // .catch(console.log)
     } else {
-        db('index')
+        const techjob = await db('index')
         .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
         .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer')
         .where('designer', 'like', `%${designer}%`)
@@ -610,13 +494,15 @@ app.post('/searchrecs', (req, res) => {
         .where('department', 'like', `%${department}%`)
         .where('creationdate', '>=', dateFrom)
         .where('creationdate', '<=', dateTo)
-        .then(results => {
-            res.json(results)
-        })
-        .catch(console.log)
+
+      res.json(techjob)
+
+      // .catch(console.log)
     }
 })
 
-app.listen(3004, () => {
-    console.log('Listening on port 3004')
+const PORT = 3004
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })

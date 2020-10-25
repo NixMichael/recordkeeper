@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, enableRecordEdit, deleteRecord } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
@@ -11,8 +11,11 @@ const RecordActionButtons = () => {
   // const { jobnumber } = record
   const lastRec = recordCount - 1
 
+  // Component state
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
   console.log('Initial value of currentRecordNumber:', currentRecordNumber)
+
+  const [buttonBoard, setButtonBoard] = useState('main')
 
   useEffect(() => {
   // set currentRecordNumber value to the last record only on first load
@@ -70,9 +73,12 @@ const RecordActionButtons = () => {
       // setCurrentRecordNumber(currentRecordNumber - 1)
       nextRecord('back')
     }
+
+    setButtonBoard('main')
   }
 
-  const handleClick = (name) => {
+  const handleClick = ({name}) => {
+
     switch (name) {
       case 'firstRecord':
         setCurrentRecordNumber(0)
@@ -88,13 +94,31 @@ const RecordActionButtons = () => {
       case 'nextRecord':
         nextRecord('forward')
         break
-      case 'edit':
-        let toggle = readOnly ? false : true
-        dispatch(enableRecordEdit(toggle))
+      case 'newRecord':
+        setButtonBoard('newRecord')
+        dispatch(enableRecordEdit(false))
         break
-      case 'delete':
-        deleteRecord()
-        // dispatch(deleteRecord(record.jobnumber, recordType))
+      case 'editRecord':
+        setButtonBoard('editRecord')
+        dispatch(enableRecordEdit(false))
+        break
+      case 'deleteRecord':
+        setButtonBoard('deleteRecord')
+        break
+      case 'save':
+        switch (buttonBoard) {
+          case 'deleteRecord':
+            deleteRecord()
+            break
+          default:
+            console.log('nope')
+            setButtonBoard('main')
+            dispatch(enableRecordEdit(true))
+        }
+        break
+      case 'cancel':
+        setButtonBoard('main')
+        dispatch(enableRecordEdit(true))
         break
       default:
         alert('error: record action button dispatch not triggered')
@@ -103,14 +127,23 @@ const RecordActionButtons = () => {
 
   return (
     <div className='record-buttons'>
-      <button className='record-button' name='firstRecord' onClick={(e) => handleClick(e.target.name)}>{`|<`}</button>
-      <button className='record-button' name='previousRecord' onClick={(e) => handleClick(e.target.name)}>{`<`}</button>
-      <button className='record-button' name='newRecord' onClick={(e) => handleClick(e.target.name)}>New</button>
-      <button className='record-button' name='edit' onClick={(e) => handleClick(e.target.name)}>Edit</button>
-      <button className='record-button' name='delete' onClick={(e) => handleClick(e.target.name)}>Delete</button>
-      <button className='record-button' name='search' onClick={(e) => handleClick(e.target.name)}>Search</button>
-      <button className='record-button' name='nextRecord' onClick={(e) => handleClick(e.target.name)}>{`>`}</button>
-      <button className='record-button' name='lastRecord' onClick={(e) => handleClick(e.target.name)}>{`>|`}</button>
+    {buttonBoard === 'main' ?
+      <>
+        <button className='record-button' name='firstRecord' onClick={(e) => handleClick(e.target)}>{`|<`}</button>
+        <button className='record-button' name='previousRecord' onClick={(e) => handleClick(e.target)}>{`<`}</button>
+        <button className='record-button' name='newRecord' onClick={(e) => handleClick(e.target)}>New</button>
+        <button className='record-button' name='editRecord' onClick={(e) => handleClick(e.target)}>Edit</button>
+        <button className='record-button' name='deleteRecord' onClick={(e) => handleClick(e.target)}>Delete</button>
+        <button className='record-button' name='search' onClick={(e) => handleClick(e.target)}>Search</button>
+        <button className='record-button' name='nextRecord' onClick={(e) => handleClick(e.target)}>{`>`}</button>
+        <button className='record-button' name='lastRecord' onClick={(e) => handleClick(e.target)}>{`>|`}</button>
+      </>
+      :
+        <>
+          <button className='record-button' name='save' onClick={(e) => handleClick(e.target)}>Save</button>
+          <button className='record-button' name='cancel' onClick={(e) => handleClick(e.target)}>Cancel</button>
+        </>
+      }
     </div>
   )
 }

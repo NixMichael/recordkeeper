@@ -78,7 +78,7 @@ const Issues = () => {
                   <p>{issue.notes}</p>
                   <p>{issue.qty}</p>
                   <p>{issue.cost}</p>
-                  <button className="delete-issue-button" disabled={readOnly} onClick={(e) => deleteIssue(e.target, issue.id, issue.jobnumber)}>x</button>
+                  <div className='delete-issue-button' disabled={readOnly} onClick={(e) => deleteIssue(e.target, issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
                 </div>
               )
             })

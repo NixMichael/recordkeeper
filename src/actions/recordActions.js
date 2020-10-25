@@ -11,9 +11,9 @@ import {
 export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 
   try {
-    dispatch({
-      type: FETCH_RECORD_REQUEST
-    })
+    // dispatch({
+    //   type: FETCH_RECORD_REQUEST
+    // })
     const { data } = await axios.get(`http://localhost:3004/${whichRecord}/${id}`)
 
     console.log(data)

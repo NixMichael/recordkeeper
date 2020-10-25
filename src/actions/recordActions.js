@@ -31,6 +31,7 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 
 export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
     const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
+    console.log(data)
     dispatch({
       type: 'SEARCH_BY_JOB_NUMBER',
       payload: data

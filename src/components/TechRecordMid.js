@@ -27,11 +27,11 @@ const TechRecordMid = () => {
   // let requestedBy = ''
   // let dept = ''
 
-  if (!currentRec.loading) {
+  // if (!currentRec.loading) {
     // category = record.category
     // requestedBy = record.referrer
     // dept = record.department
-  }
+  // }
 
   const handleChange = ({ name, value }) => {
     dispatch(updateRecordField(name, value))

@@ -8,6 +8,7 @@ const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
   const { loading, recordCount, recordType, sequenceNumber, creationdate, readOnly, jobNumber, record } = currentRec
+  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, photographer, designer } = record
   const lastRec = recordCount - 1
 
   // Component state
@@ -67,7 +68,7 @@ const RecordActionButtons = () => {
 
     if (data[5] > 0) {
       const today = new Date().getDate()
-      sequenceNumber = data[6] === today ? data[6] + 1 : 1
+      sequenceNumber = data[7] === today ? sequenceNumber + 1 : 1
     }
 
     let year = new Date().getFullYear().toString().substr(-2);
@@ -76,7 +77,7 @@ const RecordActionButtons = () => {
 
     month = month < 10 ? `0${month}` : month;
     day = day < 10 ? `0${day}` : day;
-    let count = (data[6] < 10 ? `0${data[6]}` : data[6]) + 1
+    let count = sequenceNumber < 10 ? `0${sequenceNumber}` : sequenceNumber
 
     let newJob = `${year}${month}${day}${count}`;
 
@@ -86,6 +87,36 @@ const RecordActionButtons = () => {
     //     jobNumReadOnly: true,
     //     job: newJob
     // })
+  }
+
+  const submitNewRecord = async () => {
+    console.log(permission)
+    await axios({
+      method: 'post',
+      url: 'http://localhost:3004/',
+      headers: {'Content-Type': 'application/json'},
+      data: {
+        seqNum: sequenceNumber,
+        day: new Date().getDate(),
+        job: jobNumber,
+        permission: permission,
+        requestedBy: referrer,
+        department: department,
+        hospitalNumber: hospitalnumber,
+        patientSurname: patientsurname,
+        patientForename: patientforename,
+        description: description,
+        category: category,
+        photographer: photographer,
+        designer: designer,
+        issues: [],
+        type: recordType
+      }
+      // }
+
+      // readOnly: true
+
+    })
   }
 
   const deleteRecord = async () => {
@@ -140,8 +171,8 @@ const RecordActionButtons = () => {
         break
       case 'save':
         switch (buttonBoard) {
-          case 'newRecord':
-            setButtonBoard('newRecordChoice')
+          case 'submitNewRecord':
+            submitNewRecord()
             break
           case 'deleteRecord':
             deleteRecord()
@@ -153,12 +184,12 @@ const RecordActionButtons = () => {
         break
       case 'createPatientRecord':
         createNewRecord('p')
-        setButtonBoard('newPatientRecord')
+        setButtonBoard('submitNewRecord')
         dispatch(enableRecordEdit(false))
         break
       case 'createTechRecord':
         createNewRecord('t')
-        setButtonBoard('newTechRecord')
+        setButtonBoard('submitNewRecord')
         dispatch(enableRecordEdit(false))
         break
       case 'cancel':

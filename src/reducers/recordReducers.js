@@ -59,14 +59,20 @@ export const updateCurrentRecordReducer = (state = {
     case 'UPDATE_RECORD_FIELD':
       // const field = action.payload[0] === 'user' ?
       // 'photographer' : action.payload[0]
-
-      return {
-        ...state,
-        record: { [action.payload[0]]: action.payload[1] }
+      if (action.payload[0] === 'jobnumber') {
+        return {
+          ...state,
+          jobNumber: action.payload[1]
+        }
+      } else {
+        return {
+          ...state,
+          record: { [action.payload[0]]: action.payload[1] }
+        }
       }
     case 'NEW_RECORD':
       return {
-        jobnumber: action.payload[0],
+        jobNumber: action.payload[0],
         sequenceNumber: action.payload[2],
         record: {
           hospitalnumber: '',
@@ -75,6 +81,7 @@ export const updateCurrentRecordReducer = (state = {
           permission: '--Please Select--',
           description: '',
           photographer: '--Please Select--',
+          designer: '--Please Select--',
           department: '--Please Select--',
           referrer: '--Please Select--',
           category: '--Please Select--',
@@ -86,7 +93,11 @@ export const updateCurrentRecordReducer = (state = {
     case 'SEARCH_BY_JOB_NUMBER':
       return {
         ...state,
-        record: action.payload[1],
+        record: {
+          ...action.payload[1],
+          referrer: action.payload[4],
+          department: action.payload[3]
+        },
         recordType: action.payload[2],
         department: action.payload[3]
       }

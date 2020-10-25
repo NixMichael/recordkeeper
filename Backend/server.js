@@ -94,6 +94,8 @@ app.post('/newcategory', async (req,res) => {
 app.post('/', async (req, res) => {
     const { seqNum, day, job, permission, requestedBy, department, hospitalNumber, patientSurname, patientForename, description, photographer, issues, type, category, designer} = req.body
 
+    console.log()
+
     let countTotal;
 
     await db('index')
@@ -308,7 +310,7 @@ const getRecord = async (order, id, res) => {
   data[3] = index[id].department
   data[4] = index[id].requestedby
   data[6] = index[id].sequencenumber
-  data[7] = index[id].creationdate
+  data[7] = index[id].day
   jobNum = index[id].jobnumber
 
   if (index[id].type === 'p') {
@@ -350,6 +352,7 @@ app.get('/search/:value', async (req, res) => {
     .where('jobnumber', value)
     searchRes[2] = index[0].type
     searchRes[3] = index[0].department
+    searchRes[4] = index[0].requestedby
 
     const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
     searchRes[0] = issued.length > 0 && issued[0]

@@ -35,11 +35,11 @@ const PatientUpper = () => {
   }
 
   const handleChange = ({ name, value }) => {
-    console.log('update field')
+    dispatch(updateRecordField(name, value))
   }
 
   return (
-    <div className='patient-record-component patient-record-upper'>
+    <div className='patient-record-component record-upper'>
       <div>
         <label>Job Number: </label>
         <input type='text' name='jobnumber' className='input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>

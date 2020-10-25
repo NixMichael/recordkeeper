@@ -1,9 +1,12 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import '../styles/recordStyles.scss'
 import Issues from './Issues'
+import { updateRecordField } from '../actions/recordActions'
 
 const RecordLower = () => {
+
+  const dispatch = useDispatch()
 
   const currentRec = useSelector(state => state.currentRec)
   const { record, readOnly } = currentRec
@@ -14,15 +17,15 @@ const RecordLower = () => {
     description = record.description
   }
 
-  const handleChange = (e) => {
-    console.log('Record Lower - textarea')
+  const handleChange = ({ name, value }) => {
+    dispatch(updateRecordField(name, value))
   }
 
   return (
     <div className='patient-record-component record-lower'>
       <div id='description'>
           <label>Description: </label>
-          <textarea id="description" name="description" disabled={readOnly} value={description} onChange={(e) => handleChange(e.target.name)}/>
+          <textarea id="description" name="description" disabled={readOnly} value={description} onChange={(e) => handleChange(e.target)}/>
       </div>
       <div className="issued-section">
           <Issues />

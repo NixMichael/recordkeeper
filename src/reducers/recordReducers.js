@@ -47,12 +47,19 @@ export const updateCurrentRecordReducer = (state = {
         currentRecordIndex: action.payload
       }
     case 'ENABLE_RECORD_EDIT':
-      return action.payload
+      return {
+        ...state,
+        readOnly: action.payload
+      }
         // ...state,
         // record: action.payload[1],
         // readOnly: action.payload[0]
+    case 'PREVIOUS_RECORD':
+      return action.payload
     case 'UPDATE_RECORD_FIELD':
-      console.log('field:', action.payload[0], 'value:', action.payload[1])
+      // const field = action.payload[0] === 'user' ?
+      // 'photographer' : action.payload[0]
+
       return {
         ...state,
         record: { [action.payload[0]]: action.payload[1] }
@@ -63,8 +70,8 @@ export const updateCurrentRecordReducer = (state = {
         sequenceNumber: action.payload[2],
         record: {
           hospitalnumber: '',
-          patientSurname: '',
-          patientForename: '',
+          patientsurname: '',
+          patientforename: '',
           permission: '--Please Select--',
           description: '',
           photographer: '--Please Select--',
@@ -74,8 +81,7 @@ export const updateCurrentRecordReducer = (state = {
           designer: '--Please Select--',
           quantity: 0,
         },
-        recordType: action.payload[1],
-        readOnly: false
+        recordType: action.payload[1]
       }
     case 'SEARCH_BY_JOB_NUMBER':
       return {

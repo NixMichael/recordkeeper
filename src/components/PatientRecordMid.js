@@ -1,7 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateRecordField } from '../actions/recordActions'
 
 const PatientRecordMid = () => {
+
+  const dispatch = useDispatch()
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -35,12 +38,12 @@ const PatientRecordMid = () => {
   // }
 
   const handleChange = ({ name, value }) => {
-    console.log('change')
+    dispatch(updateRecordField(name, value))
   }
 
   return (
-    <>
-    <div className='patient-record-component record-mid'>
+    <div className='record-mid'>
+    <div className='patient-record-component'>
       <div>
         <label>Requested By: </label>
         <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
@@ -72,21 +75,21 @@ const PatientRecordMid = () => {
         </select>
       </div>
     </div>
-    <div className='patient-record-component record-mid'>
+    <div className='patient-record-component'>
       <div>
         <label>Hospital Number: </label>
         <input type='text' name='hospitalnumber' className='input-text-number' disabled={readOnly} value={hospitalnumber} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's surname: </label>
-        <input type='text' name='lastname' disabled={readOnly} value={patientsurname} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='patientsurname' disabled={readOnly} value={patientsurname} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's forename: </label>
-        <input type='text' name='firstname' disabled={readOnly} value={patientforename} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='patientforename' disabled={readOnly} value={patientforename} onChange={(e) => handleChange(e.target)} />
       </div>
     </div>
-    </>
+    </div>
   )
 }
 

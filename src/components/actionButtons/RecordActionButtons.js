@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, enableRecordEdit, newRecord } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit, newRecord, previousRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
@@ -127,12 +127,12 @@ const RecordActionButtons = () => {
       case 'newRecord':
         setTemporaryRecordState(currentRec)
         setButtonBoard('newRecordChoice')
-        dispatch(enableRecordEdit(false, temporaryRecordState))
+        dispatch(enableRecordEdit(false))
         break
       case 'editRecord':
         setTemporaryRecordState(currentRec)
         setButtonBoard('editRecord')
-        dispatch(enableRecordEdit(false, temporaryRecordState))
+        dispatch(enableRecordEdit(false))
         break
       case 'deleteRecord':
         setTemporaryRecordState(currentRec)
@@ -148,20 +148,23 @@ const RecordActionButtons = () => {
             break
           default:
             setButtonBoard('main')
-            dispatch(enableRecordEdit(true, temporaryRecordState))
+            dispatch(enableRecordEdit(true))
         }
         break
       case 'createPatientRecord':
         createNewRecord('p')
         setButtonBoard('newPatientRecord')
+        dispatch(enableRecordEdit(false))
         break
       case 'createTechRecord':
         createNewRecord('t')
         setButtonBoard('newTechRecord')
+        dispatch(enableRecordEdit(false))
         break
       case 'cancel':
         setButtonBoard('main')
-        dispatch(enableRecordEdit(true, temporaryRecordState))
+        dispatch(enableRecordEdit(true))
+        dispatch(previousRecord(temporaryRecordState))
         break
       default:
         alert('error: record action button dispatch not triggered')

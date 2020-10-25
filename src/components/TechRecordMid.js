@@ -1,7 +1,10 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateRecordField } from '../actions/recordActions'
 
 const TechRecordMid = () => {
+
+  const dispatch = useDispatch()
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -30,15 +33,15 @@ const TechRecordMid = () => {
     // dept = record.department
   }
 
-  const handleChange = (name) => {
-    console.log('change')
+  const handleChange = ({ name, value }) => {
+    dispatch(updateRecordField(name, value))
   }
 
   return (
     <div className='tech-record-component record-mid'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target.name)}>
+        <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (
@@ -49,7 +52,7 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target.name)}>
+        <select name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -60,7 +63,7 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Category: </label>
-        <select name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target.name)}>
+        <select name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
             {categories.map(category => {
               return (

@@ -16,8 +16,6 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
     // })
     const { data } = await axios.get(`http://localhost:3004/${whichRecord}/${id}`)
 
-    console.log('RECORD CONTENTS:', data[1])
-
     dispatch({
       type: FETCH_RECORD_SUCCESS,
       payload: data
@@ -33,7 +31,6 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 
 export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
     const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
-    console.log('search returned:', data)
     dispatch({
       type: 'SEARCH_BY_JOB_NUMBER',
       payload: data
@@ -62,10 +59,16 @@ export const fetchFieldData = () => async (dispatch) => {
   }
 }
 
-export const enableRecordEdit = (toggle, record) => {
-  console.log(`HUH:`, record)
+export const enableRecordEdit = (toggle) => {
   return {
     type: 'ENABLE_RECORD_EDIT',
+    payload: toggle
+  }
+}
+
+export const previousRecord = (record) => {
+  return {
+    type: 'PREVIOUS_RECORD',
     payload: record
   }
 }

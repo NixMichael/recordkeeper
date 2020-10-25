@@ -16,7 +16,7 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
     // })
     const { data } = await axios.get(`http://localhost:3004/${whichRecord}/${id}`)
 
-    console.log(data)
+    console.log('RECORD CONTENTS:', data[1])
 
     dispatch({
       type: FETCH_RECORD_SUCCESS,
@@ -62,10 +62,11 @@ export const fetchFieldData = () => async (dispatch) => {
   }
 }
 
-export const enableRecordEdit = (toggle) => {
+export const enableRecordEdit = (toggle, record) => {
+  console.log(`HUH:`, record)
   return {
     type: 'ENABLE_RECORD_EDIT',
-    payload: toggle
+    payload: record
   }
 }
 
@@ -74,6 +75,13 @@ export const updateRecordField = (field, value) => {
     type: 'UPDATE_RECORD_FIELD',
     payload: [field, value]
   }
+}
+
+export const newRecord = (newJobNumber, recordType, sequenceNumber) => {
+  return ({
+    type: 'NEW_RECORD',
+    payload: [newJobNumber, recordType, sequenceNumber]
+  })
 }
 
 export const deleteRecord = (job, recordType) => async (dispatch, getState) => {

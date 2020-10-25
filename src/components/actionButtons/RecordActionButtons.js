@@ -2,30 +2,32 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, enableRecordEdit } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit, newRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount, readOnly, recordType, record } = currentRec
-  // const { jobnumber } = record
+  const { loading, recordCount, recordType, sequenceNumber, creationdate, readOnly, jobNumber, record } = currentRec
   const lastRec = recordCount - 1
 
   // Component state
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
-  console.log('Initial value of currentRecordNumber:', currentRecordNumber)
 
   const [buttonBoard, setButtonBoard] = useState('main')
+
+  const [temporaryRecordState, setTemporaryRecordState] = useState([currentRec])
+
+  ////////////////////////////////////////
 
   useEffect(() => {
   // set currentRecordNumber value to the last record only on first load
   // (when finished loading and it's NaN and not 0)
+
   if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
     setCurrentRecordNumber(lastRec)
+    setTemporaryRecordState(currentRec)
   }
-},[loading, currentRecordNumber, lastRec])
-
-  console.log('recordCount is:', recordCount, 'lastRec is:', lastRec, 'currentRecordNumber is:', currentRecordNumber)
+},[loading, currentRecordNumber, lastRec, record])
   
   const dispatch = useDispatch()
 
@@ -57,9 +59,37 @@ const RecordActionButtons = () => {
     }
   }
 
+  const createNewRecord = async (recordType) => {
+
+    const { data } = await axios.get(`http://localhost:3004/lastrec/0`)
+
+    let sequenceNumber = 1
+
+    if (data[5] > 0) {
+      const today = new Date().getDate()
+      sequenceNumber = data[6] === today ? data[6] + 1 : 1
+    }
+
+    let year = new Date().getFullYear().toString().substr(-2);
+    let month = new Date().getMonth() + 1;
+    let day = new Date().getDate();
+
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+    let count = (data[6] < 10 ? `0${data[6]}` : data[6]) + 1
+
+    let newJob = `${year}${month}${day}${count}`;
+
+    dispatch(newRecord(newJob, recordType, sequenceNumber))
+
+    // this.setState({
+    //     jobNumReadOnly: true,
+    //     job: newJob
+    // })
+  }
+
   const deleteRecord = async () => {
     const job = record.jobnumber
-    console.log('job:', job)
     await axios({
       method: 'delete',
       url: 'http://localhost:3004/deleterecord',
@@ -95,30 +125,43 @@ const RecordActionButtons = () => {
         nextRecord('forward')
         break
       case 'newRecord':
-        setButtonBoard('newRecord')
-        dispatch(enableRecordEdit(false))
+        setTemporaryRecordState(currentRec)
+        setButtonBoard('newRecordChoice')
+        dispatch(enableRecordEdit(false, temporaryRecordState))
         break
       case 'editRecord':
+        setTemporaryRecordState(currentRec)
         setButtonBoard('editRecord')
-        dispatch(enableRecordEdit(false))
+        dispatch(enableRecordEdit(false, temporaryRecordState))
         break
       case 'deleteRecord':
+        setTemporaryRecordState(currentRec)
         setButtonBoard('deleteRecord')
         break
       case 'save':
         switch (buttonBoard) {
+          case 'newRecord':
+            setButtonBoard('newRecordChoice')
+            break
           case 'deleteRecord':
             deleteRecord()
             break
           default:
-            console.log('nope')
             setButtonBoard('main')
-            dispatch(enableRecordEdit(true))
+            dispatch(enableRecordEdit(true, temporaryRecordState))
         }
+        break
+      case 'createPatientRecord':
+        createNewRecord('p')
+        setButtonBoard('newPatientRecord')
+        break
+      case 'createTechRecord':
+        createNewRecord('t')
+        setButtonBoard('newTechRecord')
         break
       case 'cancel':
         setButtonBoard('main')
-        dispatch(enableRecordEdit(true))
+        dispatch(enableRecordEdit(true, temporaryRecordState))
         break
       default:
         alert('error: record action button dispatch not triggered')
@@ -138,12 +181,18 @@ const RecordActionButtons = () => {
         <button className='record-button' name='nextRecord' onClick={(e) => handleClick(e.target)}>{`>`}</button>
         <button className='record-button' name='lastRecord' onClick={(e) => handleClick(e.target)}>{`>|`}</button>
       </>
-      :
-        <>
-          <button className='record-button' name='save' onClick={(e) => handleClick(e.target)}>Save</button>
-          <button className='record-button' name='cancel' onClick={(e) => handleClick(e.target)}>Cancel</button>
-        </>
-      }
+    : buttonBoard === 'newRecordChoice' ?
+      <>
+        <button className='record-button' name='createPatientRecord' onClick={(e) => handleClick(e.target)}>Patient</button>
+        <button className='record-button' name='createTechRecord' onClick={(e) => handleClick(e.target)}>Tech</button>
+        <button className='record-button' name='cancel' onClick={(e) => handleClick(e.target)}>Cancel</button>
+      </>
+    :
+      <>
+        <button className='record-button' name='save' onClick={(e) => handleClick(e.target)}>{buttonBoard === 'deleteRecord' ? 'Delete' : 'Save'}</button>
+        <button className='record-button' name='cancel' onClick={(e) => handleClick(e.target)}>Cancel</button>
+      </>
+    }
     </div>
   )
 }

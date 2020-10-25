@@ -14,13 +14,30 @@ export const updateCurrentRecordReducer = (state = {
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
       return {
-        loading: false, 
-        record: action.payload[1], 
-        recordType: action.payload[0], 
-        department: action.payload[3], 
-        referrer: action.payload[4],
+        loading: false,
+        readOnly: true,
         recordCount: Number(action.payload[5]),
-        readOnly: true
+        jobNumber: action.payload[1].jobnumber,
+        recordType: action.payload[0],
+        sequenceNumber: action.payload[6],
+        creationDate: action.payload[7],
+        record: {
+          id: action.payload[1].id,
+          // jobnumber: action.payload[1].jobnumber,
+          hospitalnumber: action.payload[1].hospitalnumber,
+          patientsurname: action.payload[1].patientsurname,
+          patientforename: action.payload[1].patientforename,
+          permission: action.payload[1].permission,
+          category: action.payload[1].category,
+          description: action.payload[1].description,
+          photographer: action.payload[1].photographer,
+          designer: action.payload[1].designer,
+          quantity: action.payload[1].quantity,
+          department: action.payload[3], 
+          referrer: action.payload[4]
+        },
+        // department: action.payload[3], 
+        // referrer: action.payload[4],
       }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }
@@ -30,15 +47,35 @@ export const updateCurrentRecordReducer = (state = {
         currentRecordIndex: action.payload
       }
     case 'ENABLE_RECORD_EDIT':
-      return {
-        ...state,
-        readOnly: action.payload
-      }
+      return action.payload
+        // ...state,
+        // record: action.payload[1],
+        // readOnly: action.payload[0]
     case 'UPDATE_RECORD_FIELD':
       console.log('field:', action.payload[0], 'value:', action.payload[1])
       return {
         ...state,
         record: { [action.payload[0]]: action.payload[1] }
+      }
+    case 'NEW_RECORD':
+      return {
+        jobnumber: action.payload[0],
+        sequenceNumber: action.payload[2],
+        record: {
+          hospitalnumber: '',
+          patientSurname: '',
+          patientForename: '',
+          permission: '--Please Select--',
+          description: '',
+          photographer: '--Please Select--',
+          department: '--Please Select--',
+          referrer: '--Please Select--',
+          category: '--Please Select--',
+          designer: '--Please Select--',
+          quantity: 0,
+        },
+        recordType: action.payload[1],
+        readOnly: false
       }
     case 'SEARCH_BY_JOB_NUMBER':
       return {

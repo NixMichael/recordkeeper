@@ -307,8 +307,10 @@ const getRecord = async (order, id, res) => {
   data[0] = index[id].type
   data[3] = index[id].department
   data[4] = index[id].requestedby
+  data[6] = index[id].sequencenumber
+  data[7] = index[id].creationdate
   jobNum = index[id].jobnumber
-  
+
   if (index[id].type === 'p') {
     const patientjob = await db('patientjobs').where('jobnumber', jobNum).select('*')
     data[1] = patientjob[0]

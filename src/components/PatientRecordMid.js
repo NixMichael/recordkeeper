@@ -7,7 +7,8 @@ const PatientRecordMid = () => {
   const { fieldContent } = fieldData
 
   const currentRec = useSelector(state => state.currentRec)
-  const { record, department, referrer, readOnly } = currentRec
+  const { record, readOnly } = currentRec
+  const { permission, referrer, department, hospitalnumber, patientsurname, patientforename } = record
 
   let referrers = []
   let departments = []
@@ -17,21 +18,21 @@ const PatientRecordMid = () => {
     departments = fieldContent[3]
   }
 
-  let permission
-  let requestedBy
-  let dept
-  let hospitalNumber
-  let firstName
-  let lastName
+  // let permission
+  // let requestedBy
+  // let dept
+  // let hospitalNumber
+  // let firstName
+  // let lastName
 
-  if (!currentRec.loading) {
-    permission = record.permission
-    requestedBy = referrer
-    dept = department
-    hospitalNumber = record.hospitalnumber
-    firstName = record.patientforename
-    lastName = record.patientsurname
-  }
+  // if (!currentRec.loading) {
+  //   permission = record.permission
+  //   requestedBy = record.referrer
+  //   dept = record.department
+  //   hospitalNumber = record.hospitalnumber
+  //   firstName = record.patientforename
+  //   lastName = record.patientsurname
+  // }
 
   const handleChange = ({ name, value }) => {
     console.log('change')
@@ -42,7 +43,7 @@ const PatientRecordMid = () => {
     <div className='patient-record-component record-mid'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' disabled={readOnly} value={requestedBy} onChange={(e) => handleChange(e.target)}>
+        <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (
@@ -53,7 +54,7 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' disabled={readOnly} value={dept} onChange={(e) => handleChange(e.target)}>
+        <select name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -74,15 +75,15 @@ const PatientRecordMid = () => {
     <div className='patient-record-component record-mid'>
       <div>
         <label>Hospital Number: </label>
-        <input type='text' name='hospitalnumber' className='input-text-number' disabled={readOnly} value={hospitalNumber} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='hospitalnumber' className='input-text-number' disabled={readOnly} value={hospitalnumber} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's surname: </label>
-        <input type='text' name='lastname' disabled={readOnly} value={lastName} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='lastname' disabled={readOnly} value={patientsurname} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's forename: </label>
-        <input type='text' name='firstname' disabled={readOnly} value={firstName} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='firstname' disabled={readOnly} value={patientforename} onChange={(e) => handleChange(e.target)} />
       </div>
     </div>
     </>

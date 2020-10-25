@@ -8,7 +8,7 @@ const PatientUpper = () => {
   const dispatch = useDispatch()
 
   const currentRec = useSelector(state => state.currentRec)
-  const { record, recordType, readOnly } = currentRec
+  const { record, jobNumber, recordType, readOnly } = currentRec
 
   const fieldData = useSelector(state => state.fieldData)
   const { fieldContent } = fieldData
@@ -23,7 +23,7 @@ const PatientUpper = () => {
   let user = '--Please Select--'
 
   if (!currentRec.loading) {
-    jobnumber = record.jobnumber
+    // jobnumber = record.jobnumber
     user = recordType === 'p' ? record.photographer : record.designer
   }
 
@@ -42,7 +42,7 @@ const PatientUpper = () => {
     <div className='patient-record-component patient-record-upper'>
       <div>
         <label>Job Number: </label>
-        <input type='text' name='jobnumber' className='input-text-number' value={record.jobnumber} onChange={(e) => handleJobNumberChange(e.target)}/>
+        <input type='text' name='jobnumber' className='input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>

@@ -61,32 +61,29 @@ const Issues = () => {
 
       </div>
 
+      <div className="issued-events">
       { issueResults.length === 0 ?
-          /* <div className="prevIssuesTitle">PREVIOUS ISSUES:</div> */
-        <div className="noIssuedEvents"><p>NO PREVIOUS ISSUES</p></div>
+        <p>NO PREVIOUS ISSUES</p>
       :
-      <div>
-        {/* <div className="prevIssuesTitle">PREVIOUS ISSUES:</div> */}
-        <div className="issued-events">
-          {
-            issueResults.map(issue => {
-              let fullType = issue.type === 'PACS' ? 'PACS' : issue.type === 'PRTD' ? 'Print Delivered' : issue.type === 'PRTC' ? 'Print Collected' : 'Other'
-              return (
-                <div key={issue.id}>
-                  <p>{fullType}</p>
-                  <p>{issue.date}</p>
-                  <p>{issue.notes}</p>
-                  <p>{issue.qty}</p>
-                  <p>{issue.cost}</p>
-                  <div className='delete-issue-button' disabled={readOnly} onClick={(e) => deleteIssue(e.target, issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
-                </div>
-              )
-            })
-          }
-        </div>
-      </div>
-      
+      <>
+      {
+        issueResults.map(issue => {
+          let fullType = issue.type === 'PACS' ? 'PACS' : issue.type === 'PRTD' ? 'Print Delivered' : issue.type === 'PRTC' ? 'Print Collected' : 'Other'
+          return (
+            <div key={issue.id}>
+              <p>{fullType}</p>
+              <p>{issue.date}</p>
+              <p>{issue.notes}</p>
+              <p>{issue.qty}</p>
+              <p>{issue.cost}</p>
+              <div className='delete-issue-button' disabled={readOnly} onClick={(e) => deleteIssue(e.target, issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
+            </div>
+          )
+        })
       }
+      </>
+      }
+      </div>
     </div>
   )
 }

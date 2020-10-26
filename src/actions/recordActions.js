@@ -88,10 +88,16 @@ export const newRecord = (newJobNumber, recordType, sequenceNumber) => {
   })
 }
 
-export const deleteRecord = (job, recordType) => async (dispatch, getState) => {
+export const newRecordSubmitted = () => {
+  return ({
+    type: 'NEW_RECORD_SUBMITTED'
+  })
+}
+
+export const deleteRecord = (job, recordType) => {
   try {
 
-    const data = await axios({
+    axios({
       method: 'delete',
       url: 'http://localhost:3004/deleterecord',
       headers: {'Content-Type': 'application/json'},
@@ -99,11 +105,6 @@ export const deleteRecord = (job, recordType) => async (dispatch, getState) => {
         job, recordType
       }
     })
-
-    // dispatch({
-    //   type: 'RECORD_DELETED',
-    //   payload: data
-    // })
   } catch (error) {
     console.log(error)
   }

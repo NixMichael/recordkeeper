@@ -19,14 +19,6 @@ const PatientUpper = () => {
     users = fieldContent[1]
   }
 
-  let jobnumber = 0
-  let user = '--Please Select--'
-
-  if (!currentRec.loading) {
-    // jobnumber = record.jobnumber
-    user = recordType === 'p' ? record.photographer : record.designer
-  }
-
   const handleJobNumberChange = async ({ name, value }) => {
     dispatch(updateRecordField(name, value))
     if (value.length === 8) {
@@ -46,7 +38,7 @@ const PatientUpper = () => {
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
-        <select name='user' disabled={readOnly} value={user} onChange={(e) => handleChange(e.target)}>
+        <select name='user' disabled={readOnly} value={record.user} onChange={(e) => handleChange(e.target)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {
             users.map(user => {

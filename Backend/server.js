@@ -92,9 +92,9 @@ app.post('/newcategory', async (req,res) => {
 })
 
 app.post('/', async (req, res) => {
-    const { seqNum, day, job, permission, requestedBy, department, hospitalNumber, patientSurname, patientForename, description, photographer, issues, type, category, designer} = req.body
+    const { seqNum, day, job, permission, requestedBy, department, hospitalNumber, patientSurname, patientForename, description, user, issues, type, category } = req.body
 
-    console.log()
+    console.log('arrived')
 
     let countTotal;
 
@@ -121,7 +121,7 @@ app.post('/', async (req, res) => {
             patientsurname: patientSurname,
             patientforename: patientForename,
             description: description,
-            photographer: photographer
+            photographer: user
         })
         res.send(countTotal)
     } else if (type === 't') {
@@ -132,7 +132,7 @@ app.post('/', async (req, res) => {
             category: category,
             description: description,
             quantity: 1,
-            designer: designer
+            designer: user
         })
 
         res.send(countTotal)

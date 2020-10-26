@@ -2,14 +2,18 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
-import { fetchRecord, enableRecordEdit, newRecord, previousRecord } from '../../actions/recordActions'
+import { fetchRecord, enableRecordEdit, newRecord, newRecordSubmitted, previousRecord } from '../../actions/recordActions'
 
 const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount, recordType, sequenceNumber, creationdate, readOnly, jobNumber, record } = currentRec
-  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, photographer, designer } = record
+  const { loading, recordCount, recordType, sequenceNumber, jobNumber, record } = currentRec
+  // const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, photographer, designer } = record
   const lastRec = recordCount - 1
+
+  if (record) {
+    var { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
+  }
 
   // Component state
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
@@ -28,7 +32,7 @@ const RecordActionButtons = () => {
     setCurrentRecordNumber(lastRec)
     setTemporaryRecordState(currentRec)
   }
-},[loading, currentRecordNumber, lastRec, record])
+},[loading, currentRecordNumber, currentRec, lastRec, record])
   
   const dispatch = useDispatch()
 
@@ -64,11 +68,11 @@ const RecordActionButtons = () => {
 
     const { data } = await axios.get(`http://localhost:3004/lastrec/0`)
 
-    let sequenceNumber = 1
+    let seqNumber = 1
 
     if (data[5] > 0) {
       const today = new Date().getDate()
-      sequenceNumber = data[7] === today ? sequenceNumber + 1 : 1
+      seqNumber = data[7] === today ? data[6] + 1 : 1
     }
 
     let year = new Date().getFullYear().toString().substr(-2);
@@ -77,11 +81,11 @@ const RecordActionButtons = () => {
 
     month = month < 10 ? `0${month}` : month;
     day = day < 10 ? `0${day}` : day;
-    let count = sequenceNumber < 10 ? `0${sequenceNumber}` : sequenceNumber
+    let count = seqNumber < 10 ? `0${seqNumber}` : seqNumber
 
     let newJob = `${year}${month}${day}${count}`;
 
-    dispatch(newRecord(newJob, recordType, sequenceNumber))
+    dispatch(newRecord(newJob, recordType, seqNumber))
 
     // this.setState({
     //     jobNumReadOnly: true,
@@ -90,7 +94,6 @@ const RecordActionButtons = () => {
   }
 
   const submitNewRecord = async () => {
-    console.log(permission)
     await axios({
       method: 'post',
       url: 'http://localhost:3004/',
@@ -107,16 +110,17 @@ const RecordActionButtons = () => {
         patientForename: patientforename,
         description: description,
         category: category,
-        photographer: photographer,
-        designer: designer,
+        user: user,
         issues: [],
         type: recordType
       }
       // }
-
       // readOnly: true
-
+      
     })
+    dispatch(newRecordSubmitted())
+    setCurrentRecordNumber(lastRec)
+    console.log('What is lastRec?', lastRec)
   }
 
   const deleteRecord = async () => {
@@ -178,9 +182,9 @@ const RecordActionButtons = () => {
             deleteRecord()
             break
           default:
-            setButtonBoard('main')
             dispatch(enableRecordEdit(true))
         }
+        setButtonBoard('main')
         break
       case 'createPatientRecord':
         createNewRecord('p')

@@ -8,11 +8,12 @@ import {
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const updateCurrentRecordReducer = (state = { 
-  loading: true, record: {}, recordType: '', readOnly: true }, action) => {
+  loading: true, record: {}, recordType: '', recordCount: 0, readOnly: true }, action) => {
   switch (action.type) {
     case FETCH_RECORD_REQUEST:
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
+      const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
       return {
         loading: false,
         readOnly: true,
@@ -30,6 +31,7 @@ export const updateCurrentRecordReducer = (state = {
           permission: action.payload[1].permission,
           category: action.payload[1].category,
           description: action.payload[1].description,
+          user: user,
           photographer: action.payload[1].photographer,
           designer: action.payload[1].designer,
           quantity: action.payload[1].quantity,
@@ -67,7 +69,7 @@ export const updateCurrentRecordReducer = (state = {
       } else {
         return {
           ...state,
-          record: { [action.payload[0]]: action.payload[1] }
+          record: { ...state.record, [action.payload[0]]: action.payload[1] }
         }
       }
     case 'NEW_RECORD':
@@ -80,15 +82,20 @@ export const updateCurrentRecordReducer = (state = {
           patientforename: '',
           permission: '--Please Select--',
           description: '',
-          photographer: '--Please Select--',
-          designer: '--Please Select--',
+          user: '--Please Select--',
           department: '--Please Select--',
           referrer: '--Please Select--',
           category: '--Please Select--',
-          designer: '--Please Select--',
           quantity: 0,
         },
         recordType: action.payload[1]
+      }
+    case 'NEW_RECORD_SUBMITTED':
+      console.log(state.recordCount)
+      return {
+        ...state,
+        readOnly: true,
+        recordCount: state.recordCount + 1
       }
     case 'SEARCH_BY_JOB_NUMBER':
       return {

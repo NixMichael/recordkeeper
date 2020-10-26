@@ -11,7 +11,15 @@ const TechRecordMid = () => {
 
   const currentRec = useSelector(state => state.currentRec)
   const { record, readOnly } = currentRec
-  const { category, referrer, department } = record
+
+  let category, referrer, department
+
+  if (record) {
+    category = record.category
+    referrer = record.referrer
+    department = record.department
+  }
+  // const { category, referrer, department } = record
 
   let referrers = []
   let departments = []

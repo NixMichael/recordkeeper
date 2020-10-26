@@ -13,7 +13,7 @@ const RecordLower = () => {
 
   let description = ''
 
-  if (!currentRec.loading) {
+  if (record) {
     description = record.description
   }
 

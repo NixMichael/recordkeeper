@@ -1,19 +1,41 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import '../styles/issuesStyles.scss'
+import { updateIssueList } from '../actions/recordActions'
 
 const Issues = () => {
 
+  const dispatch = useDispatch()
+
   const currentRec = useSelector(state => state.currentRec)
-  const { readOnly, jobNumber, record } = currentRec
-  const { issues } = record
+  const { readOnly, jobNumber, recordType, record } = currentRec
+  const { issues, category } = record
 
   const [issueList, setIssueList] = useState(issues)
 
   const addIssue = async ({name}) => {
-    const note = prompt('Add a note:')
-    const quantity = prompt('Quantity:')
+    let note = name !== 'PACS' ? prompt('Enter a note for this issue:') : 'Patient Record'
+    let quantity = 1
+    let totalCost = 25
+    let curDate = ''
+
+    let year = new Date().getFullYear().toString();
+    let month = new Date().getMonth() + 1;
+    let day = new Date().getDate();        
+      
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+      
+    curDate = `${day}-${month}-${year}`;
+
+    if (recordType === 't') {
+      quantity = Number(prompt('Quantity:'))
+      if (quantity === 0 || quantity === '') { quantity = 1 }
+
+      const costResult = await axios.get(`http://localhost:3004/gettechcost/${category}`)
+      totalCost = costResult.data * quantity
+    }
 
     const newIssueList = await axios({
       method: 'post',
@@ -22,15 +44,14 @@ const Issues = () => {
       data: {
         jobnumber: jobNumber,
         type: name,
-        date: new Date().getDate(),
+        date: curDate,
         notes: note,
         qty: quantity,
-        cost: '12'
+        cost: totalCost
       }
     })
-
-    console.log(newIssueList.data)
     setIssueList(newIssueList.data)
+    dispatch(updateIssueList(newIssueList.data))
   }
 
   const deleteIssue = async (id, jobnumber) => {
@@ -42,7 +63,7 @@ const Issues = () => {
     })
 
     setIssueList(newIssueList.data)
-    
+    dispatch(updateIssueList(newIssueList.data))
   }
 
   return (

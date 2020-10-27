@@ -74,6 +74,11 @@ export const updateCurrentRecordReducer = (state = {
           record: { ...state.record, [action.payload[0]]: action.payload[1] }
         }
       }
+    case 'UPDATED_ISSUE_LIST':
+      return {
+        ...state,
+        record: { ...state.record, issueUpdate: true, issues: action.payload}
+      }
     case 'NEW_RECORD':
       return {
         jobNumber: action.payload[0],

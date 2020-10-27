@@ -95,6 +95,13 @@ export const newRecordSubmitted = (count) => {
   })
 }
 
+export const updateIssueList = (newList) => {
+  return ({
+    type: 'UPDATED_ISSUE_LIST',
+    payload: newList
+  })
+}
+
 export const deleteRecord = (job, recordType) => {
   try {
 

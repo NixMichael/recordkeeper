@@ -7,7 +7,7 @@ import { fetchRecord, enableRecordEdit, newRecord, newRecordSubmitted, previousR
 const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount, recordType, sequenceNumber, jobNumber, record } = currentRec
+  const { loading, recordCount, recordType, sequenceNumber, jobNumber, record, issueUpdated } = currentRec
   const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
   const lastRec = recordCount - 1
 
@@ -152,7 +152,6 @@ const RecordActionButtons = () => {
         category: category,
         photographer: user,
         designer: user,
-        issues: [],
         type: recordType
       }
     })
@@ -175,6 +174,12 @@ const RecordActionButtons = () => {
     }
 
     setButtonBoard('main')
+  }
+
+  const updateIssuedDb = async () => {
+    if (issueUpdated) {
+      // Remove recently added issues
+    }
   }
 
   const handleClick = ({name}) => {
@@ -241,6 +246,7 @@ const RecordActionButtons = () => {
       case 'cancel':
         setButtonBoard('main')
         dispatch(enableRecordEdit(true))
+        updateIssuedDb()
         dispatch(previousRecord(temporaryRecordState))
         break
       default:

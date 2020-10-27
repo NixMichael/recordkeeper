@@ -88,9 +88,10 @@ export const newRecord = (newJobNumber, recordType, sequenceNumber) => {
   })
 }
 
-export const newRecordSubmitted = () => {
+export const newRecordSubmitted = (count) => {
   return ({
-    type: 'NEW_RECORD_SUBMITTED'
+    type: 'NEW_RECORD_SUBMITTED',
+    payload: count
   })
 }
 

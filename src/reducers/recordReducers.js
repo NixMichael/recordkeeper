@@ -91,11 +91,11 @@ export const updateCurrentRecordReducer = (state = {
         recordType: action.payload[1]
       }
     case 'NEW_RECORD_SUBMITTED':
-      console.log(state.recordCount)
+      console.log('Current recordCount:', state.recordCount)
       return {
         ...state,
         readOnly: true,
-        recordCount: state.recordCount + 1
+        recordCount: action.payload
       }
     case 'SEARCH_BY_JOB_NUMBER':
       return {

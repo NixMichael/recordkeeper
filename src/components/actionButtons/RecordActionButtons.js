@@ -8,35 +8,44 @@ const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
   const { loading, recordCount, recordType, sequenceNumber, jobNumber, record } = currentRec
-  // const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, photographer, designer } = record
+  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
   const lastRec = recordCount - 1
 
-  if (record) {
-    var { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
-  }
+  // if (record) {
+  //   var { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
+  // }
 
-  // Component state
+  // ******** Component state ********
+
   const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
 
   const [buttonBoard, setButtonBoard] = useState('main')
 
   const [temporaryRecordState, setTemporaryRecordState] = useState([currentRec])
 
-  ////////////////////////////////////////
+  //  ********************************
 
   useEffect(() => {
   // set currentRecordNumber value to the last record only on first load
   // (when finished loading and it's NaN and not 0)
+  console.log('refresh:', lastRec)
 
-  if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
+  // if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
+  if (currentRecordNumber === -1) {
     setCurrentRecordNumber(lastRec)
-    setTemporaryRecordState(currentRec)
+    // setTemporaryRecordState(currentRec)
+  } else {
+    console.log('currentRecordNumber now:', currentRecordNumber)
   }
-},[loading, currentRecordNumber, currentRec, lastRec, record])
+
+},[loading, currentRecordNumber, lastRec, record])
   
   const dispatch = useDispatch()
 
   const nextRecord = (direction) => {
+
+    console.log('currentRecordNumber on clicking back:', currentRecordNumber, 'and recordCount: ', recordCount)
+  
     let next = 0
 
     if (recordCount > 0) {
@@ -58,9 +67,11 @@ const RecordActionButtons = () => {
           next = 0
           setCurrentRecordNumber(0)
         }
+        console.log('new next', next)
       }
 
       dispatch(fetchRecord('nextrec', next)) // pass in the record index number here
+      console.log(currentRecordNumber)
     }
   }
 
@@ -94,7 +105,7 @@ const RecordActionButtons = () => {
   }
 
   const submitNewRecord = async () => {
-    await axios({
+    const newRecordCount = await axios({
       method: 'post',
       url: 'http://localhost:3004/',
       headers: {'Content-Type': 'application/json'},
@@ -118,13 +129,37 @@ const RecordActionButtons = () => {
       // readOnly: true
       
     })
-    dispatch(newRecordSubmitted())
-    setCurrentRecordNumber(lastRec)
-    console.log('What is lastRec?', lastRec)
+    console.log('What is currentRecordNumber? A', currentRecordNumber)
+    await dispatch(newRecordSubmitted(newRecordCount.data))
+    await setCurrentRecordNumber(newRecordCount.data - 1)
+    console.log('What is currentRecordNumber? B', currentRecordNumber)
+  }
+
+  const editRecord = () => {
+    axios({
+      method: 'put',
+      url: 'http://localhost:3004/editrecord',
+      headers: { 'Content-Type': 'application/json'},
+      data: {
+        job: jobNumber,
+        permission: permission,
+        requestedBy: referrer,
+        department: department,
+        hospitalNumber: hospitalnumber,
+        patientSurname: patientsurname,
+        patientForename: patientforename,
+        description: description,
+        category: category,
+        photographer: user,
+        designer: user,
+        issues: [],
+        type: recordType
+      }
+    })
   }
 
   const deleteRecord = async () => {
-    const job = record.jobnumber
+    const job = jobNumber
     await axios({
       method: 'delete',
       url: 'http://localhost:3004/deleterecord',
@@ -174,9 +209,15 @@ const RecordActionButtons = () => {
         setButtonBoard('deleteRecord')
         break
       case 'save':
+        console.log('buttonBoard is:', buttonBoard)
         switch (buttonBoard) {
           case 'submitNewRecord':
             submitNewRecord()
+            dispatch(enableRecordEdit(true))
+            break
+          case 'editRecord':
+            editRecord()
+            dispatch(enableRecordEdit(true))
             break
           case 'deleteRecord':
             deleteRecord()

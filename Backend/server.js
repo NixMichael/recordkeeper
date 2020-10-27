@@ -94,8 +94,6 @@ app.post('/newcategory', async (req,res) => {
 app.post('/', async (req, res) => {
     const { seqNum, day, job, permission, requestedBy, department, hospitalNumber, patientSurname, patientForename, description, user, issues, type, category } = req.body
 
-    console.log('arrived')
-
     let countTotal;
 
     await db('index')
@@ -123,7 +121,6 @@ app.post('/', async (req, res) => {
             description: description,
             photographer: user
         })
-        res.send(countTotal)
     } else if (type === 't') {
       await db('techjobs')
         .returning('*')
@@ -134,10 +131,8 @@ app.post('/', async (req, res) => {
             quantity: 1,
             designer: user
         })
-
-        res.send(countTotal)
       }
-
+    res.send(countTotal)
     if (issues.length > 0) {
         db('issued')
         .insert({
@@ -189,6 +184,8 @@ app.delete('/deleteissued', async (req,res) => {
 app.put('/editrecord', async (req, res) => {
 
     const { job, permission, requestedBy, hospitalNumber, patientSurname, patientForename, description, photographer, department, type, category, designer} = req.body
+
+    console.log(job, type, requestedBy)
 
     await db('index').where('jobnumber', job)
       .update({

@@ -160,9 +160,9 @@ app.post('/addissued', async (req,res) => {
         cost: cost
     })
 
-    await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
+    const updatedIssues = await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
     //     .then((updatedIssues) => {
-    //         res.status(200).json(updatedIssues)
+    res.status(200).json(updatedIssues)
     //     })
     //     .catch(err => console.log('Error', err))
     // })
@@ -173,9 +173,9 @@ app.delete('/deleteissued', async (req,res) => {
   const {id, jobnumber} = req.body
 
   await db('issued').where('id', id).del()
-  await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
+  const updatedIssues = await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
       // .then(updatedIssues => {
-      //     res.status(200).json(updatedIssues)
+  res.status(200).json(updatedIssues)
       // })
       // .catch(err => console.log(err))
   // })
@@ -319,7 +319,7 @@ const getRecord = async (order, id, res) => {
   }
 
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
-  data[2] = issued[0]
+  data[2] = issued
 
   res.send(data)
 }

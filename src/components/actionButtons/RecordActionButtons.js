@@ -200,6 +200,7 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'editRecord':
+        console.log('CURRENT RECORD:', currentRec)
         setTemporaryRecordState(currentRec)
         setButtonBoard('editRecord')
         dispatch(enableRecordEdit(false))

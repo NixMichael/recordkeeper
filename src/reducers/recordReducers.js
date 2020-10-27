@@ -14,6 +14,7 @@ export const updateCurrentRecordReducer = (state = {
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
       const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
+      console.log('issues:', action.payload)
       return {
         loading: false,
         readOnly: true,
@@ -36,7 +37,8 @@ export const updateCurrentRecordReducer = (state = {
           designer: action.payload[1].designer,
           quantity: action.payload[1].quantity,
           department: action.payload[3], 
-          referrer: action.payload[4]
+          referrer: action.payload[4],
+          issues: action.payload[2]
         },
         // department: action.payload[3], 
         // referrer: action.payload[4],

@@ -1,48 +1,48 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import '../styles/issuesStyles.scss'
 
 const Issues = () => {
 
   const currentRec = useSelector(state => state.currentRec)
-  const { readOnly } = currentRec
+  const { readOnly, jobNumber, record } = currentRec
+  const { issues } = record
 
-  const issueResults = [
-    {
-      id: 1,
-      jobnumber: '20100210',
-      type: 'pacs',
-      date: '02-10-2020',
-      notes: 'no notes',
-      qty: 2,
-      cost: 3.50
-    },
-    {
-      id: 2,
-      jobnumber: '20100211',
-      type: 'pacs',
-      date: '03-10-2020',
-      notes: 'note note note',
-      qty: 1,
-      cost: 3.50
-    },
-    {
-      id: 3,
-      jobnumber: '20100210',
-      type: 'pacs',
-      date: '02-10-2020',
-      notes: 'no notes',
-      qty: 2,
-      cost: 3.50
-    }
-  ]
+  const [issueList, setIssueList] = useState(issues)
 
-  const handleClick = ({ name, value }) => {
-    console.log('handled')
+  const addIssue = async ({name}) => {
+    const note = prompt('Add a note:')
+    const quantity = prompt('Quantity:')
+
+    const newIssueList = await axios({
+      method: 'post',
+      url: 'http://localhost:3004/addissued',
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        jobnumber: jobNumber,
+        type: name,
+        date: new Date().getDate(),
+        notes: note,
+        qty: quantity,
+        cost: '12'
+      }
+    })
+
+    console.log(newIssueList.data)
+    setIssueList(newIssueList.data)
   }
 
-  const deleteIssue = (e, id, jobnumber) => {
-    console.log('delete issue')
+  const deleteIssue = async (id, jobnumber) => {
+    const newIssueList = await axios({
+      method: 'delete',
+      url: 'http://localhost:3004/deleteissued',
+      headers: { 'Content-Type': 'application/json'},
+      data: { id, jobnumber }
+    })
+
+    setIssueList(newIssueList.data)
+    
   }
 
   return (
@@ -50,24 +50,24 @@ const Issues = () => {
       <div>
         <h5>Add New Issue:</h5>
         <div>
-          <button className="issued-button" name='pacs' disabled={readOnly} onClick={(e) => handleClick(e.target)}>PACS</button>
+          <button className="issued-button" name='PACS' disabled={readOnly} onClick={(e) => addIssue(e.target)}>PACS</button>
           
-          <button className="issued-button" id="printDelivered" name="printDelivered" disabled={readOnly} onClick={(e) => handleClick(e.target)}>Delivered</button>
+          <button className="issued-button" id="printDelivered" name="PRTD" disabled={readOnly} onClick={(e) => addIssue(e.target)}>Delivered</button>
           
-          <button className="issued-button" id="printCollected" name="printCollected" disabled={readOnly} onClick={(e) => handleClick(e.target)}>Collected</button>
+          <button className="issued-button" id="printCollected" name="PRTC" disabled={readOnly} onClick={(e) => addIssue(e.target)}>Collected</button>
 
-          <button className="issued-button" id="other" name="other" disabled={readOnly} onClick={(e) => handleClick(e.target)}>Other</button>
+          <button className="issued-button" id="other" name="OTHR" disabled={readOnly} onClick={(e) => addIssue(e.target)}>Other</button>
         </div>
 
       </div>
 
       <div className="issued-events">
-      { issueResults.length === 0 ?
+      { issues.length === 0 ?
         <p>NO PREVIOUS ISSUES</p>
       :
       <>
       {
-        issueResults.map(issue => {
+        issueList.map(issue => {
           let fullType = issue.type === 'PACS' ? 'PACS' : issue.type === 'PRTD' ? 'Print Delivered' : issue.type === 'PRTC' ? 'Print Collected' : 'Other'
           return (
             <div key={issue.id}>
@@ -76,7 +76,7 @@ const Issues = () => {
               <p>{issue.notes}</p>
               <p>{issue.qty}</p>
               <p>{issue.cost}</p>
-              <div className='delete-issue-button' disabled={readOnly} onClick={(e) => deleteIssue(e.target, issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
+              <div className='delete-issue-button' onClick={(e) => !readOnly && deleteIssue(issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
             </div>
           )
         })

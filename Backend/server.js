@@ -168,7 +168,7 @@ app.post('/addissued', async (req,res) => {
     // })
 })
 
-app.delete('/deleteissued', async (req,res) => {
+app.delete('/deleteissued', async (req, res) => {
 
   const {id, jobnumber} = req.body
 
@@ -179,6 +179,18 @@ app.delete('/deleteissued', async (req,res) => {
       // })
       // .catch(err => console.log(err))
   // })
+})
+
+app.delete('/deletenewissues', async (req, res) => {
+  const { jobnumber, count } = req.body
+  console.log('delete new issues:', jobnumber, count)
+
+  const result = await db.select('*').from('issued').where('jobnumber', jobnumber).orderBy('id', 'desc').limit(count)
+
+  result.map(async (issue) => {
+    const id = issue.id
+    await db.select('*').from('issued').where('id', id).del()
+  })
 })
 
 app.put('/editrecord', async (req, res) => {
@@ -320,6 +332,8 @@ const getRecord = async (order, id, res) => {
 
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
   data[2] = issued
+
+  console.log(issued)
 
   res.send(data)
 }

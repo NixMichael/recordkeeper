@@ -1,20 +1,24 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../styles/issuesStyles.scss'
 import { updateIssueList } from '../actions/recordActions'
 
 const Issues = () => {
 
+  
   const dispatch = useDispatch()
-
+  
   const currentRec = useSelector(state => state.currentRec)
-  const { readOnly, jobNumber, recordType, record } = currentRec
+  const { readOnly, jobNumber, recordType, newIssues, record } = currentRec
   const { issues, category } = record
 
-  const [issueList, setIssueList] = useState(issues)
+  useEffect(() => {
+    console.log('reload::now value changed!?', newIssues)
+  }, [newIssues])
 
   const addIssue = async ({name}) => {
+    console.log('new issues should be 0:', newIssues)
     let note = name !== 'PACS' ? prompt('Enter a note for this issue:') : 'Patient Record'
     let quantity = 1
     let totalCost = 25
@@ -50,8 +54,8 @@ const Issues = () => {
         cost: totalCost
       }
     })
-    setIssueList(newIssueList.data)
-    dispatch(updateIssueList(newIssueList.data))
+
+    await dispatch(updateIssueList(newIssueList.data))
   }
 
   const deleteIssue = async (id, jobnumber) => {
@@ -62,7 +66,6 @@ const Issues = () => {
       data: { id, jobnumber }
     })
 
-    setIssueList(newIssueList.data)
     dispatch(updateIssueList(newIssueList.data))
   }
 
@@ -88,7 +91,7 @@ const Issues = () => {
       :
       <>
       {
-        issueList.map(issue => {
+        issues.map(issue => {
           let fullType = issue.type === 'PACS' ? 'PACS' : issue.type === 'PRTD' ? 'Print Delivered' : issue.type === 'PRTC' ? 'Print Collected' : 'Other'
           return (
             <div key={issue.id}>

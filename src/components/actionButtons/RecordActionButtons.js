@@ -7,8 +7,8 @@ import { fetchRecord, enableRecordEdit, newRecord, newRecordSubmitted, previousR
 const RecordActionButtons = () => {
   
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordCount, recordType, sequenceNumber, jobNumber, record, issueUpdated } = currentRec
-  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
+ const { loading, recordCount, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
+  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user, issues } = record
   const lastRec = recordCount - 1
 
   // if (record) {
@@ -176,10 +176,16 @@ const RecordActionButtons = () => {
     setButtonBoard('main')
   }
 
-  const updateIssuedDb = async () => {
-    if (issueUpdated) {
-      // Remove recently added issues
-    }
+  const updateIssuedDb = async (jb, issueCount) => {
+    console.log('wtf?', jobNumber, newIssues, issues)
+    const jobnumber = jobNumber
+    const count = newIssues
+      await axios({
+        method: 'delete',
+        url: 'http://localhost:3004/deletenewissues',
+        headers: { 'Content-Type': 'application/json'},
+        data: { jobnumber, count }
+      })
   }
 
   const handleClick = ({name}) => {
@@ -205,7 +211,7 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'editRecord':
-        console.log('CURRENT RECORD:', currentRec)
+        console.log('CURRENT RECORD:', currentRec, 'newIssues 0?:', newIssues)
         setTemporaryRecordState(currentRec)
         setButtonBoard('editRecord')
         dispatch(enableRecordEdit(false))
@@ -244,10 +250,10 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'cancel':
-        setButtonBoard('main')
+        updateIssuedDb(newIssues)
         dispatch(enableRecordEdit(true))
-        updateIssuedDb()
         dispatch(previousRecord(temporaryRecordState))
+        setButtonBoard('main')
         break
       default:
         alert('error: record action button dispatch not triggered')

@@ -14,7 +14,7 @@ export const updateCurrentRecordReducer = (state = {
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
       const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
-      console.log('issues:', action.payload)
+      console.log('issues:', action.payload[2])
       return {
         loading: false,
         readOnly: true,
@@ -53,7 +53,9 @@ export const updateCurrentRecordReducer = (state = {
     case 'ENABLE_RECORD_EDIT':
       return {
         ...state,
-        readOnly: action.payload
+        readOnly: action.payload,
+        newIssues: 0,
+        record: { ...state.record }
       }
         // ...state,
         // record: action.payload[1],
@@ -75,9 +77,10 @@ export const updateCurrentRecordReducer = (state = {
         }
       }
     case 'UPDATED_ISSUE_LIST':
+      console.log('recordReducer: newIssues count:', state.record.newIssues)
       return {
-        ...state,
-        record: { ...state.record, issueUpdate: true, issues: action.payload}
+        ...state, newIssues: state.newIssues + 1,
+        record: { ...state.record, issues: action.payload }
       }
     case 'NEW_RECORD':
       return {
@@ -93,6 +96,7 @@ export const updateCurrentRecordReducer = (state = {
           department: '--Please Select--',
           referrer: '--Please Select--',
           category: '--Please Select--',
+          issues: [],
           quantity: 0,
         },
         recordType: action.payload[1]

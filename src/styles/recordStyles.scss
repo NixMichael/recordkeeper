@@ -1,15 +1,13 @@
 .record-fields-container {
   height: 440px;
+  width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .record-fields-background {
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-  width: 90vw;
+  width: 1200px;
   margin: auto;
   background-color: var(--feature-element-color);
   min-height: 420px;
@@ -66,6 +64,7 @@
 
 .record-title {
   width: 90%;
+  min-width: 1200px;
   font-size: 2rem;
   color: white;
   margin: 1rem auto 0.5rem;
@@ -103,7 +102,6 @@ select:disabled {
 
 // Issues
 .issued {
-  // min-height: 100%;
   max-height: 200px;
   background: rgba(0,0,0,0.2);
   padding: 1rem;
@@ -132,7 +130,7 @@ select:disabled {
 }
 
 .issued-section {
-  width: 50%;
+  width: 55%;
 }
 
 .issued-events {

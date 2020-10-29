@@ -71,10 +71,15 @@
   border-bottom: 1px solid white;
 }
 
+#description label {
+  margin-top: 0.5rem;
+}
+
 textarea {
   width: 350px;
-  height: 160px;
+  height: 165px;
   resize: none;
+  margin-top: 5px;
   padding: 5px 8px;
 }
 
@@ -141,16 +146,36 @@ select:disabled {
     display: flex;
     justify-content: space-around;
     align-items: center;
+
+    &:nth-child(2n) {
+      background: rgba(255,255,255,0.2);
+    }
+
     &:nth-child(2n + 1) {
       background: rgba(255,255,255,0.1);
     }
 
     p {
-      max-width: 12%;
+      width: 12%;
+      margin: 0.5rem 0;
+      padding: 0;
+
+      &:first-child {
+        width: 20%;
+      }
 
       &:nth-child(3) {
-        max-width: 15%;
+        text-align: center;
+        width: 35%;
       }
+
+      &:nth-child(4) {
+        width: 5%;
+      }
+    }
+
+    div {
+      width: 5%;
     }
 
     .delete-issue-button {

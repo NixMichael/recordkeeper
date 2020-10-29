@@ -24,7 +24,7 @@ const SearchScreen = () => {
           </div>
         }
       </div>
-      <RecordActionButtons />
+      <RecordActionButtons buttonOption='return'/>
     </>
   )
 }

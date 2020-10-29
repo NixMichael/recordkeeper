@@ -5,11 +5,11 @@ import '../../styles/buttonStyles.scss'
 import { fetchRecord, enableRecordEdit, newRecord, newRecordSubmitted, previousRecord } from '../../actions/recordActions'
 import { chooseRoute } from '../../actions/routeActions'
 
-const RecordActionButtons = () => {
+const RecordActionButtons = ({buttonOption}) => {
   
   const currentRec = useSelector(state => state.currentRec)
- const { loading, recordCount, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
-  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user, issues } = record
+ const { recordCount, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
+  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
   const lastRec = recordCount - 1
 
   // if (record) {
@@ -181,6 +181,8 @@ const RecordActionButtons = () => {
 
   const handleClick = ({name}) => {
 
+    console.log(buttonBoard)
+
     switch (name) {
       case 'firstRecord':
         setCurrentRecordNumber(0)
@@ -242,28 +244,37 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'cancel':
+        setButtonBoard('main')
         updateIssuedDb()
         dispatch(enableRecordEdit(true))
         dispatch(previousRecord(temporaryRecordState)) // revert back to most recently viewed record
-        setButtonBoard('main')
         break
       case 'cancelSearch':
+        dispatch(chooseRoute('browseRecords'))
         setButtonBoard('main')
         break
       case 'patientSearch':
         dispatch(chooseRoute('patientSearch'))
         break
-        case 'techSearch':
-          dispatch(chooseRoute('techSearch'))
-          break
+      case 'techSearch':
+        dispatch(chooseRoute('techSearch'))
+        break
       default:
         alert('error: record action button dispatch not triggered')
     }
+
+    console.log(buttonBoard)
   }
 
   return (
     <div className='record-buttons'>
-    {buttonBoard === 'main' ?
+    {
+    buttonOption === 'return' ?
+      <>
+        <button className='record-button' name='cancelSearch' onClick={(e) => handleClick(e.target)}>Return to Records</button>
+      </>
+      :
+    buttonBoard === 'main' ?
       <>
         <button className='record-button' name='firstRecord' onClick={(e) => handleClick(e.target)}>{`|<`}</button>
         <button className='record-button' name='previousRecord' onClick={(e) => handleClick(e.target)}>{`<`}</button>

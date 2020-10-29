@@ -28,23 +28,18 @@ const RecordActionButtons = () => {
   useEffect(() => {
   // set currentRecordNumber value to the last record only on first load
   // (when finished loading and it's NaN and not 0)
-  console.log('refresh:', lastRec)
 
   // if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
   if (currentRecordNumber === -1) {
     setCurrentRecordNumber(lastRec)
     // setTemporaryRecordState(currentRec)
-  } else {
-    console.log('currentRecordNumber now:', currentRecordNumber)
   }
 
-},[loading, currentRecordNumber, lastRec, record])
+},[currentRecordNumber, lastRec])
   
   const dispatch = useDispatch()
 
   const nextRecord = (direction) => {
-
-    console.log('currentRecordNumber on clicking back:', currentRecordNumber, 'and recordCount: ', recordCount)
   
     let next = 0
 
@@ -67,11 +62,9 @@ const RecordActionButtons = () => {
           next = 0
           setCurrentRecordNumber(0)
         }
-        console.log('new next', next)
       }
 
       dispatch(fetchRecord('nextrec', next)) // pass in the record index number here
-      console.log(currentRecordNumber)
     }
   }
 
@@ -129,10 +122,8 @@ const RecordActionButtons = () => {
       // readOnly: true
       
     })
-    console.log('What is currentRecordNumber? A', currentRecordNumber)
     await dispatch(newRecordSubmitted(newRecordCount.data))
     await setCurrentRecordNumber(newRecordCount.data - 1)
-    console.log('What is currentRecordNumber? B', currentRecordNumber)
   }
 
   const editRecord = () => {
@@ -176,8 +167,7 @@ const RecordActionButtons = () => {
     setButtonBoard('main')
   }
 
-  const updateIssuedDb = async (jb, issueCount) => {
-    console.log('wtf?', jobNumber, newIssues, issues)
+  const updateIssuedDb = async () => {
     const jobnumber = jobNumber
     const count = newIssues
       await axios({
@@ -211,7 +201,6 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'editRecord':
-        console.log('CURRENT RECORD:', currentRec, 'newIssues 0?:', newIssues)
         setTemporaryRecordState(currentRec)
         setButtonBoard('editRecord')
         dispatch(enableRecordEdit(false))
@@ -221,7 +210,6 @@ const RecordActionButtons = () => {
         setButtonBoard('deleteRecord')
         break
       case 'save':
-        console.log('buttonBoard is:', buttonBoard)
         switch (buttonBoard) {
           case 'submitNewRecord':
             submitNewRecord()
@@ -250,9 +238,9 @@ const RecordActionButtons = () => {
         dispatch(enableRecordEdit(false))
         break
       case 'cancel':
-        updateIssuedDb(newIssues)
+        updateIssuedDb()
         dispatch(enableRecordEdit(true))
-        dispatch(previousRecord(temporaryRecordState))
+        dispatch(previousRecord(temporaryRecordState)) // revert back to most recently viewed record
         setButtonBoard('main')
         break
       default:

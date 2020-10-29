@@ -183,7 +183,6 @@ app.delete('/deleteissued', async (req, res) => {
 
 app.delete('/deletenewissues', async (req, res) => {
   const { jobnumber, count } = req.body
-  console.log('delete new issues:', jobnumber, count)
 
   const result = await db.select('*').from('issued').where('jobnumber', jobnumber).orderBy('id', 'desc').limit(count)
 
@@ -196,8 +195,6 @@ app.delete('/deletenewissues', async (req, res) => {
 app.put('/editrecord', async (req, res) => {
 
     const { job, permission, requestedBy, hospitalNumber, patientSurname, patientForename, description, photographer, department, type, category, designer} = req.body
-
-    console.log(job, type, requestedBy)
 
     await db('index').where('jobnumber', job)
       .update({

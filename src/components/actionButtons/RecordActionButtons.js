@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
 import { fetchRecord, enableRecordEdit, newRecord, newRecordSubmitted, previousRecord } from '../../actions/recordActions'
+import { chooseRoute } from '../../actions/routeActions'
 
 const RecordActionButtons = () => {
   
@@ -209,6 +210,9 @@ const RecordActionButtons = () => {
         setTemporaryRecordState(currentRec)
         setButtonBoard('deleteRecord')
         break
+      case 'search':
+        setButtonBoard('search')
+        break
       case 'save':
         switch (buttonBoard) {
           case 'submitNewRecord':
@@ -243,6 +247,15 @@ const RecordActionButtons = () => {
         dispatch(previousRecord(temporaryRecordState)) // revert back to most recently viewed record
         setButtonBoard('main')
         break
+      case 'cancelSearch':
+        setButtonBoard('main')
+        break
+      case 'patientSearch':
+        dispatch(chooseRoute('patientSearch'))
+        break
+        case 'techSearch':
+          dispatch(chooseRoute('techSearch'))
+          break
       default:
         alert('error: record action button dispatch not triggered')
     }
@@ -266,6 +279,12 @@ const RecordActionButtons = () => {
         <button className='record-button' name='createPatientRecord' onClick={(e) => handleClick(e.target)}>Patient</button>
         <button className='record-button' name='createTechRecord' onClick={(e) => handleClick(e.target)}>Tech</button>
         <button className='record-button' name='cancel' onClick={(e) => handleClick(e.target)}>Cancel</button>
+      </>
+    : buttonBoard === 'search' ?
+      <>
+        <button className='record-button' name='patientSearch' onClick={(e) => handleClick(e.target)}>Search Patient Jobs</button>
+        <button className='record-button' name='techSearch' onClick={(e) => handleClick(e.target)}>Search Tech Jobs</button>
+        <button className='record-button' name='cancelSearch' onClick={(e) => handleClick(e.target)}>Cancel</button>
       </>
     :
       <>

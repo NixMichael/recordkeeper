@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Navigation from '../components/Navigation'
 import BrowseRecords from './BrowseRecords'
+import SearchScreen from './SearchScreen'
 import Admin from './Admin'
 import Reports from './Reports'
 
@@ -17,6 +18,8 @@ const MainApp = () => {
         <BrowseRecords />
         : screenRoute === 'admin' ?
         <Admin />
+        : screenRoute === 'patientSearch' || screenRoute === 'techSearch' ?
+        <SearchScreen />
         :
         <Reports />
       }

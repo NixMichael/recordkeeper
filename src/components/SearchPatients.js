@@ -6,6 +6,7 @@ const SearchPatients = () => {
 
   
   const [ searchResult, setSearchResult] = useState([])
+  const [ searchReturned, setSearchReturned ] = useState(false)
   
   const [searchCriteria, setSearchCriteria] = useState({ 
     permission: '', 
@@ -24,29 +25,27 @@ const SearchPatients = () => {
   
   const search = async () => {
 
-    let curDate
+    const { department, user, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo } = searchCriteria
+
+    let dateA = dateFrom
+    let dateB = dateTo
 
     if (!searchCriteria.dateFrom) {
-      console.log('no date here')
-      await setSearchCriteria({...searchCriteria, [searchCriteria.dateFrom]: '01-01-2000'})
+      dateA = '01-01-2000'
     }
 
     if (!searchCriteria.dateTo) {
-      console.log('no date here')
       let year = new Date().getFullYear().toString();
       let month = new Date().getMonth() + 1;
       let day = new Date().getDate();
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      curDate = `${day}-${month}-${year}`
-
-      await setSearchCriteria({...searchCriteria, [searchCriteria.dateTo]: curDate})
+      let curDate = `${day}-${month}-${year}`
+      
+      dateB = curDate
     }
 
-    const { department, user, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo } = searchCriteria
-
-    console.log(searchCriteria)
 
     const searchQueries = {
       type: 'p',
@@ -58,8 +57,8 @@ const SearchPatients = () => {
       patientSurname: patientSurname,
       referrer: referrer,
       description: description,
-      dateFrom: '01-01-2000',
-      dateTo: curDate
+      dateFrom: dateA,
+      dateTo: dateB
     }
 
     const result = await axios({
@@ -68,9 +67,9 @@ const SearchPatients = () => {
         headers: {'Content-Type': 'application/json'},
         data: searchQueries
     })
-      console.log(result.data)
-      setSearchResult(result.data)
-        // setSearchCriteria(true)
+
+    setSearchResult(result.data)
+    setSearchReturned(true)
   }
 
   const reset = () => {
@@ -88,6 +87,7 @@ const SearchPatients = () => {
         returned: false,
         dates: []
       })
+      setSearchReturned(false)
   }
 
   const handleChange = (event) => {
@@ -131,8 +131,8 @@ const SearchPatients = () => {
                 <input className="shortInput" type="text" id="dateTo" name="dateTo" placeholder="DD-MM-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
                 </label>
             <div className="search__buttons">
-                <button className="button search-button feature-button" onClick={search}>Search</button>
-                <button className="button search-button feature-button" onClick={reset}>Reset</button>
+                <button className="record-button search-button" onClick={search}>Search</button>
+                <button className="record-button search-button" onClick={reset}>Reset</button>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@ const SearchPatients = () => {
             <p className="shortResult">DATE</p>
         </div>  
         <div className="resultContent">
-        {(!searchResult.returned) ?
+        {(searchReturned) ?
             searchResult.map(record => {
 
                 return (

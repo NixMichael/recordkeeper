@@ -4,7 +4,6 @@ import '../styles/searchScreenStyles.scss'
 
 const SearchPatients = () => {
 
-  
   const [ searchResult, setSearchResult] = useState([])
   const [ searchReturned, setSearchReturned ] = useState(false)
   
@@ -99,7 +98,7 @@ const SearchPatients = () => {
       })
 
       if (event.keyCode === '13') {
-          this.search('p')
+          this.search()
       }
   }
 
@@ -136,18 +135,18 @@ const SearchPatients = () => {
             </div>
         </div>
     </div>
-    <div className="returnedResultsPatient">
+    <div className="returnedResults">
         <div className="resultTitles">
-            <p className="shorterResult">JOB NO</p>
-            <p className="shortResult">REFERRER</p>
-            <p className="longResult">DEPTARTMENT</p>
-            <p className="shortResult">PERMISSION</p>
-            <p className="shorterResult">RBV</p>
-            <p className="shortResult">SURNAME</p>
-            <p className="shortResult">FORENAME</p>
-            <p className="longResult">DESCRIPTION</p>
-            <p className="shortResult">PHOTOGRAPHER</p>
-            <p className="shortResult">DATE</p>
+            <p className="patientResult shorterResult">JOB NO</p>
+            <p className="patientResult shortResult">REFERRER</p>
+            <p className="patientResult longResult">DEPARTMENT</p>
+            <p className="patientResult shortResult">PERMISSION</p>
+            <p className="patientResult shortResult">RBV</p>
+            <p className="patientResult shortResult">SURNAME</p>
+            <p className="patientResult shortResult">FORENAME</p>
+            <p className="patientResult longerResult">DESCRIPTION</p>
+            <p className="patientResult shortResult">PHOTOGRAPHER</p>
+            <p className="patientResult shortResult">DATE</p>
         </div>  
         <div className="resultContent">
         {(searchReturned) ?
@@ -155,16 +154,16 @@ const SearchPatients = () => {
 
                 return (
                     <div className="resultRows" key={record.id}>
-                        <p className="shorterResult">{record.jobnumber}</p>
-                        <p className="shortResult">{record.requestedby}</p>
-                        <p className="longResult">{record.department}</p>
-                        <p className="shortResult">{record.permission}</p>
-                        <p className="shorterResult">{record.hospitalnumber}</p>
-                        <p className="shortResult">{record.patientsurname}</p>
-                        <p className="shortResult">{record.patientforename}</p>
-                        <p className="longResult">{record.description}</p>
-                        <p className="shortResult">{record.photographer}</p>
-                        <p className="shortResult">{record.to_char}</p>
+                        <p className="patientResult shorterResult">{record.jobnumber}</p>
+                        <p className="patientResult shortResult">{record.requestedby}</p>
+                        <p className="patientResult longResult">{record.department}</p>
+                        <p className="patientResult shortResult">{record.permission}</p>
+                        <p className="patientResult shortResult">{record.hospitalnumber}</p>
+                        <p className="patientResult shortResult">{record.patientsurname}</p>
+                        <p className="patientResult shortResult">{record.patientforename}</p>
+                        <p className="patientResult longerResult">{record.description}</p>
+                        <p className="patientResult shortResult">{record.photographer}</p>
+                        <p className="patientResult shortResult">{record.to_char}</p>
                     </div>
                         )
                     })

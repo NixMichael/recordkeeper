@@ -126,7 +126,7 @@ const SearchPatients = () => {
         <div className="searchBoxes">
             <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>
             <label>Date Range: <input className="shortInput" type="text" id="dateFrom" name="dateFrom" placeholder="DD-MM-YYYY" value={searchCriteria.dateFrom} onChange={(e) => handleChange(e.target)}/>
-                <span>-</span>
+                <span> to </span>
                 <input className="shortInput" type="text" id="dateTo" name="dateTo" placeholder="DD-MM-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
                 </label>
             <div className="search__buttons">
@@ -168,7 +168,7 @@ const SearchPatients = () => {
                         )
                     })
                     :    
-                    <p className="techResults">Results display here...</p>
+                    <p className="search-noResults">Results display here...</p>
                 }
                 </div>
     </div>

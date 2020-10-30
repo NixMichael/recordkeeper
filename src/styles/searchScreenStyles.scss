@@ -65,7 +65,10 @@
     overflow-x: hidden;
 
     .resultRows {
-      padding: 0 1rem;
+      padding: 0.5rem 1rem 0;
+      &:last-child {
+        border-bottom: 0;
+      }
     }
   }
 
@@ -102,11 +105,11 @@
     &:nth-child(6) {
       width: 15%;
     }
-    &:last-child {
-      border-bottom: 0;
-      background: red;
-    }
   }
+}
+
+.search-noResults {
+  margin: 1rem;
 }
 
   // .shorterResult {

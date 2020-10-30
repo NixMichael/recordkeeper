@@ -91,8 +91,17 @@ label {
 }
 
 input, select {
-  min-width: 120px;
-  max-width: 200px;
+  width: 200px;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+select {
+  background: url('../images/dropDownBG.png') 90% / 60% no-repeat #fff;
 }
 
 .input-text-number {
@@ -100,12 +109,16 @@ input, select {
   text-align: center;
 }
 
-input:disabled {
-  color: rgb(255, 255, 255);
+input:disabled, textarea:disabled {
+  color: black;
 }
 
 select:disabled {
-  color: rgb(135, 135, 135);
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  color: rgb(0, 0, 0);
 }
 
 // Issues

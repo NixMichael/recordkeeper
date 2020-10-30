@@ -229,8 +229,6 @@ app.put('/editrecord', async (req, res) => {
 app.delete('/deleterecord', async (req, res) => {
     const {job,recordType} = req.body
 
-    console.log('DELETION INITIATED', job, recordType)
-
     await db('index').where('jobnumber', job).del()
     await db('issued').where('jobnumber', job).del()
 
@@ -329,8 +327,6 @@ const getRecord = async (order, id, res) => {
 
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
   data[2] = issued
-
-  console.log(issued)
 
   res.send(data)
 }

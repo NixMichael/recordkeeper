@@ -46,15 +46,18 @@
 // }
 
 .returnedResults {
-    & > div {
-      // padding: 0 1rem;
-    }
   .resultTitles {
     padding: 0 1rem;
     background: rgba(0, 0, 20, 0.4);
+    p {
+      margin: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
   }
   .resultTitles, .resultContent .resultRows {
     display: flex;
+    align-items: center;
     width: 100%;
     border-bottom: 1px solid white;
   }

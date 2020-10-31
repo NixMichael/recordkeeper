@@ -8,7 +8,7 @@
 
 .record-fields-background {
   width: 1200px;
-  margin: auto;
+  margin: 3rem auto 0;
   background-color: var(--feature-element-color);
   min-height: 420px;
   position: relative;
@@ -67,12 +67,13 @@
 }
 
 .record-title {
-  width: 90%;
-  min-width: 1200px;
+  // width: 90%;
+  // min-width: 1200px;
   font-size: 2rem;
   color: white;
-  margin: 1rem auto 0.5rem;
-  border-bottom: 1px solid white;
+  margin-left: 2rem;
+  // margin: 1rem auto 0.5rem;
+  // border-bottom: 1px solid white;
 }
 
 #description label {

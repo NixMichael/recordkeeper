@@ -15,18 +15,12 @@ const BrowseRecords = () => {
   }, [dispatch])
 
   const currentRec = useSelector(state => state.currentRec)
-  const { loading, recordType } = currentRec
-
-  let recType
-
-  if (!loading) {
-    recType = recordType
-  }
+  const { recordType } = currentRec
 
   return (
     <>
-      <div className='record-title'>{recType === 'p' ? 'Patient Record' : 'Tech Record'}</div>
-      {recType === 'p' ?
+      {/* <div className='record-title'>{recordType === 'p' ? 'Patient Record' : 'Tech Record'}</div> */}
+      {recordType === 'p' ?
         <PatientRecord />
       :
         <TechRecord />

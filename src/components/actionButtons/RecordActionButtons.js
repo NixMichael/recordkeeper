@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/buttonStyles.scss'
 import { fetchRecord, updateRecordNumber, enableRecordEdit, newRecord, newRecordSubmitted, previousRecord } from '../../actions/recordActions'
@@ -8,50 +8,25 @@ import { chooseRoute } from '../../actions/routeActions'
 const RecordActionButtons = ({buttonOption}) => {
   
   const currentRec = useSelector(state => state.currentRec)
- const { loading, recordCount, currentRecordNumber, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
+ const { recordCount, currentRecordNumber, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
   const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
   const lastRec = recordCount - 1
 
   const dispatch = useDispatch()
 
   // ******** Component state ********
-
-  // const [currentRecordNumber, setCurrentRecordNumber] = useState(lastRec)
-
   const [buttonBoard, setButtonBoard] = useState('main')
-
   const [temporaryRecordState, setTemporaryRecordState] = useState([currentRec])
 
-  //  ********************************
-
-  useEffect(() => {
-  // set currentRecordNumber value to the last record only on first load
-  // (when finished loading and it's NaN and not 0)
-
-  // if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
-  // if (!loading && !currentRecordNumber && currentRecordNumber !== 0 ) {
-    // dispatch(updateRecordNumber(lastRec))
-    // setTemporaryRecordState(currentRec)
-  // }
-  if (!loading) {
-    console.log(currentRecordNumber)
-  }
-
-},[dispatch, currentRecordNumber, lastRec])
-  
-
   const nextRecord = async (direction) => {
-    console.log('CURRRRH', currentRecordNumber)
   
     let next = 0
 
     if (recordCount > 0) {
       if (direction === 'forward') {
         if (currentRecordNumber < lastRec) {
-          console.log('huhuhu')
           next = currentRecordNumber + 1
         } else if (currentRecordNumber === lastRec) {
-          console.log('yayaya')
           next = lastRec
         }
       }
@@ -62,7 +37,6 @@ const RecordActionButtons = ({buttonOption}) => {
         }
       }
       dispatch(fetchRecord('nextrec', next)) // pass in the record index number here
-      console.log('next:', next)
       dispatch(updateRecordNumber(next))
     }
   }
@@ -89,11 +63,6 @@ const RecordActionButtons = ({buttonOption}) => {
     let newJob = `${year}${month}${day}${count}`;
 
     dispatch(newRecord(newJob, recordType, seqNumber))
-
-    // this.setState({
-    //     jobNumReadOnly: true,
-    //     job: newJob
-    // })
   }
 
   const submitNewRecord = async () => {
@@ -117,9 +86,6 @@ const RecordActionButtons = ({buttonOption}) => {
         issues: [],
         type: recordType
       }
-      // }
-      // readOnly: true
-      
     })
     await dispatch(newRecordSubmitted(newRecordCount.data))
     await dispatch(updateRecordNumber(newRecordCount.data - 1))
@@ -159,7 +125,6 @@ const RecordActionButtons = ({buttonOption}) => {
     })
 
     if (recordCount > 1) {
-      // setCurrentRecordNumber(currentRecordNumber - 1)
       nextRecord('back')
     }
 
@@ -177,12 +142,12 @@ const RecordActionButtons = ({buttonOption}) => {
       })
   }
 
-  const handleClick = ({name}) => {
+  const handleClick = async ({name}) => {
 
     switch (name) {
       case 'firstRecord':
-        dispatch(updateRecordNumber(0))
         dispatch(fetchRecord('firstrec'))
+        dispatch(updateRecordNumber(0))
         break
       case 'lastRecord':
         dispatch(updateRecordNumber(lastRec))

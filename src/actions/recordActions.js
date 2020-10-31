@@ -1,5 +1,4 @@
 import axios from 'axios'
-import RecordActionButtons from '../components/actionButtons/RecordActionButtons'
 import {
   FETCH_RECORD_REQUEST,
   FETCH_RECORD_SUCCESS,

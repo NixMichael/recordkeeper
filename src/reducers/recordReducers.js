@@ -13,8 +13,12 @@ export const updateCurrentRecordReducer = (state = {
     case FETCH_RECORD_REQUEST:
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
+      // Set user to result from patientjobs, otherwise set to result from techjobs
       const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
-      const firstLoad = state.currentRecordNumber ? state.currentRecordNumber : action.payload[5] - 1
+
+      // Set currentRecordNumber to the last record on first load. After this, it has a value of 0 or greater so remains unaffected here
+      const firstLoad = state.currentRecordNumber >= 0 ? state.currentRecordNumber : action.payload[5] - 1
+
       return {
         loading: false,
         readOnly: true,
@@ -26,7 +30,6 @@ export const updateCurrentRecordReducer = (state = {
         creationDate: action.payload[7],
         record: {
           id: action.payload[1].id,
-          // jobnumber: action.payload[1].jobnumber,
           hospitalnumber: action.payload[1].hospitalnumber,
           patientsurname: action.payload[1].patientsurname,
           patientforename: action.payload[1].patientforename,
@@ -40,9 +43,7 @@ export const updateCurrentRecordReducer = (state = {
           department: action.payload[3], 
           referrer: action.payload[4],
           issues: action.payload[2]
-        },
-        // department: action.payload[3], 
-        // referrer: action.payload[4],
+        }
       }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }
@@ -58,14 +59,9 @@ export const updateCurrentRecordReducer = (state = {
         newIssues: 0,
         record: { ...state.record }
       }
-        // ...state,
-        // record: action.payload[1],
-        // readOnly: action.payload[0]
     case 'PREVIOUS_RECORD':
       return action.payload
     case 'UPDATE_RECORD_FIELD':
-      // const field = action.payload[0] === 'user' ?
-      // 'photographer' : action.payload[0]
       if (action.payload[0] === 'jobnumber') {
         return {
           ...state,
@@ -109,7 +105,6 @@ export const updateCurrentRecordReducer = (state = {
       }
     case 'SEARCH_BY_JOB_NUMBER':
       const currentIndex = action.payload[5].findIndex(el => el.jobnumber === action.payload[1].jobnumber)
-      console.log('reducer:', currentIndex)
 
       return {
         ...state,

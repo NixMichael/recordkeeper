@@ -14,11 +14,12 @@ export const updateCurrentRecordReducer = (state = {
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
       const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
-      console.log('issues:', action.payload[2])
+      const firstLoad = state.currentRecordNumber ? state.currentRecordNumber : action.payload[5] - 1
       return {
         loading: false,
         readOnly: true,
         recordCount: Number(action.payload[5]),
+        currentRecordNumber: firstLoad,
         jobNumber: action.payload[1].jobnumber,
         recordType: action.payload[0],
         sequenceNumber: action.payload[6],
@@ -77,7 +78,6 @@ export const updateCurrentRecordReducer = (state = {
         }
       }
     case 'UPDATED_ISSUE_LIST':
-      console.log('recordReducer: newIssues count:', state.record.newIssues)
       return {
         ...state, newIssues: state.newIssues + 1,
         record: { ...state.record, issues: action.payload }
@@ -102,22 +102,31 @@ export const updateCurrentRecordReducer = (state = {
         recordType: action.payload[1]
       }
     case 'NEW_RECORD_SUBMITTED':
-      console.log('Current recordCount:', state.recordCount)
       return {
         ...state,
         readOnly: true,
         recordCount: action.payload
       }
     case 'SEARCH_BY_JOB_NUMBER':
+      const currentIndex = action.payload[5].findIndex(el => el.jobnumber === action.payload[1].jobnumber)
+      console.log('reducer:', currentIndex)
+
       return {
         ...state,
         record: {
           ...action.payload[1],
           referrer: action.payload[4],
-          department: action.payload[3]
+          department: action.payload[3],
+          issues: action.payload[0]
         },
+        currentRecordNumber: currentIndex,
         recordType: action.payload[2],
         department: action.payload[3]
+      }
+    case 'UPDATE_RECORD_NUMBER':
+      return {
+        ...state,
+        currentRecordNumber: action.payload
       }
     default:
       return state

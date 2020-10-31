@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../styles/issuesStyles.scss'
 import { updateIssueList } from '../actions/recordActions'
@@ -10,11 +10,8 @@ const Issues = () => {
   const dispatch = useDispatch()
   
   const currentRec = useSelector(state => state.currentRec)
-  const { readOnly, jobNumber, recordType, newIssues, record } = currentRec
+  const { readOnly, jobNumber, recordType, record } = currentRec
   const { issues, category } = record
-
-  useEffect(() => {
-  }, [newIssues])
 
   const addIssue = async ({name}) => {
     if (recordType === 't' && category === '--Please Select--') {

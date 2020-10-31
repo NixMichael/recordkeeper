@@ -328,6 +328,8 @@ const getRecord = async (order, id, res) => {
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
   data[2] = issued
 
+  console.log(issued)
+
   res.send(data)
 }
 
@@ -347,6 +349,7 @@ app.get('/nextrec/:id', (req, res) => {
   getRecord('asc', id, res)
 })
 
+// SEARCH BY JOB NUMBER
 app.get('/search/:value', async (req, res) => {
     const {value} = req.params
 
@@ -358,8 +361,12 @@ app.get('/search/:value', async (req, res) => {
     searchRes[3] = index[0].department
     searchRes[4] = index[0].requestedby
 
+    const indexList = await db.select('jobnumber').from('index').orderBy('id', 'asc')
+    console.log('indexList:', indexList)
+    searchRes[5] = indexList
+
     const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
-    searchRes[0] = issued.length > 0 && issued[0]
+    searchRes[0] = issued
 
     if (searchRes[2] === 'p') {
       const patientRecord = await db.select('*').from('patientjobs')
@@ -371,43 +378,11 @@ app.get('/search/:value', async (req, res) => {
       searchRes[1] = techRecord[0]
     }
 
+    console.log('issues:', searchRes[0])
     res.json(searchRes)
-
-    // db.select('*').from('index')
-    // .where('jobnumber', value)
-    // .then((result) => {
-    //     if (result.length > 0) {
-    //         searchRes[2] = result[0].type
-    //         searchRes[3] = result[0].department
-    //     }
-    // })
-
-    // db.select('*').from('issued')
-    // .where('jobnumber', value)
-    // .orderBy('id', 'asc')
-    // .then((result) => {
-    //     searchRes[0] = result.length > 0 && result[0]
-    // })
-    // .then(() => {
-    //     searchRes[2] === 'p' ?
-    //     db.select('*').from('patientjobs')
-    //     .where('jobnumber', value)
-    //     .then(record => {
-    //         searchRes[1] = record[0]
-    //         res.json(searchRes)
-    //     })
-    //     .catch(console.log)
-    //     :
-    //     db.select('*').from('techjobs')
-    //     .where('jobnumber', value)
-    //     .then(record => {
-    //         searchRes[1] = record[0]
-    //         res.json(searchRes)
-    //     })
-    //     .catch(console.log)
-    // })
 })
 
+// RETRIEVE ALL LISTS
 app.get('/fetchFields', async (req, res) => {
   let dropDownContents = []
 

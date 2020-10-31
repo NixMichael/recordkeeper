@@ -1,4 +1,5 @@
 import axios from 'axios'
+import RecordActionButtons from '../components/actionButtons/RecordActionButtons'
 import {
   FETCH_RECORD_REQUEST,
   FETCH_RECORD_SUCCESS,
@@ -36,6 +37,13 @@ export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
       type: 'SEARCH_BY_JOB_NUMBER',
       payload: data
     })
+}
+
+export const updateRecordNumber = (position) => {
+  return {
+    type: 'UPDATE_RECORD_NUMBER',
+    payload: position
+  }
 }
 
 export const fetchFieldData = () => async (dispatch) => {

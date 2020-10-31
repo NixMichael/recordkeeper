@@ -4,7 +4,16 @@ import {
   FETCH_RECORD_FAIL,
   FIELD_DATA_REQUEST,
   FIELD_DATA_SUCCESS,
-  FIELD_DATA_FAIL
+  FIELD_DATA_FAIL,
+  RECORD_COUNT,
+  ENABLE_RECORD_EDIT,
+  PREVIOUS_RECORD,
+  UPDATE_RECORD_FIELD,
+  UPDATED_ISSUE_LIST,
+  NEW_RECORD,
+  NEW_RECORD_SUBMITTED,
+  SEARCH_BY_JOB_NUMBER,
+  UPDATE_RECORD_NUMBER
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const updateCurrentRecordReducer = (state = { 
@@ -47,21 +56,21 @@ export const updateCurrentRecordReducer = (state = {
       }
     case FETCH_RECORD_FAIL:
       return { loading: false, error: action.payload }
-    case 'RECORD_COUNT':
+    case RECORD_COUNT:
       return { 
         ...state, 
         currentRecordIndex: action.payload
       }
-    case 'ENABLE_RECORD_EDIT':
+    case ENABLE_RECORD_EDIT:
       return {
         ...state,
         readOnly: action.payload,
         newIssues: 0,
         record: { ...state.record }
       }
-    case 'PREVIOUS_RECORD':
+    case PREVIOUS_RECORD:
       return action.payload
-    case 'UPDATE_RECORD_FIELD':
+    case UPDATE_RECORD_FIELD:
       if (action.payload[0] === 'jobnumber') {
         return {
           ...state,
@@ -73,12 +82,12 @@ export const updateCurrentRecordReducer = (state = {
           record: { ...state.record, [action.payload[0]]: action.payload[1] }
         }
       }
-    case 'UPDATED_ISSUE_LIST':
+    case UPDATED_ISSUE_LIST:
       return {
         ...state, newIssues: state.newIssues + 1,
         record: { ...state.record, issues: action.payload }
       }
-    case 'NEW_RECORD':
+    case NEW_RECORD:
       return {
         jobNumber: action.payload[0],
         sequenceNumber: action.payload[2],
@@ -97,13 +106,13 @@ export const updateCurrentRecordReducer = (state = {
         },
         recordType: action.payload[1]
       }
-    case 'NEW_RECORD_SUBMITTED':
+    case NEW_RECORD_SUBMITTED:
       return {
         ...state,
         readOnly: true,
         recordCount: action.payload
       }
-    case 'SEARCH_BY_JOB_NUMBER':
+    case SEARCH_BY_JOB_NUMBER:
       const currentIndex = action.payload[5].findIndex(el => el.jobnumber === action.payload[1].jobnumber)
 
       return {
@@ -118,7 +127,7 @@ export const updateCurrentRecordReducer = (state = {
         recordType: action.payload[2],
         department: action.payload[3]
       }
-    case 'UPDATE_RECORD_NUMBER':
+    case UPDATE_RECORD_NUMBER:
       return {
         ...state,
         currentRecordNumber: action.payload

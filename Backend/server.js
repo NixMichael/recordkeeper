@@ -328,8 +328,6 @@ const getRecord = async (order, id, res) => {
   const issued = await db('issued').where('jobnumber', jobNum).orderBy('id', 'asc').select('*')
   data[2] = issued
 
-  console.log(issued)
-
   res.send(data)
 }
 
@@ -362,7 +360,6 @@ app.get('/search/:value', async (req, res) => {
     searchRes[4] = index[0].requestedby
 
     const indexList = await db.select('jobnumber').from('index').orderBy('id', 'asc')
-    console.log('indexList:', indexList)
     searchRes[5] = indexList
 
     const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
@@ -378,7 +375,6 @@ app.get('/search/:value', async (req, res) => {
       searchRes[1] = techRecord[0]
     }
 
-    console.log('issues:', searchRes[0])
     res.json(searchRes)
 })
 

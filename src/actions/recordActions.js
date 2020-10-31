@@ -1,11 +1,17 @@
 import axios from 'axios'
 import {
-  FETCH_RECORD_REQUEST,
+  // FETCH_RECORD_REQUEST,
   FETCH_RECORD_SUCCESS,
   FETCH_RECORD_FAIL,
   FIELD_DATA_REQUEST,
   FIELD_DATA_SUCCESS,
-  FIELD_DATA_FAIL
+  FIELD_DATA_FAIL,
+  ENABLE_RECORD_EDIT,
+  PREVIOUS_RECORD,
+  UPDATE_RECORD_FIELD,
+  NEW_RECORD,
+  NEW_RECORD_SUBMITTED,
+  UPDATED_ISSUE_LIST
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
@@ -69,42 +75,42 @@ export const fetchFieldData = () => async (dispatch) => {
 
 export const enableRecordEdit = (toggle) => {
   return {
-    type: 'ENABLE_RECORD_EDIT',
+    type: ENABLE_RECORD_EDIT,
     payload: toggle
   }
 }
 
 export const previousRecord = (record) => {
   return {
-    type: 'PREVIOUS_RECORD',
+    type: PREVIOUS_RECORD,
     payload: record
   }
 }
 
 export const updateRecordField = (field, value) => {
   return {
-    type: 'UPDATE_RECORD_FIELD',
+    type: UPDATE_RECORD_FIELD,
     payload: [field, value]
   }
 }
 
 export const newRecord = (newJobNumber, recordType, sequenceNumber) => {
   return ({
-    type: 'NEW_RECORD',
+    type: NEW_RECORD,
     payload: [newJobNumber, recordType, sequenceNumber]
   })
 }
 
 export const newRecordSubmitted = (count) => {
   return ({
-    type: 'NEW_RECORD_SUBMITTED',
+    type: NEW_RECORD_SUBMITTED,
     payload: count
   })
 }
 
 export const updateIssueList = (newList) => {
   return ({
-    type: 'UPDATED_ISSUE_LIST',
+    type: UPDATED_ISSUE_LIST,
     payload: newList
   })
 }

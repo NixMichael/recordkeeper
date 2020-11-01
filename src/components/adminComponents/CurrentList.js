@@ -22,7 +22,7 @@ const CurrentList = () => {
       newArr[index] = false
     }
 
-    // setSelected(newArr)
+    setSelected(newArr)
 
     // setToDelete()
   }
@@ -52,7 +52,7 @@ const CurrentList = () => {
             <div className="editDepartments" key={dept.id}>
               <li>{dept.departmentname}</li>
               <li></li>
-              <input className="adminCheckbox" id={dept.departmentname} name={index} checked={selected[index] || false} type="checkbox" onChange={() => handleChange(index)}/>
+              <input className="adminCheckbox" id={dept.departmentname} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )
         })
@@ -63,7 +63,7 @@ const CurrentList = () => {
             <div key={referrer.id}>
               <li>{referrer.name}</li>
               <li></li>
-              <input className="adminCheckbox" id={referrer.name} name={index} checked={selected[index] || false} type="checkbox" onChange={() =>handleChange(index)}/>
+              <input className="adminCheckbox" id={referrer.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) =>handleChange(e.target.id, index)}/>
             </div>
           )
         })
@@ -73,7 +73,7 @@ const CurrentList = () => {
             <div key={category.id}>
               <li>{category.type}</li>
               <li></li>
-              <input className="adminCheckbox" id={category.type} name={index} checked={selected[index] || false} type="checkbox" onChange={() => handleChange(index)}/>
+              <input className="adminCheckbox" id={category.type} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )
         })

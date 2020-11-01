@@ -137,12 +137,18 @@ export const updateCurrentRecordReducer = (state = {
   }
 }
 
-export const fieldDataReducer = (state = { loading: true, fieldContent: []}, action) => {
+export const fieldDataReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case FIELD_DATA_REQUEST:
       return { loading: true }
     case FIELD_DATA_SUCCESS:
-      return { loading: false, fieldContent: action.payload }
+      return { 
+        loading: false,
+        users: action.payload[1],
+        departments: action.payload[3],
+        referrers: action.payload[0],
+        techTypes: action.payload[2]
+      }
     case FIELD_DATA_FAIL:
       return { loading: false, error: action.payload }
     default:

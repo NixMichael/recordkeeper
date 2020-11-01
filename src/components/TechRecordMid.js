@@ -7,7 +7,7 @@ const TechRecordMid = () => {
   const dispatch = useDispatch()
 
   const fieldData = useSelector(state => state.fieldData)
-  const { fieldContent } = fieldData
+  const { referrers, departments, techTypes } = fieldData
 
   const currentRec = useSelector(state => state.currentRec)
   const { record, readOnly } = currentRec
@@ -19,27 +19,6 @@ const TechRecordMid = () => {
     referrer = record.referrer
     department = record.department
   }
-  // const { category, referrer, department } = record
-
-  let referrers = []
-  let departments = []
-  let categories = []
-
-  if (!fieldData.loading) {
-    referrers = fieldContent[0]
-    departments = fieldContent[3]
-    categories = fieldContent[2]
-  }
-
-  // let category = ''
-  // let requestedBy = ''
-  // let dept = ''
-
-  // if (!currentRec.loading) {
-    // category = record.category
-    // requestedBy = record.referrer
-    // dept = record.department
-  // }
 
   const handleChange = ({ name, value }) => {
     dispatch(updateRecordField(name, value))
@@ -49,7 +28,7 @@ const TechRecordMid = () => {
     <div className='tech-record-component record-mid'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (
@@ -60,7 +39,7 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -71,9 +50,9 @@ const TechRecordMid = () => {
       </div>
       <div>
         <label>Category: </label>
-        <select name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
-            {categories.map(category => {
+            {techTypes.map(category => {
               return (
                 <option value={category.type} key={category.id}>{category.type}</option>
               )

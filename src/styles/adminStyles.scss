@@ -1,0 +1,141 @@
+.testing {
+  width: 200px;
+  height: 200px;
+  border: 2px solid red;
+}
+
+.editLists {
+  width: 430px;
+  min-width: 330px;
+  min-height: 370px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: linear-gradient(to top, rgba(76, 123, 165, 0.9), rgba(41, 62, 77, 0.6));
+  box-shadow: 5px 10px 20px 10px rgba(87,84,84,0.2);
+  margin-right: 1rem;
+  padding: 1.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+ul {
+  list-style-type: none;
+  min-width: 310px;
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.editLists ul li:first-child {
+  width: 50%;
+}
+
+.editLists ul li:nth-child(2) {
+  width: 40%;
+  opacity: 0.5;
+}
+
+.editLists .editDepartments li:first-child {
+  width: 85%;
+}
+
+.editLists .editDepartments li:nth-child(2) {
+  width: 5%;
+}
+
+.editLists ul input {
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
+  color: black;
+}
+
+.editLists ul > div {
+  width: 290px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editLists li, .editLists input, .editLists Button {
+  margin-bottom: 1rem;
+}
+
+.adminButtons {
+  width: 290px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
+}
+
+.adminButtons button {
+  background: none;
+  border: none;
+  margin-right: 5px;
+}
+
+.adminButtons button:focus, .adminButtons button:hover {
+  outline: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(237, 245, 255, 0.6);
+  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.6);
+}
+
+// .adminCheckbox {
+//   width: 20px;
+//   height: 20px;
+// }
+
+
+.addNew > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 370px;
+  padding: 2.5rem 5rem;
+  color: white;
+  background: linear-gradient(to top, rgba(76, 123, 165, 0.9), rgba(41, 62, 77, 0.6));
+  border: 1px solid rgba(0,0,0,1);
+  border-radius: 6px;
+  margin-left: 1rem;
+}
+
+.newUser__Boxes {
+  display: flex;
+  flex-direction: column;
+}
+
+.newUser__Boxes * {
+  margin-top: 1rem;
+}
+
+#departmentName {
+  width: 300px;
+  margin-top: 1rem;
+}
+
+.addNew h3 {
+  margin-top: 0;
+}
+
+.addNew .centerMe {
+  align-self: center;
+}
+
+.addNew select {
+  margin-top: 1rem;
+}
+
+.addNew #initials {
+  width: 100px;
+}
+
+.addNew #name {
+  width: 240px;
+}
+
+.addNew button {
+  margin-top: 1rem;
+  width: 150px;
+}

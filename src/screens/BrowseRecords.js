@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import PatientRecord from './PatientRecord'
 import TechRecord from './TechRecord'
 import RecordActionButtons from '../components/actionButtons/RecordActionButtons'
-import { fetchFieldData, fetchRecord } from '../actions/recordActions'
+import { fetchRecord } from '../actions/recordActions'
 
 const BrowseRecords = () => {
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchFieldData())
     dispatch(fetchRecord('lastRec'))
   }, [dispatch])
 

@@ -3,7 +3,9 @@ import { useSelector } from 'react-redux'
 import Navigation from '../components/Navigation'
 import BrowseRecords from './BrowseRecords'
 import SearchScreen from './SearchScreen'
-import Admin from './Admin'
+import UsersAdmin from './UsersAdmin'
+import ReferrersAdmin from './ReferrersAdmin'
+import DepartmentsAdmin from './DepartmentsAdmin'
 import Reports from './Reports'
 
 const MainApp = () => {
@@ -16,8 +18,12 @@ const MainApp = () => {
       {
         screenRoute === 'browseRecords' ?
         <BrowseRecords />
-        : screenRoute === 'admin' ?
-        <Admin />
+        : screenRoute === 'editUsers' ?
+        <UsersAdmin />
+        : screenRoute === 'editReferrers' ?
+        <ReferrersAdmin />
+        : screenRoute === 'editDepartments' ?
+        <DepartmentsAdmin />
         : screenRoute === 'patientSearch' || screenRoute === 'techSearch' ?
         <SearchScreen />
         :

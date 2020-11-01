@@ -11,13 +11,13 @@ const PatientUpper = () => {
   const { record, jobNumber, recordType, readOnly } = currentRec
 
   const fieldData = useSelector(state => state.fieldData)
-  const { fieldContent } = fieldData
+  const { users } = fieldData
 
-  let users = []
+  // let users = []
 
-  if (!fieldData.loading) {
-    users = fieldContent[1]
-  }
+  // if (!fieldData.loading) {
+  //   users = fieldContent[1]
+  // }
 
   const handleJobNumberChange = async ({ name, value }) => {
     dispatch(updateRecordField(name, value))
@@ -34,11 +34,11 @@ const PatientUpper = () => {
     <div className='patient-record-component record-upper'>
       <div>
         <label>Job Number: </label>
-        <input type='text' name='jobnumber' className='input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>
+        <input type='text' name='jobnumber' className='record-input input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
-        <select name='user' disabled={readOnly} value={record.user} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='user' disabled={readOnly} value={record.user} onChange={(e) => handleChange(e.target)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {
             users.map(user => {

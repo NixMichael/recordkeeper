@@ -7,35 +7,11 @@ const PatientRecordMid = () => {
   const dispatch = useDispatch()
 
   const fieldData = useSelector(state => state.fieldData)
-  const { fieldContent } = fieldData
+  const { referrers, departments } = fieldData
 
   const currentRec = useSelector(state => state.currentRec)
   const { record, readOnly } = currentRec
   const { permission, referrer, department, hospitalnumber, patientsurname, patientforename } = record
-
-  let referrers = []
-  let departments = []
-
-  if (!fieldData.loading) {
-    referrers = fieldContent[0]
-    departments = fieldContent[3]
-  }
-
-  // let permission
-  // let requestedBy
-  // let dept
-  // let hospitalNumber
-  // let firstName
-  // let lastName
-
-  // if (!currentRec.loading) {
-  //   permission = record.permission
-  //   requestedBy = record.referrer
-  //   dept = record.department
-  //   hospitalNumber = record.hospitalnumber
-  //   firstName = record.patientforename
-  //   lastName = record.patientsurname
-  // }
 
   const handleChange = ({ name, value }) => {
     dispatch(updateRecordField(name, value))
@@ -46,7 +22,7 @@ const PatientRecordMid = () => {
     <div className='patient-record-component'>
       <div>
         <label>Requested By: </label>
-        <select name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='referrer' disabled={readOnly} value={referrer} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {referrers.map(referrer => {
             return (

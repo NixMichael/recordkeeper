@@ -382,12 +382,12 @@ app.get('/search/:value', async (req, res) => {
 app.get('/fetchFields', async (req, res) => {
   let dropDownContents = []
 
-  const referrer = await db.select('*').from('referrer').orderBy('name', 'asc')
+  const referrers = await db.select('*').from('referrer').orderBy('name', 'asc')
   const users = await db.select('*').from('users').orderBy('name', 'asc')
   const techTypes = await db.select('*').from('techtype')
   const departments = await db.select('*').from('departments')
 
-  dropDownContents = [referrer, users, techTypes, departments]
+  dropDownContents = [referrers, users, techTypes, departments]
 
   res.send(dropDownContents)
 })

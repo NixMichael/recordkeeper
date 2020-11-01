@@ -1,6 +1,6 @@
 import React from 'react'
 import CurrentList from '../components/adminComponents/CurrentList'
-// import AddNew from '../Components/AddNew'
+import AddNew from '../components/adminComponents/AddNew'
 
 const UsersAdmin = () => {
   return (
@@ -8,8 +8,7 @@ const UsersAdmin = () => {
       <div className="editorContainer">
 
         <CurrentList />
-
-        {/* <AddNew /> */}
+        <AddNew />
 
       </div>         
     </div>

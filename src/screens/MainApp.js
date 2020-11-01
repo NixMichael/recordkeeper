@@ -15,6 +15,7 @@ const MainApp = () => {
   return (
     <>
       <Navigation />
+      <div className='body-content'>
       {
         screenRoute === 'browseRecords' ?
         <BrowseRecords />
@@ -29,6 +30,7 @@ const MainApp = () => {
         :
         <Reports />
       }
+      </div>
     </>
   )
 }

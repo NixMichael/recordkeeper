@@ -15,142 +15,50 @@
   display: flex;
 }
 
-.editLists {
-  width: 430px;
-  min-width: 330px;
-  min-height: 370px;
-  max-height: 500px;
+.admin-components {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background: rgb(245,245,245);
+  width: 500px;
+  height: 400px;
   margin-right: 1rem;
   padding: 1.5rem 1rem;
   border: 1px solid black;
   border-radius: 6px;
+
+    h3 {
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      width: 90%;
+      max-height: 70%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: rgba(0,0,0,0.05);
+      
+      & > :nth-child(2n) {
+        background: rgba(0,0,0,0.1);
+      }
+      
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.25rem 1rem;
+      }
+    }
 }
 
-ul {
-  margin-top: 2rem;
-  padding: 1rem;
-  padding-right: 2rem;
-  list-style-type: none;
-  min-width: 310px;
-  max-height: 180px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: rgba(0,0,0,0.05);
-}
-
-.editLists ul li:first-child {
-  width: 50%;
-}
-
-.editLists ul li:nth-child(2) {
-  width: 40%;
-  opacity: 0.5;
-}
-
-.editLists .editDepartments li:first-child {
-  width: 85%;
-}
-
-.editLists .editDepartments li:nth-child(2) {
-  width: 5%;
-}
-
-.editLists ul input {
-  width: 20px;
-  height: 20px;
-  border-radius: 0;
-  color: black;
-}
-
-.editLists ul > div {
-  width: 290px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.editLists li, .editLists input, .editLists Button {
-  margin-bottom: 1rem;
-}
-
-.adminButtons {
-  width: 290px;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 0.5rem;
-}
-
-.adminButtons button {
-  background: none;
-  border: none;
-  margin-right: 5px;
-}
-
-.adminButtons button:focus, .adminButtons button:hover {
-  color: red;
-}
-
-// .adminCheckbox {
-//   width: 20px;
-//   height: 20px;
-// }
-
-
-.addNew {
+.new_user_boxes {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  min-height: 370px;
-  padding: 2.5rem 5rem;
-  background: rgb(245,245,245);
-  border: 1px solid rgba(0,0,0,1);
-  border-radius: 6px;
-  margin-left: 1rem;
-}
-
-.newUser__Boxes {
-  display: flex;
-  flex-direction: column;
   padding: 1rem;
+  height: 70%;
+  width: 90%;
   background: rgba(0,0,0,0.05);
-}
-
-.newUser__Boxes * {
-  margin-top: 1rem;
-}
-
-#departmentName {
-  width: 300px;
-  margin-top: 1rem;
-}
-
-.addNew h3 {
-  margin-top: 0;
-}
-
-.addNew .centerMe {
-  align-self: center;
-}
-
-.addNew select {
-  margin-top: 1rem;
-}
-
-.addNew #initials {
-  width: 100px;
-}
-
-.addNew #name {
-  width: 240px;
-}
-
-.addNew button {
-  margin-top: 1rem;
-  width: 150px;
 }

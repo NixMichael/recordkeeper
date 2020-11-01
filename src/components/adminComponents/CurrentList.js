@@ -32,7 +32,7 @@ const CurrentList = () => {
   }
 
   return (
-    <div className="editLists">
+    <div className="admin-components">
       <h3>Current {currentTitle}</h3>
       <ul>
         {

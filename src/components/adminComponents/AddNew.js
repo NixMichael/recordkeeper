@@ -19,9 +19,9 @@ const AddNew = () => {
 
   return (
 
-    <div className="addNew">
-      <h3 className="centerMe">Add a new {currentTitle}</h3>
-      <div className="newUser__Boxes">
+    <div className="admin-components">
+      <h3>Add a new {currentTitle}</h3>
+      <div className="new_user_boxes">
       {
       screenRoute === 'editUsers' ?
       <>
@@ -38,7 +38,7 @@ const AddNew = () => {
       </>
       : screenRoute === 'editDepartments' ?
       <>
-          <input id="departmentName" type="text" name="department" />
+          <label>New department name:</label><input id="departmentName" type="text" name="department" />
       </>
       : screenRoute === 'editReferrers' ?
       <>

@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/adminStyles.scss'
+import { deleteUsers } from '../../actions/adminActions'
 
 const CurrentList = () => {
+
+  const dispatch = useDispatch()
 
   const screenRoute = useSelector(state => state.screenRoute)
 
@@ -27,8 +30,28 @@ const CurrentList = () => {
     // setToDelete()
   }
 
-  const deleteUser = () => {
+  const deleteItems = async () => {
+    const filtered = []
+    selected.filter((i, index) => {
+      if (i === true) {
+        filtered.push(index)
+      }
+      return index
+    })
+
+    const usersToDelete = []
     
+    users.filter((i, index) => {
+      for (let c = 0; c < filtered.length; c++) {
+        if (index === filtered[c]){
+          usersToDelete.push(i.name)
+        }
+      }
+      return i.name
+    })
+
+    dispatch(deleteUsers(usersToDelete))
+    setSelected([])
   }
 
   return (
@@ -80,7 +103,7 @@ const CurrentList = () => {
         }
     </ul>
     {/* <div className="adminButtons"> */}
-      <button className='record-button' onClick={() => {deleteUser(screenRoute)}}>Delete Selected</button>
+      <button className='record-button' onClick={() => {deleteItems(screenRoute)}}>Delete Selected</button>
     {/* </div> */}
   </div>
   )

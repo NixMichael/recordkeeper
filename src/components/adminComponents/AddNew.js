@@ -1,7 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addUser } from '../../actions/adminActions'
 
 const AddNew = () => {
+
+  const dispatch = useDispatch()
+
+  const [role, setRole] = useState('--Please Select--')
+  const [initials, setInitials] = useState('')
+  const [name, setName] = useState('')
 
   const screenRoute = useSelector(state => state.screenRoute)
 
@@ -14,7 +21,12 @@ const AddNew = () => {
   }
 
   const addNew = () => {
-    console.log('add new')
+    const arr = [role, initials, name]
+    dispatch(addUser(arr))
+
+    setRole('--Please Select--')
+    setInitials('')
+    setName('')
   }
 
   return (
@@ -25,15 +37,15 @@ const AddNew = () => {
       {
       screenRoute === 'editUsers' ?
       <>
-        <label>Role: <select className='record-input' id="typeSelection" name="typeSelection" value={typeSelection}>
+        <label>Role: <select className='record-input' id="typeSelection" name="typeSelection" value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="--Please Select--">--Please Select--</option>
           <option value='Photographer' key='1'>Photographer</option>
           <option value='Designer' key='2'>Designer</option>
         </select>
         </label>
-        <label>Initials: <input id="initials" type="text" name="newUserInitials" />
+        <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
         </label>
-        <label>Name: <input id="name" type="text" name="newUserName" />
+        <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
         </label>
       </>
       : screenRoute === 'editDepartments' ?

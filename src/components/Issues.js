@@ -13,6 +13,8 @@ const Issues = () => {
   const { readOnly, jobNumber, recordType, record } = currentRec
   const { issues, category } = record
 
+  // const [temporaryIssues, setTemporaryIssues] = useState([...issues])
+
   const addIssue = async ({name}) => {
     if (recordType === 't' && category === '--Please Select--') {
       alert('Please choose a category')
@@ -39,7 +41,16 @@ const Issues = () => {
         const costResult = await axios.get(`http://localhost:3004/gettechcost/${category}`)
         totalCost = costResult.data * quantity
       }
-  
+
+      // setTemporaryIssues([...temporaryIssues, {
+      //   jobnumber: jobNumber,
+      //   type: name,
+      //   date: curDate,
+      //   notes: note,
+      //   qty: quantity,
+      //   cost: totalCost
+      // }])
+
       const newIssueList = await axios({
         method: 'post',
         url: 'http://localhost:3004/addissued',

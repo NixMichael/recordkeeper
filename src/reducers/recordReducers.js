@@ -151,6 +151,10 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
       }
     case FIELD_DATA_FAIL:
       return { loading: false, error: action.payload }
+    case 'UPDATED_USERS_LIST':
+      return { ...state, users: action.payload }
+    case 'NEW_USER':
+      return { ...state, users: action.payload }
     default:
       return state
   }

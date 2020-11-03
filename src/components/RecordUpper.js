@@ -34,7 +34,7 @@ const PatientUpper = () => {
     <div className='patient-record-component record-upper'>
       <div>
         <label>Job Number: </label>
-        <input type='text' name='jobnumber' className='record-input input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>
+        <input type='text' name='jobnumber' disabled={!readOnly} className='record-input input-text-number' value={jobNumber} onChange={(e) => handleJobNumberChange(e.target)}/>
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>

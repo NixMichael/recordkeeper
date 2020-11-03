@@ -120,6 +120,10 @@ select {
   max-width: 100px;
   text-align: center;
   padding-right: 0.5rem;
+
+  &:disabled {
+    background-color: var(--button-color-faded);
+  }
 }
 
 input:disabled, textarea:disabled {

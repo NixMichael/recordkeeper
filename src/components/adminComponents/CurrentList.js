@@ -39,18 +39,23 @@ const CurrentList = () => {
       return index
     })
 
-    const usersToDelete = []
+    const toDelete = []
     
-    users.filter((i, index) => {
+    const list = screenRoute === 'editUsers' ? users 
+    : screenRoute === 'editDepartments' ? departments 
+    : screenRoute === 'editReferrers' ? referrers
+    : techTypes
+
+    list.filter((i, index) => {
       for (let c = 0; c < filtered.length; c++) {
         if (index === filtered[c]){
-          usersToDelete.push(i.name)
+          toDelete.push(i.name)
         }
       }
       return i.name
     })
 
-    dispatch(deleteUsers(usersToDelete))
+    dispatch(deleteUsers(screenRoute, toDelete))
     setSelected([])
   }
 
@@ -73,9 +78,9 @@ const CurrentList = () => {
         departments.map((dept, index) => {
           return (
             <div className="editDepartments" key={dept.id}>
-              <li>{dept.departmentname}</li>
+              <li>{dept.name}</li>
               <li></li>
-              <input className="adminCheckbox" id={dept.departmentname} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
+              <input className="adminCheckbox" id={dept.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )
         })
@@ -86,7 +91,7 @@ const CurrentList = () => {
             <div key={referrer.id}>
               <li>{referrer.name}</li>
               <li></li>
-              <input className="adminCheckbox" id={referrer.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) =>handleChange(e.target.id, index)}/>
+              <input className="adminCheckbox" id={referrer.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )
         })

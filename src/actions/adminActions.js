@@ -1,9 +1,35 @@
 import axios from 'axios'
 
-export const deleteUsers = (arr) => async (dispatch) => {
+export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
+
+  console.log(arr)
+
+  let adminType = ''
+  let dispatchType = ''
+  switch (screenRoute) {
+    case 'editUsers':
+      adminType = 'deleteuser'
+      dispatchType = 'UPDATE_USERS_LIST'
+      break
+    case 'editDepartments':
+      adminType = 'deletedepartment'
+      dispatchType = 'UPDATE_DEPARTMENTS_LIST'
+      break
+    case 'editReferrers':
+      adminType = 'deletereferrer'
+      dispatchType = 'UPDATE_REFERRERS_LIST'
+      break
+    case 'editCategory':
+      adminType = 'deletecategory'
+      dispatchType = 'UPDATE_CATEGORIES_LIST'
+      break
+    default:
+      adminType = ''
+  }
+
   const { data } = await axios({
     method: 'delete',
-    url: 'http://localhost:3004/deleteuser',
+    url: `http://localhost:3004/${adminType}`,
     headers: { 'Content-Type': 'application/json'},
     data: {
       toDelete: arr
@@ -11,14 +37,13 @@ export const deleteUsers = (arr) => async (dispatch) => {
   })
 
   dispatch({
-    type: 'UPDATED_USERS_LIST',
+    type: dispatchType,
     payload: data
   })
 }
 
 export const addUser = (screenRoute, { role, initials, name, departmentName, categoryName, cost }) => async (dispatch) => {
 
-  console.log('sR:', screenRoute)
   let adminType = ''
   let dispatchType = ''
   switch (screenRoute) {

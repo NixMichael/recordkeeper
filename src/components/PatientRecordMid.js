@@ -37,7 +37,7 @@ const PatientRecordMid = () => {
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
-                <option value={department.departmentname} key={department.id}>{department.departmentname}</option>
+                <option value={department.department} key={department.id}>{department.name}</option>
               )
             })}
         </select>

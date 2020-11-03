@@ -28,7 +28,8 @@ app.post('/newuser', async (req,res) => {
         usertype: usertype
     })
 
-    const newList = await db.select('*').returning('*').from('users')
+    const newList = await db('users').returning('*').select('*').orderBy('name', 'asc')
+
     res.status(200).json(newList)
 
       // .then((newList) => {
@@ -46,9 +47,7 @@ app.post('/newreferrer', async (req,res) => {
               name: name
           })
     
-    const newList = await db.select('*')
-        .returning('*')
-        .from('referrer')
+    const newList = await db('referrer').returning('*').select('*').orderBy('name', 'asc')
 
     res.status(200).json(newList)
 
@@ -60,13 +59,11 @@ app.post('/newdepartment', async (req,res) => {
 
     await db('departments')
       .insert({
-        departmentname: department,
+        name: department,
         headofdepartment: ''
       })
 
-    await db.select('*')
-      .returning('*')
-      .from('departments')
+    const newList = await db('departments').select('*').returning('*').orderBy('name', 'asc')
 
     res.status(200).json(newList)
 
@@ -258,6 +255,7 @@ app.delete('/deleteuser', async (req,res) => {
 
 app.delete('/deletereferrer', async (req,res) => {
   const { toDelete } = req.body
+  console.log(toDelete)
 
   for (c = 0; c < toDelete.length; c++) {
     await db.select('*').from('referrer').where('name', toDelete[c]).del()
@@ -271,7 +269,7 @@ app.delete('/deletedepartment', async (req,res) => {
   const { toDelete } = req.body
 
   for (c = 0; c < toDelete.length; c++) {
-    await db.select('*').from('departments').where('departmentname', toDelete[c]).del()
+    await db.select('*').from('departments').where('name', toDelete[c]).del()
   }
 
   const updatedList = await db.select('*').from('departments')

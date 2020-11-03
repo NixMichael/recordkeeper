@@ -33,9 +33,17 @@ body {
     color: white;
   }
 
+  input {
+    width: 200px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: none;
+  }
+
   div {
     width: 300px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 }

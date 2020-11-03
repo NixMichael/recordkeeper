@@ -179,11 +179,11 @@ app.delete('/deleteissued', async (req, res) => {
 app.delete('/deletenewissues', async (req, res) => {
   const { jobnumber, count } = req.body
 
-  const result = await db.select('*').from('issued').where('jobnumber', jobnumber).orderBy('id', 'desc').limit(count)
+  const result = await db('issued').select('*').where('jobnumber', jobnumber).orderBy('id', 'desc').limit(count)
 
   result.map(async (issue) => {
     const id = issue.id
-    await db.select('*').from('issued').where('id', id).del()
+    await db('issued').select('*').where('id', id).del()
   })
 })
 
@@ -228,11 +228,11 @@ app.delete('/deleterecord', async (req, res) => {
     await db('issued').where('jobnumber', job).del()
 
     if (recordType === 'p') {
-      const deleted = await db.select('*').from('patientjobs').where('jobnumber', job).del()
+      const deleted = await db('patientjobs').select('*').where('jobnumber', job).del()
       res.status(200).json(`Deleted: ${deleted}`)
             // .catch(err => console.log(`Erroneous: ${err}`))
     } else if (recordType === 't') {
-      const deleted = await db.select('*').from('techjobs').where('jobnumber', job).del()
+      const deleted = await db('techjobs').select('*').where('jobnumber', job).del()
       res.status(200).json(`Deleted: ${deleted}`)
             // .catch(err => console.log(`Erroneous: ${err}`))
     }
@@ -242,7 +242,7 @@ app.delete('/deleteuser', async (req,res) => {
   const { toDelete } = req.body
 
   for (c = 0; c < toDelete.length; c++) {
-    await db.select('*').from('users').where('name', toDelete[c]).del()
+    await db('users').select('*').where('name', toDelete[c]).del()
 
     // if (c === toDelete.length) {
       // }
@@ -256,7 +256,7 @@ app.delete('/deletereferrer', async (req,res) => {
   console.log(toDelete)
 
   for (c = 0; c < toDelete.length; c++) {
-    await db.select('*').from('referrer').where('name', toDelete[c]).del()
+    await db('referrer').select('*').where('name', toDelete[c]).del()
   }
 
   const updatedList = await db('referrer').select('*').orderBy('name', 'asc')
@@ -267,7 +267,7 @@ app.delete('/deletedepartment', async (req,res) => {
   const { toDelete } = req.body
 
   for (c = 0; c < toDelete.length; c++) {
-    await db.select('*').from('departments').where('name', toDelete[c]).del()
+    await db('departments').select('*').where('name', toDelete[c]).del()
   }
 
   const updatedList = await db('departments').select('*').orderBy('name', 'asc')
@@ -288,7 +288,7 @@ app.delete('/deletecategory', async (req, res) => {
 app.get('/gettechcost/:cat', async (req, res) => {
   const { cat } = req.params
 
-  const result = await db.select('techtypecost').from('categories').where('type', cat)
+  const result = await db('categories').select('techtypecost').where('type', cat)
   const techTypeCost = result[0].techtypecost
   res.send(techTypeCost)
 })
@@ -349,24 +349,24 @@ app.get('/search/:value', async (req, res) => {
 
     let searchRes = []
 
-    const index = await db.select('*').from('index')
+    const index = await db('index').select('*')
     .where('jobnumber', value)
     searchRes[2] = index[0].type
     searchRes[3] = index[0].department
     searchRes[4] = index[0].requestedby
 
-    const indexList = await db.select('jobnumber').from('index').orderBy('id', 'asc')
+    const indexList = await db('index').select('jobnumber').orderBy('id', 'asc')
     searchRes[5] = indexList
 
-    const issued = await db.select('*').from('issued').where('jobnumber', value).orderBy('id', 'asc')
+    const issued = await db('issued').select('*').where('jobnumber', value).orderBy('id', 'asc')
     searchRes[0] = issued
 
     if (searchRes[2] === 'p') {
-      const patientRecord = await db.select('*').from('patientjobs')
+      const patientRecord = await db('patientjobs').select('*')
       .where('jobnumber', value)
       searchRes[1] = patientRecord[0]
     } else if (searchRes[2] === 't') {
-      const techRecord = await db.select('*').from('techjobs')
+      const techRecord = await db('techjobs').select('*')
       .where('jobnumber', value)
       searchRes[1] = techRecord[0]
     }
@@ -391,7 +391,7 @@ app.get('/fetchFields', async (req, res) => {
 app.get('/getRecord', async (req, res) => {
     let dropDownContents = [];
 
-    const previousJob = await db.select('*').from('index').orderBy('id', 'desc').limit(1)
+    const previousJob = await db('index').select('*').orderBy('id', 'desc').limit(1)
 
     if (previousJob[0] !== undefined) {
         dropDownContents[4] = [
@@ -406,25 +406,25 @@ app.get('/getRecord', async (req, res) => {
     const count = await db('index').count('id')
     dropDownContents[3] = count[0]
 
-    const refs = await db.select('*').from('referrer').orderBy('name', 'asc')
+    const refs = await db('referrer').select('*').orderBy('name', 'asc')
     dropDownContents[0] = refs
     
-    const users = await db.select('*').from('users').orderBy('name', 'asc')
+    const users = await db('users').select('*').orderBy('name', 'asc')
     dropDownContents[1] = users
 
-    const categories = await db.select('*').from('categories')
+    const categories = await db('categories').select('*')
     dropDownContents[7] = categories
 
-    const departments = await db.select('*').from('departments')
+    const departments = await db('departments').select('*')
     dropDownContents[8] = departments
     
-    const patientjobs = await db.select('*').from('patientjobs').orderBy('id', 'desc').limit(1)
+    const patientjobs = await db('patientjobs').select('*').orderBy('id', 'desc').limit(1)
     dropDownContents[2] = patientjobs[0]
 
-    const techjobs = await db.select('*').from('techjobs').orderBy('id', 'desc').limit(1)
+    const techjobs = await db('techjobs').select('*').orderBy('id', 'desc').limit(1)
     dropDownContents[5] = techjobs[0]
 
-    const issuedList = await db.select('*').from('issued').where('jobnumber', dropDownContents[4][4]).orderBy('id', 'asc')
+    const issuedList = await db('issued').select('*').where('jobnumber', dropDownContents[4][4]).orderBy('id', 'asc')
     dropDownContents[9] = issuedList
 
     res.send(dropDownContents)

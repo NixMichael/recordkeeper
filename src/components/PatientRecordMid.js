@@ -54,7 +54,7 @@ const PatientRecordMid = () => {
     <div className='patient-record-component'>
       <div>
         <label>Hospital Number: </label>
-        <input type='text' name='hospitalnumber' className='input-text-number' disabled={readOnly} value={hospitalnumber} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='hospitalnumber' className='record-input input-text-number' disabled={readOnly} value={hospitalnumber} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's surname: </label>

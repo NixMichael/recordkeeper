@@ -94,6 +94,7 @@ label {
 .record-input {
   width: 200px;
   padding: 0.5rem;
+  padding-right: 2rem;  // prevents longer text from extending over the arrow icon
   border-radius: 10px;
   border: none;
   background-color: white;
@@ -101,8 +102,18 @@ label {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
 select {
   background: url('../images/dropDownBG.png') 90% / 60% no-repeat #fff;
+
+  &:disabled {
+    border-radius: 10px;
+    padding-right: 0.75rem;
+    border: none;
+    background: none;
+    background-color: var(--button-color-faded);
+    color: rgb(0, 0, 0);
+  }
 }
 
 .input-text-number {
@@ -114,13 +125,6 @@ input:disabled, textarea:disabled {
   color: black;
 }
 
-select:disabled {
-  padding: 0.5rem;
-  border-radius: 10px;
-  border: none;
-  background-color: var(--button-color-faded);
-  color: rgb(0, 0, 0);
-}
 
 // Issues
 .issued {
@@ -201,3 +205,11 @@ select:disabled {
     }
   }
 }
+
+// .select-shape {
+//   padding: 0.5rem;
+//   padding-right: 3rem;
+//   height: 2.5rem;
+//   width: 200px;
+//   border-radius: 10px;
+// }

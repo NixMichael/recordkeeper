@@ -155,6 +155,12 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
       return { ...state, users: action.payload }
     case 'NEW_USER':
       return { ...state, users: action.payload }
+    case 'NEW_DEPARTMENT':
+      return { ...state, departments: action.payload }
+      case 'NEW_REFERRER':
+        return { ...state, referrers: action.payload }
+        case 'NEW_CATEGORY':
+          return { ...state, techTypes: action.payload }
     default:
       return state
   }

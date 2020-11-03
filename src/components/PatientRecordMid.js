@@ -33,7 +33,7 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Department: </label>
-        <select name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='department' disabled={readOnly} value={department} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
           {departments.map(department => {
               return (
@@ -44,7 +44,7 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Permission for: </label>
-        <select name='permission' disabled={readOnly} value={permission} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='permission' disabled={readOnly} value={permission} onChange={(e) => handleChange(e.target)}>
           <option value="Records">Records</option>
           <option value="Teaching">Teaching</option>
           <option value="Publication">Publication</option>

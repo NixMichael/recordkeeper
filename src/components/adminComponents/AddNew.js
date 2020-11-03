@@ -9,24 +9,31 @@ const AddNew = () => {
   const [role, setRole] = useState('--Please Select--')
   const [initials, setInitials] = useState('')
   const [name, setName] = useState('')
+  const [departmentName, setDepartmentName] = useState('')
+  const [categoryName, setCategoryName] = useState('')
+  const [cost, setCost] = useState(0)
 
   const screenRoute = useSelector(state => state.screenRoute)
 
   let currentTitle = screenRoute === 'editUsers' ? 'User' : screenRoute === 'editDepartments' ? 'Department' : screenRoute === 'editReferrers' ? 'Referrer' : 'Tech Category'
 
-  const typeSelection = 'users'
-
-  const handleChange = () => {
-    console.log('blah')
-  }
-
   const addNew = () => {
-    const arr = [role, initials, name]
-    dispatch(addUser(arr))
+    const newDetails = {
+      role: role,
+      initials: initials,
+      name: name,
+      departmentName: departmentName,
+      categoryName: categoryName,
+      cost: cost
+    }
+    dispatch(addUser(screenRoute, newDetails))
 
     setRole('--Please Select--')
     setInitials('')
     setName('')
+    setDepartmentName('')
+    setCategoryName('')
+    setCost(0)
   }
 
   return (
@@ -50,19 +57,19 @@ const AddNew = () => {
       </>
       : screenRoute === 'editDepartments' ?
       <>
-          <label>New department name:</label><input id="departmentName" type="text" name="department" />
+          <label>New department name:</label><input id="departmentName" type="text" name="department" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)}/>
       </>
       : screenRoute === 'editReferrers' ?
       <>
-        <label>Initials: <input id="initials" type="text" name="newUserInitials" />
+        <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
         </label>
-        <label>Name: <input id="name" type="text" name="newUserName" />
+        <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
       </>
       :
         <>
-          <label>Category: <input id="category" type="text" name="category" /></label>
-          <label>Cost (0.00): <input id="cost" type="text" name="cost" /></label>
+          <label>Category: <input id="category" type="text" name="category" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} /></label>
+          <label>Cost (0.00): <input id="cost" type="text" name="cost" value={cost} onChange={(e) => setCost(e.target.value)} /></label>
         </>
       }
       </div>

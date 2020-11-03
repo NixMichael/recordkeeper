@@ -16,20 +16,48 @@ export const deleteUsers = (arr) => async (dispatch) => {
   })
 }
 
-export const addUser = (arr) => async (dispatch) => {
+export const addUser = (screenRoute, { role, initials, name, departmentName, categoryName, cost }) => async (dispatch) => {
+
+  console.log('sR:', screenRoute)
+  let adminType = ''
+  let dispatchType = ''
+  switch (screenRoute) {
+    case 'editUsers':
+      adminType = 'newuser'
+      dispatchType = 'NEW_USER'
+      break
+    case 'editDepartments':
+      adminType = 'newdepartment'
+      dispatchType = 'NEW_DEPARTMENT'
+      break
+    case 'editReferrers':
+      adminType = 'newreferrer'
+      dispatchType = 'NEW_REFERRER'
+      break
+    case 'editCategory':
+      adminType = 'newcategory'
+      dispatchType = 'NEW_CATEGORY'
+      break
+    default:
+      adminType = ''
+  }
+
   const { data } = await axios({
     method: 'post',
-    url: 'http://localhost:3004/newuser',
+    url: `http://localhost:3004/${adminType}`,
     headers: { 'Content-Type': 'application/json'},
     data: {
-      usertype: arr[0],
-      initials: arr[1],
-      name: arr[2]
+      usertype: role,
+      initials: initials,
+      name: name,
+      department: departmentName,
+      category: categoryName,
+      cost: cost
     }
   })
 
   dispatch({
-    type: 'NEW_USER',
+    type: dispatchType,
     payload: data
   })
 }

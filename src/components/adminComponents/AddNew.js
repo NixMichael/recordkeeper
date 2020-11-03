@@ -15,7 +15,7 @@ const AddNew = () => {
 
   const screenRoute = useSelector(state => state.screenRoute)
 
-  let currentTitle = screenRoute === 'editUsers' ? 'User' : screenRoute === 'editDepartments' ? 'Department' : screenRoute === 'editReferrers' ? 'Referrer' : 'Tech Category'
+  let currentTitle = screenRoute === 'editUsers' ? 'User' : screenRoute === 'editDepartments' ? 'Department' : screenRoute === 'editReferrers' ? 'Referrer' : 'Category'
 
   const addNew = () => {
     const newDetails = {

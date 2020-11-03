@@ -5,14 +5,13 @@ import AddNew from '../components/adminComponents/AddNew'
 const DepartmentsAdmin = () => {
   return (
     <div className="adminMain">
-    <div className="editorContainer">
+      <div className="editorContainer">
 
-      <CurrentList />
+        <CurrentList />
+        <AddNew />
 
-      <AddNew />
-
-    </div>         
-  </div>
+      </div>         
+    </div>
   )
 }
 

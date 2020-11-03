@@ -7,7 +7,7 @@ const TechRecordMid = () => {
   const dispatch = useDispatch()
 
   const fieldData = useSelector(state => state.fieldData)
-  const { referrers, departments, techTypes } = fieldData
+  const { referrers, departments, categories } = fieldData
 
   const currentRec = useSelector(state => state.currentRec)
   const { record, readOnly } = currentRec
@@ -52,9 +52,9 @@ const TechRecordMid = () => {
         <label>Category: </label>
         <select className='record-input' name='category' disabled={readOnly} value={category} onChange={(e) => handleChange(e.target)}>
           <option value="--Please Select--">--Please Select--</option>
-            {techTypes.map(category => {
+            {categories.map(category => {
               return (
-                <option value={category.type} key={category.id}>{category.type}</option>
+                <option value={category.name} key={category.id}>{category.name}</option>
               )
             })}
         </select>

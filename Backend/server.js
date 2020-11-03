@@ -73,15 +73,13 @@ app.post('/newdepartment', async (req,res) => {
 app.post('/newcategory', async (req,res) => {
   const { category, cost } = req.body
 
-  await db('techtype')
+  await db('categories')
     .insert({
-        type: category,
+        name: category,
         techtypecost: cost
     })
   
-  const newList = await db.select('*')
-  .returning('*')
-  .from('techtype')
+  const newList = await db('categories').select('*').returning('*').orderBy('name', 'asc')
 
   res.status(200).json(newList)
 
@@ -249,7 +247,7 @@ app.delete('/deleteuser', async (req,res) => {
     // if (c === toDelete.length) {
       // }
   }
-  const updatedList = await db.select('*').from('users')
+  const updatedList = await db('users').select('*').orderBy('name', 'asc')
   res.send(updatedList)
 })
 
@@ -261,7 +259,7 @@ app.delete('/deletereferrer', async (req,res) => {
     await db.select('*').from('referrer').where('name', toDelete[c]).del()
   }
 
-  const updatedList = await db.select('*').from('referrer')
+  const updatedList = await db('referrer').select('*').orderBy('name', 'asc')
   res.send(updatedList)
 })
 
@@ -272,7 +270,7 @@ app.delete('/deletedepartment', async (req,res) => {
     await db.select('*').from('departments').where('name', toDelete[c]).del()
   }
 
-  const updatedList = await db.select('*').from('departments')
+  const updatedList = await db('departments').select('*').orderBy('name', 'asc')
   res.send(updatedList)
 })
 
@@ -280,17 +278,17 @@ app.delete('/deletecategory', async (req, res) => {
   const { toDelete } = req.body
 
   for (c = 0; c < toDelete.length; c++) {
-    await db('techtype').where('type', toDelete[c]).select('*').del()
+    await db('categories').where('name', toDelete[c]).select('*').del()
   }
 
-  const updatedList = await db('techtype').select('*')
+  const updatedList = await db('categories').select('*').orderBy('name', 'asc')
   res.send(updatedList)
 })
 
 app.get('/gettechcost/:cat', async (req, res) => {
   const { cat } = req.params
 
-  const result = await db.select('techtypecost').from('techtype').where('type', cat)
+  const result = await db.select('techtypecost').from('categories').where('type', cat)
   const techTypeCost = result[0].techtypecost
   res.send(techTypeCost)
 })
@@ -380,12 +378,12 @@ app.get('/search/:value', async (req, res) => {
 app.get('/fetchFields', async (req, res) => {
   let dropDownContents = []
 
-  const referrers = await db.select('*').from('referrer').orderBy('name', 'asc')
-  const users = await db.select('*').from('users').orderBy('name', 'asc')
-  const techTypes = await db.select('*').from('techtype')
-  const departments = await db.select('*').from('departments')
+  const referrers = await db('referrer').select('*').orderBy('name', 'asc')
+  const users = await db('users').select('*').orderBy('name', 'asc')
+  const categories = await db('categories').select('*').orderBy('name', 'asc')
+  const departments = await db('departments').select('*').orderBy('name', 'asc')
 
-  dropDownContents = [referrers, users, techTypes, departments]
+  dropDownContents = [referrers, users, categories, departments]
 
   res.send(dropDownContents)
 })
@@ -414,8 +412,8 @@ app.get('/getRecord', async (req, res) => {
     const users = await db.select('*').from('users').orderBy('name', 'asc')
     dropDownContents[1] = users
 
-    const techtypes = await db.select('*').from('techtype')
-    dropDownContents[7] = techtypes
+    const categories = await db.select('*').from('categories')
+    dropDownContents[7] = categories
 
     const departments = await db.select('*').from('departments')
     dropDownContents[8] = departments

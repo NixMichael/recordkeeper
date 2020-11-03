@@ -147,7 +147,7 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
         users: action.payload[1],
         departments: action.payload[3],
         referrers: action.payload[0],
-        techTypes: action.payload[2]
+        categories: action.payload[2]
       }
     case FIELD_DATA_FAIL:
       return { loading: false, error: action.payload }
@@ -158,15 +158,15 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
     case 'UPDATE_REFERRERS_LIST':
       return { ...state, referrers: action.payload }
     case 'UPDATE_CATEGORIES_LIST':
-      return { ...state, techTypes: action.payload }
+      return { ...state, categories: action.payload }
     case 'NEW_USER':
       return { ...state, users: action.payload }
     case 'NEW_DEPARTMENT':
       return { ...state, departments: action.payload }
-      case 'NEW_REFERRER':
-        return { ...state, referrers: action.payload }
-        case 'NEW_CATEGORY':
-          return { ...state, techTypes: action.payload }
+    case 'NEW_REFERRER':
+      return { ...state, referrers: action.payload }
+    case 'NEW_CATEGORY':
+      return { ...state, categories: action.payload }
     default:
       return state
   }

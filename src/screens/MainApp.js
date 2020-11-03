@@ -6,6 +6,7 @@ import SearchScreen from './SearchScreen'
 import UsersAdmin from './UsersAdmin'
 import ReferrersAdmin from './ReferrersAdmin'
 import DepartmentsAdmin from './DepartmentsAdmin'
+import CategoriesAdmin from './CategoriesAdmin'
 import Reports from './Reports'
 
 const MainApp = () => {
@@ -25,6 +26,8 @@ const MainApp = () => {
         <ReferrersAdmin />
         : screenRoute === 'editDepartments' ?
         <DepartmentsAdmin />
+        : screenRoute === 'editCategories' ?
+        <CategoriesAdmin />
         : screenRoute === 'patientSearch' || screenRoute === 'techSearch' ?
         <SearchScreen />
         :

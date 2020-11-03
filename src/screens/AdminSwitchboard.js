@@ -18,6 +18,7 @@ const AdminSwitchboard = () => {
         <button className='menu-button' value='editUsers' onClick={(e) => handleChooseRoute(e.target.value)}>Users</button>
         <button className='menu-button' value='editReferrers' onClick={(e) => handleChooseRoute(e.target.value)}>Referrers</button>
         <button className='menu-button' value='editDepartments' onClick={(e) => handleChooseRoute(e.target.value)}>Departments</button>
+        <button className='menu-button' value='editCategories' onClick={(e) => handleChooseRoute(e.target.value)}>Categories</button>
         <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button>
       </div>
     </div>

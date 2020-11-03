@@ -19,7 +19,7 @@ export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
       adminType = 'deletereferrer'
       dispatchType = 'UPDATE_REFERRERS_LIST'
       break
-    case 'editCategory':
+    case 'editCategories':
       adminType = 'deletecategory'
       dispatchType = 'UPDATE_CATEGORIES_LIST'
       break
@@ -44,6 +44,8 @@ export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
 
 export const addUser = (screenRoute, { role, initials, name, departmentName, categoryName, cost }) => async (dispatch) => {
 
+  console.log(screenRoute)
+
   let adminType = ''
   let dispatchType = ''
   switch (screenRoute) {
@@ -59,7 +61,7 @@ export const addUser = (screenRoute, { role, initials, name, departmentName, cat
       adminType = 'newreferrer'
       dispatchType = 'NEW_REFERRER'
       break
-    case 'editCategory':
+    case 'editCategories':
       adminType = 'newcategory'
       dispatchType = 'NEW_CATEGORY'
       break

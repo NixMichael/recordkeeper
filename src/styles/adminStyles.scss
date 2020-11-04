@@ -49,6 +49,17 @@
         justify-content: space-between;
         padding: 0.25rem 1rem;
       }
+
+      .categories-list {
+        li:first-child {
+          width: 45%;
+        }
+    
+        li:nth-child(2) {
+          width: 20%;
+          text-align: left;
+        }
+      }
     }
 }
 

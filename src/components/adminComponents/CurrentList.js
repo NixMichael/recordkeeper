@@ -98,9 +98,9 @@ const CurrentList = () => {
         :
         categories.map((category, index) => {
           return (
-            <div key={category.id}>
+            <div className='categories-list' key={category.id}>
               <li>{category.name}</li>
-              <li></li>
+              <li>£{category.techtypecost}</li>
               <input className="adminCheckbox" id={category.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )

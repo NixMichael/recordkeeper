@@ -1,6 +1,6 @@
 import React from 'react'
-import CurrentList from '../components/adminComponents/CurrentList'
-import AddNew from '../components/adminComponents/AddNew'
+import CurrentList from '../../components/adminComponents/CurrentList'
+import AddNew from '../../components/adminComponents/AddNew'
 
 const ReferrersAdmin = () => {
   return (

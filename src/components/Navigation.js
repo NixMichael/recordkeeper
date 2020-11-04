@@ -34,6 +34,12 @@ const Navigation = () => {
     case 'editTechTypes':
       title = 'Editing Tech Categories'
       break
+    case 'patientSearch':
+      title = 'Search Patient Records'
+      break
+    case 'techSearch':
+      title = 'Search Tech Records'
+      break
     case 'reports':
       title = 'Reports'
       break

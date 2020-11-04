@@ -4,6 +4,7 @@ import '../styles/mainAppStyles.scss'
 import '../styles/recordKeeperStyles.scss'
 import Switchboard from './Switchboard'
 import AdminSwitchboard from './AdminSwitchboard'
+import ReportsSwitchboard from './ReportsSwitchboard'
 import MainApp from './MainApp'
 import { fetchFieldData } from '../actions/recordActions'
 
@@ -24,6 +25,9 @@ const RecordKeeper = () => {
     :
     screenRoute === 'admin' ?
     <AdminSwitchboard />
+    :
+    screenRoute === 'reports' ?
+    <ReportsSwitchboard />
     :
     <MainApp />
     }

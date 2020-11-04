@@ -10,7 +10,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('')
 
   const handleClick = () => {
-    dispatch(loginUser())
+    dispatch(loginUser(username, password))
   }
 
   return (

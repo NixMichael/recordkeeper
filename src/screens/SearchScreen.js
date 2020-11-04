@@ -10,7 +10,6 @@ const SearchScreen = () => {
 
   return (
     <>
-      <div className='record-title'>Search</div>
       <div className='record-fields-background'>
         {
           screenRoute === 'patientSearch' ?

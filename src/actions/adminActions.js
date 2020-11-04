@@ -2,8 +2,6 @@ import axios from 'axios'
 
 export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
 
-  console.log(arr)
-
   let adminType = ''
   let dispatchType = ''
   switch (screenRoute) {
@@ -43,8 +41,6 @@ export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
 }
 
 export const addUser = (screenRoute, { role, initials, name, departmentName, categoryName, cost }) => async (dispatch) => {
-
-  console.log(screenRoute)
 
   let adminType = ''
   let dispatchType = ''

@@ -253,7 +253,6 @@ app.delete('/deleteuser', async (req,res) => {
 
 app.delete('/deletereferrer', async (req,res) => {
   const { toDelete } = req.body
-  console.log(toDelete)
 
   for (c = 0; c < toDelete.length; c++) {
     await db('referrer').select('*').where('name', toDelete[c]).del()

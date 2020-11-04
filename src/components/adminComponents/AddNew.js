@@ -11,13 +11,25 @@ const AddNew = () => {
   const [name, setName] = useState('')
   const [departmentName, setDepartmentName] = useState('')
   const [categoryName, setCategoryName] = useState('')
-  const [cost, setCost] = useState(0)
+  const [cost, setCost] = useState(null)
 
   const screenRoute = useSelector(state => state.screenRoute)
 
   let currentTitle = screenRoute === 'editUsers' ? 'User' : screenRoute === 'editDepartments' ? 'Department' : screenRoute === 'editReferrers' ? 'Referrer' : 'Category'
 
+  const submitNewListItem = async (data) => {
+    await dispatch(addUser(screenRoute, data))
+
+    setRole('--Please Select--')
+    setInitials('')
+    setName('')
+    setDepartmentName('')
+    setCategoryName('')
+    setCost(0)
+  }
+
   const addNew = () => {
+
     const newDetails = {
       role: role,
       initials: initials,
@@ -26,14 +38,18 @@ const AddNew = () => {
       categoryName: categoryName,
       cost: cost
     }
-    dispatch(addUser(screenRoute, newDetails))
 
-    setRole('--Please Select--')
-    setInitials('')
-    setName('')
-    setDepartmentName('')
-    setCategoryName('')
-    setCost(0)
+    if (screenRoute === 'editUsers' & (role === '--Please Select--' || initials === '' || name === '')) {
+      alert('Please enter a value for all fields')
+    } else if (screenRoute === 'editDepartments' && departmentName === '') {
+      alert('Please enter a value for all fields')
+    } else if (screenRoute === 'editReferrers' && (initials === '' || name === '')) {
+      alert('Please enter a value for all fields')
+    } else if (screenRoute === 'editCategories' && (categoryName === '' || cost === '')) {
+      alert('Please enter a value for all fields')
+    } else {
+      submitNewListItem(newDetails)
+    }
   }
 
   return (

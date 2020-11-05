@@ -7,11 +7,12 @@
   background-color: var(--button-color);
 
   &:hover, &:focus {
-    background-color: var(--button-color-faded);
+    background-color: var(--hover-highlight-color);
+    box-shadow: 0 4px 10px 0 var(--shadow-color);
   }
 }
 
-.button-div {
+.nav-button {
   min-width: 100px;
   margin-left: 20px;
   padding: 5px 10px;
@@ -20,6 +21,7 @@
   align-items: center;
   border-radius: 14px;
   border: 3px solid white;
+  background-color: transparent;
   color: white;
   cursor: pointer;
 

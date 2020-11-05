@@ -9,10 +9,10 @@ const Switchboard = () => {
   const dispatch = useDispatch()
 
   const handleChooseRoute = (route) => {
+
     route === 'logout' ?
-    dispatch(logoutUser())
-    :
-    dispatch(chooseRoute(route))
+      dispatch(logoutUser())
+    : dispatch(chooseRoute(route))
   }
 
   return (

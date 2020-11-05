@@ -47,12 +47,9 @@ const Navigation = () => {
       title = ''
   }
 
-  const handleClick = (value) => {
+  const handleClick = (route) => {
     dispatch(chooseRoute('switchboard'))
-
-    if (value === 'logout') {
-      dispatch(logoutUser())
-    }
+    route === 'logout' && dispatch(logoutUser())
   }
 
   return (
@@ -60,8 +57,8 @@ const Navigation = () => {
       {/* <div className='record-title'>{screenRoute === 'browseRecords' ? (recordType === 'p' ? 'Patient Record' : 'Tech Record') : screenRoute === 'report' ? 'Report' : 'Admin'}</div> */}
       <div className='record-title'>{title}</div>
       <div>
-        <div className='button-div' name='switchboard' onClick={(e) => handleClick(e.target.name)}>Switchboard</  div>
-        <div className='button-div' name='logout' onClick={(e) => handleClick(e.target.name)}>Logout</div>
+        <button className='nav-button' value='switchboard' onClick={(e) => handleClick(e.target.value)}>Switchboard</button>
+        <button className='nav-button' value='logout' onClick={(e) => handleClick(e.target.value)}>Logout</button>
       </div>
     </div>
   )

@@ -43,6 +43,20 @@ export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
     })
 }
 
+export const searchRecords = (query) => async(dispatch) => {
+  const { data } = await axios({
+    method: 'post',
+    url: 'http://localhost:3004/searchrecs',
+    headers: {'Content-Type': 'application/json'},
+    data: query
+  })
+
+  dispatch({
+    type: 'SEARCH_RESULTS',
+    payload: data
+  })
+}
+
 export const updateRecordNumber = (position) => {
   return {
     type: 'UPDATE_RECORD_NUMBER',

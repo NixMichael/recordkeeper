@@ -60,6 +60,7 @@
     align-items: center;
     width: 100%;
     border-bottom: 1px solid white;
+    cursor: pointer;
   }
 
   .resultContent {
@@ -147,9 +148,11 @@
 //   font-size: 0.8rem;
 // }
 
-// .selectBoxSize {
-//   min-width: 120px;
-// }
+.selectBoxSize {
+  border-radius: 4px;
+  padding: 0.4rem;
+  width: 140px;
+}
 
 // .resultTitles {
 //   width: 100%;

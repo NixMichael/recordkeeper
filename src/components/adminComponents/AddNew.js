@@ -55,7 +55,7 @@ const AddNew = () => {
   return (
 
     <div className="admin-components">
-      <h3>Add a new {currentTitle}</h3>
+      <h3 id='component-title'>Add a new {currentTitle}</h3>
       <div className="new_user_boxes">
       {
       screenRoute === 'editUsers' ?

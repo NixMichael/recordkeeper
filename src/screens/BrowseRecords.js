@@ -9,8 +9,11 @@ const BrowseRecords = () => {
 
   const dispatch = useDispatch()
 
+  const searchResult = useSelector(state => state.searchResult)
+
   useEffect(() => {
-    dispatch(fetchRecord('lastRec'))
+    console.log(searchResult)
+    // dispatch(fetchRecord('lastRec'))
   }, [dispatch])
 
   const currentRec = useSelector(state => state.currentRec)

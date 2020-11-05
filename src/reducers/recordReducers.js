@@ -113,6 +113,7 @@ export const updateCurrentRecordReducer = (state = {
         recordCount: action.payload
       }
     case SEARCH_BY_JOB_NUMBER:
+      console.log(action.payload)
       const currentIndex = action.payload[5].findIndex(el => el.jobnumber === action.payload[1].jobnumber)
 
       return {
@@ -120,12 +121,15 @@ export const updateCurrentRecordReducer = (state = {
         record: {
           ...action.payload[1],
           referrer: action.payload[4],
+          photographer: action.payload[1].photographer,
+          designer: action.payload[1].designer,
           department: action.payload[3],
           issues: action.payload[0]
         },
         currentRecordNumber: currentIndex,
         recordType: action.payload[2],
-        department: action.payload[3]
+        department: action.payload[3],
+        jobNumber: action.payload[1].jobnumber
       }
     case UPDATE_RECORD_NUMBER:
       return {
@@ -169,5 +173,13 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
       return { ...state, categories: action.payload }
     default:
       return state
+  }
+}
+
+export const searchResultReducer = (state = [], action) => {
+  if (action.type === 'SEARCH_RESULTS') {
+    return action.payload
+  } else {
+    return state
   }
 }

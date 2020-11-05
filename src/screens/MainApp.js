@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Navigation from '../components/Navigation'
 import BrowseRecords from './BrowseRecords'
 import SearchScreen from './SearchScreen'
@@ -10,8 +10,15 @@ import CategoriesAdmin from './adminScreens/CategoriesAdmin'
 import PrivateReport from './reportScreens/PrivateReport'
 import TechReport from './reportScreens/TechReport'
 import Reports from './Reports'
+import { fetchRecord } from '../actions/recordActions'
 
 const MainApp = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchRecord('lastRec'))
+  }, [dispatch])
 
   const screenRoute = useSelector(state => state.screenRoute)
 

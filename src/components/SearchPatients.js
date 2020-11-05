@@ -1,11 +1,18 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import '../styles/searchScreenStyles.scss'
+import { fetchRecordByJobNumber, searchRecords } from '../actions/recordActions'
+import { chooseRoute } from '../actions/routeActions'
 
 const SearchPatients = () => {
 
-  const [ searchResult, setSearchResult] = useState([])
+  const dispatch = useDispatch()
+
+  // const [ searchResult, setSearchResult] = useState([])
   const [ searchReturned, setSearchReturned ] = useState(false)
+
+  const searchResult = useSelector(state => state.searchResult)
   
   const [searchCriteria, setSearchCriteria] = useState({ 
     permission: '', 
@@ -60,14 +67,16 @@ const SearchPatients = () => {
       dateTo: dateB
     }
 
-    const result = await axios({
-        method: 'post',
-        url: 'http://localhost:3004/searchrecs',
-        headers: {'Content-Type': 'application/json'},
-        data: searchQueries
-    })
+    await dispatch(searchRecords(searchQueries))
 
-    setSearchResult(result.data)
+    // const result = await axios({
+    //     method: 'post',
+    //     url: 'http://localhost:3004/searchrecs',
+    //     headers: {'Content-Type': 'application/json'},
+    //     data: searchQueries
+    // })
+
+    // setSearchResult(result.data)
     setSearchReturned(true)
   }
 
@@ -102,13 +111,18 @@ const SearchPatients = () => {
       }
   }
 
+  const jumpToRecord = async (jobnumber) => {
+    await dispatch(fetchRecordByJobNumber(jobnumber))
+    dispatch(chooseRoute('browseRecords'))
+  }
+
   return (
     <div className="searchChoice__form">
     <div className="searchCriteria">
         <div className="searchBoxes">
             <label>Photographer: <input className="shortInput" type="text" id="photographer" value={searchCriteria.user} name="user" onChange={(e) => handleChange(e.target)}/></label>
             <label>Department: <input className="midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
-            <label>Permission: <select className="selectBoxSize" id="permission" name="permission" value={searchCriteria.permission} onChange={(e) => handleChange(e.target)}>
+            <label>Permission: <select className="record-input selectBoxSize" id="permission" name="permission" value={searchCriteria.permission} onChange={(e) => handleChange(e.target)}>
                 <option value=""></option>
                 <option value="Records">Records</option>
                 <option value="Teaching">Teaching</option>
@@ -153,7 +167,7 @@ const SearchPatients = () => {
             searchResult.map(record => {
 
                 return (
-                    <div className="resultRows" key={record.id}>
+                    <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
                         <p className="patientResult shorterResult">{record.jobnumber}</p>
                         <p className="patientResult shortResult">{record.requestedby}</p>
                         <p className="patientResult longResult">{record.department}</p>

@@ -38,7 +38,7 @@ const PatientUpper = () => {
       </div>
       <div>
         <label>{recordType === 'p' ? 'Photographer' : 'Designer'}: </label>
-        <select className='record-input' name='user' disabled={readOnly} value={record.user} onChange={(e) => handleChange(e.target)}>
+        <select className='record-input' name='user' disabled={readOnly} value={record.photographer || record.designer} onChange={(e) => handleChange(e.target)}>
           <option disabled value='--Please Select--'>--Please Select--</option>
           {
             users.map(user => {

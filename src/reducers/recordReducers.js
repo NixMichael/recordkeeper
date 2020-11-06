@@ -115,17 +115,21 @@ export const updateCurrentRecordReducer = (state = {
     case SEARCH_BY_JOB_NUMBER:
       const currentIndex = action.payload[5].findIndex(el => el.jobnumber === action.payload[1].jobnumber)
 
+      console.log(action.payload)
       return {
         ...state,
         record: {
           ...action.payload[1],
           referrer: action.payload[4],
           department: action.payload[3],
-          issues: action.payload[0]
+          issues: action.payload[0],
+          photographer: action.payload[1].photographer,
+          designer: action.payload[1].designer,
         },
         currentRecordNumber: currentIndex,
         recordType: action.payload[2],
-        department: action.payload[3]
+        department: action.payload[3],
+        jobNumber: action.payload[1].jobnumber
       }
     case UPDATE_RECORD_NUMBER:
       return {

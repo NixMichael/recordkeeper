@@ -1,8 +1,13 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { fetchRecordByJobNumber } from '../actions/recordActions'
+import { chooseRoute } from '../actions/routeActions'
 import '../styles/searchScreenStyles.scss'
 
 const SearchPatients = () => {
+
+  const dispatch = useDispatch()
 
   const [ searchResult, setSearchResult] = useState([])
   const [ searchReturned, setSearchReturned ] = useState(false)
@@ -69,6 +74,11 @@ const SearchPatients = () => {
 
     setSearchResult(result.data)
     setSearchReturned(true)
+  }
+
+  const jumpToRecord = async (jobnumber) => {
+    await dispatch(fetchRecordByJobNumber(jobnumber))
+    dispatch(chooseRoute('browseRecords'))
   }
 
   const reset = () => {
@@ -153,7 +163,7 @@ const SearchPatients = () => {
             searchResult.map(record => {
 
                 return (
-                    <div className="resultRows" key={record.id}>
+                    <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
                         <p className="patientResult shorterResult">{record.jobnumber}</p>
                         <p className="patientResult shortResult">{record.requestedby}</p>
                         <p className="patientResult longResult">{record.department}</p>

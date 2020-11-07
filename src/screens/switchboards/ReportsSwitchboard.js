@@ -80,18 +80,18 @@ const AdminSwitchboard = () => {
             })
           }
         </select>
-        <div className='warning-message'>{selectedReport === '--Please Select--' && <>Please choose a report</>}</div>
+        {/* <div className='warning-message'>{selectedReport === '--Please Select--' && <>Please choose a report</>}</div> */}
         <div className='date-range-inputs'>
           <div>
             <h5>Date From:</h5>
-            <input type='text' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='DD-MM-YYYY' />
+            <input type='text' title='Leave blank for default start date' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='DD-MM-YYYY' />
           </div>
           <div>
             <h5>Date To:</h5>
-            <input type='text' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='DD-MM-YYYY' />
+            <input type='text' title='Leave blank for default end date' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='DD-MM-YYYY' />
           </div>
         </div>
-        <button className='menu-button' onClick={loadReport}>View Report</button>
+        <button className='menu-button' disabled={selectedReport === '--Please Select--'} onClick={loadReport}>View Report</button>
         <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button>
         {/* <button className='menu-button' value='editDepartments' onClick={(e) => handleChooseRoute(e.target.value)}>Departments</button>
         <button className='menu-button' value='editCategories' onClick={(e) => handleChooseRoute(e.target.value)}>Categories</button>

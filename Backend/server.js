@@ -491,7 +491,7 @@ app.post('/addreport', async (req, res) => {
   const { permission, hospitalNumber, patientForename, patientSurname, designer, photographer, referrer, department, description, category } = req.body[1]
 
   await db('reports').insert({
-    reportname: req.body[0],
+    name: req.body[0],
     permission: permission,
     hospitalnumber: hospitalNumber,
     patientforename: patientForename,

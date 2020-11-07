@@ -9,12 +9,19 @@ const Report = () => {
   return (
     <div className='report-screen'>
       <div className='report-results'>
+        <div className='report-results-titles'>
+          <div className='report-sequence-col'>Sequence</div>
+          <div>Job Number</div>
+          <div>Referrer</div>
+          <div>Date</div>
+          <div>Cost</div>
+        </div>
       {
         reportCriteria.map((returned, index) => {
           return (
             
             <div key={returned.id}>
-              <div>{index + 1}</div>
+              <div className='report-sequence-col'>{index + 1}</div>
               <div>{returned.jobnumber}</div>
               <div>{returned.requestedby}</div>
               <div>{returned.to_char}</div>

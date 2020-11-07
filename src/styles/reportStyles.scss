@@ -1,7 +1,9 @@
 .report-screen {
   width: 90vw;
   min-width: 1200px;
-  min-height: 70vh;
+  min-height: 400px;
+  max-height: 80vh;
+  margin-top: 2rem;
   color: white;
   border: 1px solid black;
   display: flex;
@@ -14,6 +16,7 @@
   & > div:first-child {
     width: 99%;
     margin: 1rem auto;
+    overflow-y: scroll;
 
     div {
       display: flex;
@@ -21,12 +24,27 @@
       padding: 0.3rem 2rem;
     }
 
+    & > div div {
+      width: 20%;
+      display: flex;
+      justify-content: center;
+    }
+
+    
+    .report-sequence-col {
+      width: 7%;
+    }
+    
     & > :nth-child(2n) {
       background-color: rgba(237, 237, 237, 0.1);
     }
-
+    
     & > :nth-child(2n  + 1) {
       background-color: rgba(237, 237, 237, 0.3);
+    }
+
+    & > :first-child {
+      background: var(--minor-feature-element-color);
     }
   }
 

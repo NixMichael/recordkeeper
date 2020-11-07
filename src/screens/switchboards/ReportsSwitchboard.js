@@ -80,10 +80,16 @@ const AdminSwitchboard = () => {
             })
           }
         </select>
-        {selectedReport === '--Please Select--' && <Alert>Please choose a report</Alert>}
-        <div>
-          <input type='text' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='date from' />
-          <input type='text' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='date to' />
+        <div className='warning-message'>{selectedReport === '--Please Select--' && <>Please choose a report</>}</div>
+        <div className='date-range-inputs'>
+          <div>
+            <h5>Date From:</h5>
+            <input type='text' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='DD-MM-YYYY' />
+          </div>
+          <div>
+            <h5>Date To:</h5>
+            <input type='text' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='DD-MM-YYYY' />
+          </div>
         </div>
         <button className='menu-button' onClick={loadReport}>View Report</button>
         <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button>

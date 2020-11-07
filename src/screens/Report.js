@@ -25,7 +25,7 @@ const Report = () => {
       }
       </div>
       <div className='report-figures'>
-        <div>Total Jobs: 1</div>
+    <div>Total Jobs: {reportCriteria.length}</div>
         <div>Total Cost: £{reportCriteria.length * 25}</div>
       </div>
     </div>

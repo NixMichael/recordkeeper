@@ -43,8 +43,8 @@ const Navigation = () => {
     case 'techSearch':
       title = 'Search Tech Records'
       break
-    case 'reports':
-      title = 'Reports'
+    case 'report':
+      title = 'Report'
       break
     default:
       title = ''

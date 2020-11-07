@@ -138,8 +138,6 @@ export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
     data: { reportName }
   })
 
-  console.log('sending this to search request:', data)
-
   const result = await axios({
     method: 'post',
     url: 'http://localhost:3004/searchrecs',
@@ -148,8 +146,6 @@ export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
       ...data, dateFrom: dateA, dateTo: dateB
     }
 })
-
-console.log(result.data)
 
   dispatch({
     type: 'LOAD_REPORT_CRITERIA',

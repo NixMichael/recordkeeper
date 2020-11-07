@@ -50,6 +50,10 @@
   &:hover {
     background-color: var(--feature-element-color-faded);
   }
+
+  &:disabled {
+    color: rgb(131, 131, 131);
+  }
 }
 
 .search__buttons {

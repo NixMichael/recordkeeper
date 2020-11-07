@@ -65,14 +65,14 @@ const SearchPatients = () => {
       dateTo: dateB
     }
 
-    const result = await axios({
+    const { data } = await axios({
         method: 'post',
         url: 'http://localhost:3004/searchrecs',
         headers: {'Content-Type': 'application/json'},
         data: searchQueries
     })
 
-    setSearchResult(result.data)
+    setSearchResult(data)
     setSearchReturned(true)
   }
 

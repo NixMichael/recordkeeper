@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { chooseRoute } from '../../actions/routeActions'
 import { fetchReport } from '../../actions/recordActions'
@@ -36,26 +37,31 @@ const AdminSwitchboard = () => {
   }
 
   const loadReport = async () => {
-    let dateA, dateB
+    if (selectedReport === '--Please Select--') {
+      alert('Please select a report')
+    } else {
+      let dateA = dateFrom
+      let dateB = dateTo
 
-    if (!dateFrom) {
-      dateA = '01-01-2000' // Set default from date
+      if (!dateFrom) {
+        dateA = '01-01-2000' // Set default from date
+      }
+
+      if (!dateTo) {
+        let year = new Date().getFullYear().toString();
+        let month = new Date().getMonth() + 1;
+        let day = new Date().getDate();
+
+        month = month < 10 ? `0${month}` : month;
+        day = day < 10 ? `0${day}` : day;
+        let curDate = `${day}-${month}-${year}`
+        
+        dateB = curDate
+      }
+      await dispatch(fetchReport(selectedReport, dateA, dateB))
+      // await dispatch(loadSearchResults(reportCriteria))
+      dispatch(chooseRoute('report'))
     }
-
-    if (!dateTo) {
-      let year = new Date().getFullYear().toString();
-      let month = new Date().getMonth() + 1;
-      let day = new Date().getDate();
-
-      month = month < 10 ? `0${month}` : month;
-      day = day < 10 ? `0${day}` : day;
-      let curDate = `${day}-${month}-${year}`
-      
-      dateB = curDate
-    }
-    await dispatch(fetchReport(selectedReport, dateA, dateB))
-    // await dispatch(loadSearchResults(reportCriteria))
-    dispatch(chooseRoute('report'))
   }
 
   return (
@@ -74,9 +80,10 @@ const AdminSwitchboard = () => {
             })
           }
         </select>
+        {selectedReport === '--Please Select--' && <Alert>Please choose a report</Alert>}
         <div>
-          <input type='text' value={dateFrom} onChange={setDateFrom} placeholder='date from' />
-          <input type='text' value={dateTo} onChange={setDateTo} placeholder='date to' />
+          <input type='text' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='date from' />
+          <input type='text' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='date to' />
         </div>
         <button className='menu-button' onClick={loadReport}>View Report</button>
         <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button>

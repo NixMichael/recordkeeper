@@ -1,0 +1,42 @@
+.report-screen {
+  width: 90vw;
+  min-width: 1200px;
+  min-height: 70vh;
+  color: white;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: space-between;
+  background: var(--feature-element-color);
+  color: white;
+
+  & > div:first-child {
+    width: 99%;
+    margin: 1rem auto;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.3rem 2rem;
+    }
+
+    & > :nth-child(2n) {
+      background-color: rgba(237, 237, 237, 0.1);
+    }
+
+    & > :nth-child(2n  + 1) {
+      background-color: rgba(237, 237, 237, 0.3);
+    }
+  }
+
+  .report-figures {
+    width: 100%;
+    margin: 1rem auto 0;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--minor-feature-element-color);
+  }
+  
+}

@@ -435,8 +435,9 @@ app.post('/searchrecs', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
+  let job = []
   if (type === 'p') {
-    const patientjob = await db('index')
+    job = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description')
       .where('photographer', 'like', `%${photographer}%`)
@@ -449,10 +450,8 @@ app.post('/searchrecs', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-
-    res.json(patientjob)
   } else {
-    const techjob = await db('index')
+    job = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer')
       .where('designer', 'like', `%${designer}%`)
@@ -462,9 +461,9 @@ app.post('/searchrecs', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-
-    res.json(techjob)
   }
+
+  res.json(job)
 })
 
 const PORT = 3004

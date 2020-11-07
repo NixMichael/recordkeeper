@@ -11,7 +11,9 @@ import {
   UPDATE_RECORD_FIELD,
   NEW_RECORD,
   NEW_RECORD_SUBMITTED,
-  UPDATED_ISSUE_LIST
+  UPDATED_ISSUE_LIST,
+  SEARCH_BY_JOB_NUMBER,
+  UPDATE_RECORD_NUMBER
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
@@ -38,14 +40,14 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
     const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
     dispatch({
-      type: 'SEARCH_BY_JOB_NUMBER',
+      type: SEARCH_BY_JOB_NUMBER,
       payload: data
     })
 }
 
 export const updateRecordNumber = (position) => {
   return {
-    type: 'UPDATE_RECORD_NUMBER',
+    type: UPDATE_RECORD_NUMBER,
     payload: position
   }
 }

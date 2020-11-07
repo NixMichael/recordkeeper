@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { NEW_CATEGORY, NEW_DEPARTMENT, NEW_REFERRER, NEW_USER, UPDATE_CATEGORIES_LIST, UPDATE_DEPARTMENTS_LIST, UPDATE_REFERRERS_LIST, UPDATE_USERS_LIST } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
 
@@ -7,19 +8,19 @@ export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
   switch (screenRoute) {
     case 'editUsers':
       adminType = 'deleteuser'
-      dispatchType = 'UPDATE_USERS_LIST'
+      dispatchType = UPDATE_USERS_LIST
       break
     case 'editDepartments':
       adminType = 'deletedepartment'
-      dispatchType = 'UPDATE_DEPARTMENTS_LIST'
+      dispatchType = UPDATE_DEPARTMENTS_LIST
       break
     case 'editReferrers':
       adminType = 'deletereferrer'
-      dispatchType = 'UPDATE_REFERRERS_LIST'
+      dispatchType = UPDATE_REFERRERS_LIST
       break
     case 'editCategories':
       adminType = 'deletecategory'
-      dispatchType = 'UPDATE_CATEGORIES_LIST'
+      dispatchType = UPDATE_CATEGORIES_LIST
       break
     default:
       adminType = ''
@@ -47,19 +48,19 @@ export const addUser = (screenRoute, { role, initials, name, departmentName, cat
   switch (screenRoute) {
     case 'editUsers':
       adminType = 'newuser'
-      dispatchType = 'NEW_USER'
+      dispatchType = NEW_USER
       break
     case 'editDepartments':
       adminType = 'newdepartment'
-      dispatchType = 'NEW_DEPARTMENT'
+      dispatchType = NEW_DEPARTMENT
       break
     case 'editReferrers':
       adminType = 'newreferrer'
-      dispatchType = 'NEW_REFERRER'
+      dispatchType = NEW_REFERRER
       break
     case 'editCategories':
       adminType = 'newcategory'
-      dispatchType = 'NEW_CATEGORY'
+      dispatchType = NEW_CATEGORY
       break
     default:
       adminType = ''

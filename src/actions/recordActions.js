@@ -60,7 +60,7 @@ export const fetchFieldData = () => async (dispatch) => {
 
     const { data } = await axios.get('http://localhost:3004/fetchFields')
 
-    const fieldData = [data[0], data[1], data[2], data[3]]
+    const fieldData = [data[0], data[1], data[2], data[3], data[4]]
     dispatch({
       type: FIELD_DATA_SUCCESS,
       payload: fieldData

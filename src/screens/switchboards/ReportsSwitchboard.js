@@ -20,7 +20,7 @@ const AdminSwitchboard = () => {
       url: 'http://localhost:3004/fetchreports',
       headers: { 'Content-Type': 'application/json' }
     })
-    const reportList = data.map(report => report.reportname)
+    const reportList = data.map(report => report.name)
     setList(reportList)
   }
 

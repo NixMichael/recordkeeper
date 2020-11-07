@@ -284,6 +284,19 @@ app.delete('/deletecategory', async (req, res) => {
   res.send(updatedList)
 })
 
+app.delete('/deletereport', async (req, res) => {
+  const { toDelete } = req.body
+
+  console.log('report', toDelete)
+
+  for (c = 0; c < toDelete.length; c++) {
+    await db('reports').where('name', toDelete[c]).select('*').del()
+  }
+
+  const updatedList = await db('reports').select('*').orderBy('name', 'asc')
+  res.send(updatedList)
+})
+
 app.get('/gettechcost/:cat', async (req, res) => {
   const { cat } = req.params
 
@@ -381,8 +394,9 @@ app.get('/fetchFields', async (req, res) => {
   const users = await db('users').select('*').orderBy('name', 'asc')
   const categories = await db('categories').select('*').orderBy('name', 'asc')
   const departments = await db('departments').select('*').orderBy('name', 'asc')
+  const reports = await db('reports').select('*').orderBy('name', 'asc')
 
-  dropDownContents = [referrers, users, categories, departments]
+  dropDownContents = [referrers, users, categories, departments, reports]
 
   res.send(dropDownContents)
 })
@@ -495,13 +509,13 @@ app.post('/addreport', async (req, res) => {
 })
 
 app.get('/fetchreports', async (req, res) => {
-  const reportList = await db('reports').select('reportname')
+  const reportList = await db('reports').select('name')
   res.json(reportList)
 })
 
 app.post('/fetchreport', async (req, res) => {
   const { reportName } = req.body
   console.log('name:', reportName)
-  const result = await db('reports').select('*').where('reportname', reportName)
+  const result = await db('reports').select('*').where('name', reportName)
   res.json(result[0])
 })

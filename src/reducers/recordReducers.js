@@ -21,7 +21,8 @@ import {
   NEW_USER,
   UPDATE_CATEGORIES_LIST,
   UPDATE_REFERRERS_LIST,
-  UPDATE_DEPARTMENTS_LIST
+  UPDATE_DEPARTMENTS_LIST,
+  UPDATE_REPORTS_LIST
 } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const updateCurrentRecordReducer = (state = { 
@@ -157,10 +158,11 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
     case FIELD_DATA_SUCCESS:
       return { 
         loading: false,
-        users: action.payload[1],
-        departments: action.payload[3],
         referrers: action.payload[0],
-        categories: action.payload[2]
+        users: action.payload[1],
+        categories: action.payload[2],
+        departments: action.payload[3],
+        reports: action.payload[4]
       }
     case FIELD_DATA_FAIL:
       return { loading: false, error: action.payload }
@@ -172,6 +174,8 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
       return { ...state, referrers: action.payload }
     case UPDATE_CATEGORIES_LIST:
       return { ...state, categories: action.payload }
+    case UPDATE_REPORTS_LIST:
+      return { ...state, reports: action.payload }
     case NEW_USER:
       return { ...state, users: action.payload }
     case NEW_DEPARTMENT:

@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { NEW_CATEGORY, NEW_DEPARTMENT, NEW_REFERRER, NEW_USER, UPDATE_CATEGORIES_LIST, UPDATE_DEPARTMENTS_LIST, UPDATE_REFERRERS_LIST, UPDATE_USERS_LIST } from '../CONSTANTS/RECORD_CONSTANTS'
+import { NEW_CATEGORY, NEW_DEPARTMENT, NEW_REFERRER, NEW_USER, UPDATE_CATEGORIES_LIST, UPDATE_DEPARTMENTS_LIST, UPDATE_REFERRERS_LIST, UPDATE_USERS_LIST, UPDATE_REPORTS_LIST } from '../CONSTANTS/RECORD_CONSTANTS'
 
 export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
+
+  console.log(screenRoute)
 
   let adminType = ''
   let dispatchType = ''
@@ -21,6 +23,10 @@ export const deleteUsers = (screenRoute, arr) => async (dispatch) => {
     case 'editCategories':
       adminType = 'deletecategory'
       dispatchType = UPDATE_CATEGORIES_LIST
+      break
+    case 'editReports':
+      adminType = 'deletereport'
+      dispatchType = UPDATE_REPORTS_LIST
       break
     default:
       adminType = ''

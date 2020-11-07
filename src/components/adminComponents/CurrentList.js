@@ -14,7 +14,7 @@ const CurrentList = () => {
   let currentTitle = screenRoute === 'editUsers' ? 'Users' : screenRoute === 'editDepartments' ? 'Departments' : screenRoute === 'editReferrers' ? 'Referrers' : 'Categories'
 
   const fieldData = useSelector(state => state.fieldData)
-  const { users, departments, referrers, categories } = fieldData
+  const { users, departments, referrers, categories, reports } = fieldData
 
   const handleChange = (id, index) => {
     // Create a new array from the array in state, then add the true/false value to the relevant array index and set state to this new array
@@ -44,7 +44,8 @@ const CurrentList = () => {
     const list = screenRoute === 'editUsers' ? users 
     : screenRoute === 'editDepartments' ? departments 
     : screenRoute === 'editReferrers' ? referrers
-    : categories
+    : screenRoute === 'editCategories' ? categories
+    : reports
 
     list.filter((i, index) => {
       for (let c = 0; c < filtered.length; c++) {
@@ -96,12 +97,23 @@ const CurrentList = () => {
           )
         })
         :
+        screenRoute === 'editCategories' ?
         categories.map((category, index) => {
           return (
             <div className='categories-list' key={category.id}>
               <li>{category.name}</li>
               <li>£{category.techtypecost}</li>
               <input className="adminCheckbox" id={category.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
+            </div>
+          )
+        })
+        :
+        reports.map((report, index) => {
+          return (
+            <div key={report.id}>
+              <li>{report.name}</li>
+              <li></li>
+              <input className="adminCheckbox" id={report.name} name={index} checked={selected[index] || false} type="checkbox" onChange={(e) => handleChange(e.target.id, index)}/>
             </div>
           )
         })

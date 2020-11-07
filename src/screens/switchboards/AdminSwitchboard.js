@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { chooseRoute } from '../actions/routeActions'
-import '../styles/switchboardStyles.scss'
+import { chooseRoute } from '../../actions/routeActions'
+import '../../styles/switchboardStyles.scss'
 
 const AdminSwitchboard = () => {
 
@@ -14,7 +14,7 @@ const AdminSwitchboard = () => {
   return (
     <div className='switchboard'>
       <div>
-        <h2>Switchboard</h2>
+        <h2>Admin</h2>
         <button className='menu-button' value='editUsers' onClick={(e) => handleChooseRoute(e.target.value)}>Users</button>
         <button className='menu-button' value='editReferrers' onClick={(e) => handleChooseRoute(e.target.value)}>Referrers</button>
         <button className='menu-button' value='editDepartments' onClick={(e) => handleChooseRoute(e.target.value)}>Departments</button>

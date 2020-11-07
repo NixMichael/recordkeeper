@@ -31,6 +31,9 @@ const Navigation = () => {
     case 'editReferrers':
       title = 'Editing Referrers'
       break
+    case 'editCategories':
+      title = 'Editing Tech Categories'
+      break
     case 'editTechTypes':
       title = 'Editing Tech Categories'
       break

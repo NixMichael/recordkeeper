@@ -431,43 +431,78 @@ app.get('/getRecord', async (req, res) => {
 
 app.post('/searchrecs', async (req, res) => {
 
-    // if (req.body.type === 'p') {
-        const { type, photographer, permission, hospitalNumber, patientSurname, patientForename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
+  console.log('searching for:', req.body)
 
-    if (type === 'p') {
-      const patientjob = await db('index')
-        .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
-        .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description')
-        .where('photographer', 'like', `%${photographer}%`)
-        .where('permission', 'like', `%${permission}%`)
-        .where('hospitalnumber', 'like', `%${hospitalNumber}%`)
-        .where('patientsurname', 'ilike', `%${patientSurname}%`)
-        .where('patientforename', 'ilike', `%${patientForename}%`)
-        .where('index.requestedby', 'like', `%${referrer}%`)
-        .where('description', 'ilike', `%${description}%`)
-        .where('department', 'like', `%${department}%`)
-        .where('creationdate', '>=', dateFrom)
-        .where('creationdate', '<=', dateTo)
+  const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
-      res.json(patientjob)
-    } else {
-      const techjob = await db('index')
-        .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
-        .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer')
-        .where('designer', 'like', `%${designer}%`)
-        .where('category', 'like', `%${category}%`)
-        .where('index.requestedby', 'like', `%${referrer}%`)
-        .where('description', 'ilike', `%${description}%`)
-        .where('department', 'like', `%${department}%`)
-        .where('creationdate', '>=', dateFrom)
-        .where('creationdate', '<=', dateTo)
+  if (type === 'p') {
+    const patientjob = await db('index')
+      .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description')
+      .where('photographer', 'like', `%${photographer}%`)
+      .where('permission', 'like', `%${permission}%`)
+      .where('hospitalnumber', 'like', `%${hospitalnumber}%`)
+      .where('patientsurname', 'ilike', `%${patientsurname}%`)
+      .where('patientforename', 'ilike', `%${patientforename}%`)
+      .where('index.requestedby', 'like', `%${referrer}%`)
+      .where('description', 'ilike', `%${description}%`)
+      .where('department', 'like', `%${department}%`)
+      .where('creationdate', '>=', dateFrom)
+      .where('creationdate', '<=', dateTo)
 
-      res.json(techjob)
-    }
+    res.json(patientjob)
+  } else {
+    const techjob = await db('index')
+      .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer')
+      .where('designer', 'like', `%${designer}%`)
+      .where('category', 'like', `%${category}%`)
+      .where('index.requestedby', 'like', `%${referrer}%`)
+      .where('description', 'ilike', `%${description}%`)
+      .where('department', 'like', `%${department}%`)
+      .where('creationdate', '>=', dateFrom)
+      .where('creationdate', '<=', dateTo)
+
+    res.json(techjob)
+  }
 })
 
 const PORT = 3004
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
+})
+
+app.post('/addreport', async (req, res) => {
+
+  const { permission, hospitalNumber, patientForename, patientSurname, designer, photographer, referrer, department, description, category } = req.body[1]
+
+  await db('reports').insert({
+    reportname: req.body[0],
+    permission: permission,
+    hospitalnumber: hospitalNumber,
+    patientforename: patientForename,
+    patientsurname: patientSurname,
+    designer: designer,
+    photographer: photographer,
+    referrer: referrer,
+    department: department,
+    description: description,
+    category: category,
+    type: req.body[2]
+  })
+
+  res.send('success')
+})
+
+app.get('/fetchreports', async (req, res) => {
+  const reportList = await db('reports').select('reportname')
+  res.json(reportList)
+})
+
+app.post('/fetchreport', async (req, res) => {
+  const { reportName } = req.body
+  console.log('name:', reportName)
+  const result = await db('reports').select('*').where('reportname', reportName)
+  res.json(result[0])
 })

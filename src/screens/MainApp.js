@@ -7,9 +7,8 @@ import UsersAdmin from './adminScreens/UsersAdmin'
 import ReferrersAdmin from './adminScreens/ReferrersAdmin'
 import DepartmentsAdmin from './adminScreens/DepartmentsAdmin'
 import CategoriesAdmin from './adminScreens/CategoriesAdmin'
-import PrivateReport from './reportScreens/PrivateReport'
-import TechReport from './reportScreens/TechReport'
-import Reports from './Reports'
+import Report from './Report'
+import Reports from './Report'
 import { fetchRecord } from '../actions/recordActions'
 
 const MainApp = () => {
@@ -37,10 +36,8 @@ const MainApp = () => {
         <DepartmentsAdmin />
         : screenRoute === 'editCategories' ?
         <CategoriesAdmin />
-        : screenRoute === 'reportPrivate' ?
-        <PrivateReport />
-        : screenRoute === 'reportTech' ?
-        <TechReport />
+        : screenRoute === 'report' ?
+        <Report />
         : screenRoute === 'patientSearch' || screenRoute === 'techSearch' ?
         <SearchScreen />
         :

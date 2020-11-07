@@ -129,3 +129,30 @@ export const deleteRecord = (job, recordType) => {
     console.log(error)
   }
 }
+
+export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
+  const { data } = await axios({
+    method: 'post',
+    url: 'http://localhost:3004/fetchreport',
+    headers: { 'Content-Type': 'application/json' },
+    data: { reportName }
+  })
+
+  console.log('sending this to search request:', data)
+
+  const result = await axios({
+    method: 'post',
+    url: 'http://localhost:3004/searchrecs',
+    headers: {'Content-Type': 'application/json'},
+    data: {
+      ...data, dateFrom: dateA, dateTo: dateB
+    }
+})
+
+console.log(result.data)
+
+  dispatch({
+    type: 'LOAD_REPORT_CRITERIA',
+    payload: result.data
+  })
+}

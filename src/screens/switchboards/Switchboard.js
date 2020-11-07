@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { logoutUser } from '../actions/userActions'
-import { chooseRoute } from '../actions/routeActions'
-import '../styles/switchboardStyles.scss'
+import { logoutUser } from '../../actions/userActions'
+import { chooseRoute } from '../../actions/routeActions'
+import '../../styles/switchboardStyles.scss'
 
 const Switchboard = () => {
 

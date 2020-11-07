@@ -175,3 +175,14 @@ export const fieldDataReducer = (state = { loading: true }, action) => {
       return state
   }
 }
+
+export const loadReportCriteria = (state = {}, action) => {
+
+  
+  if (action.type === 'LOAD_REPORT_CRITERIA') {
+    console.log('now in state:', action.payload)
+    return action.payload
+  } else {
+    return state
+  }
+}

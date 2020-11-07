@@ -17,7 +17,7 @@ const SearchPatients = () => {
     hospitalNumber: '', 
     patientForename: '', 
     patientSurname: '', 
-    user: '', 
+    photographer: '', 
     referrer: '', 
     department: '', 
     description: '', 
@@ -29,13 +29,13 @@ const SearchPatients = () => {
   
   const search = async () => {
 
-    const { department, user, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo } = searchCriteria
+    const { department, photographer, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo } = searchCriteria
 
     let dateA = dateFrom
     let dateB = dateTo
 
     if (!searchCriteria.dateFrom) {
-      dateA = '01-01-2000'
+      dateA = '01-01-2000' // Set default from date
     }
 
     if (!searchCriteria.dateTo) {
@@ -54,11 +54,11 @@ const SearchPatients = () => {
     const searchQueries = {
       type: 'p',
       department: department,
-      photographer: user,
+      photographer: photographer,
       permission: permission,
-      hospitalNumber: hospitalNumber,
-      patientForename: patientForename,
-      patientSurname: patientSurname,
+      hospitalnumber: hospitalNumber,
+      patientforename: patientForename,
+      patientsurname: patientSurname,
       referrer: referrer,
       description: description,
       dateFrom: dateA,
@@ -87,16 +87,34 @@ const SearchPatients = () => {
         hospitalNumber: '', 
         patientForename: '', 
         patientSurname: '', 
-        user: '', 
+        photographer: '', 
+        designer: '', 
         referrer: '', 
         department: '', 
         description: '', 
         dateFrom: '', 
-        dateTo: '',
+        dateTo: '', 
         returned: false,
         dates: []
       })
       setSearchReturned(false)
+  }
+
+  const save = async () => {
+    const reportName = prompt('Give the report a name:')
+
+    await axios({
+      method: 'post',
+      url: 'http://localhost:3004/addreport',
+      headers: { 'Content-Type': 'application/json' },
+      data: [
+        reportName,
+        searchCriteria,
+        'p'
+      ]
+    })
+
+    alert('Report saved. Make use of this report in the Reports section from the main switchboard')
   }
 
   const handleChange = (event) => {
@@ -116,9 +134,9 @@ const SearchPatients = () => {
     <div className="searchChoice__form">
     <div className="searchCriteria">
         <div className="searchBoxes">
-            <label>Photographer: <input className="shortInput" type="text" id="photographer" value={searchCriteria.user} name="user" onChange={(e) => handleChange(e.target)}/></label>
+            <label>Photographer: <input className="shortInput" type="text" id="photographer" value={searchCriteria.photographer} name="photographer" onChange={(e) => handleChange(e.target)}/></label>
             <label>Department: <input className="midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
-            <label>Permission: <select className="selectBoxSize" id="permission" name="permission" value={searchCriteria.permission} onChange={(e) => handleChange(e.target)}>
+            <label>Permission: <select className="record-input selectBoxSize" id="permission" name="permission" value={searchCriteria.permission} onChange={(e) => handleChange(e.target)}>
                 <option value=""></option>
                 <option value="Records">Records</option>
                 <option value="Teaching">Teaching</option>
@@ -142,6 +160,7 @@ const SearchPatients = () => {
             <div className="search__buttons">
                 <button className="record-button search-button" onClick={search}>Search</button>
                 <button className="record-button search-button" onClick={reset}>Reset</button>
+                <button className="record-button search-button" onClick={save}>Save As Report</button>
             </div>
         </div>
     </div>
@@ -161,25 +180,23 @@ const SearchPatients = () => {
         <div className="resultContent">
         {(searchReturned) ?
             searchResult.map(record => {
-
-                return (
-                    <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
-                        <p className="patientResult shorterResult">{record.jobnumber}</p>
-                        <p className="patientResult shortResult">{record.requestedby}</p>
-                        <p className="patientResult longResult">{record.department}</p>
-                        <p className="patientResult shortResult">{record.permission}</p>
-                        <p className="patientResult shortResult">{record.hospitalnumber}</p>
-                        <p className="patientResult shortResult">{record.patientsurname}</p>
-                        <p className="patientResult shortResult">{record.patientforename}</p>
-                        <p className="patientResult longerResult">{record.description}</p>
-                        <p className="patientResult shortResult">{record.photographer}</p>
-                        <p className="patientResult shortResult">{record.to_char}</p>
-                    </div>
-                        )
-                    })
-                    :    
-                    <p className="search-noResults">Results display here...</p>
-                }
+              return (
+                <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
+                  <p className="patientResult shorterResult">{record.jobnumber}</p>
+                  <p className="patientResult shortResult">{record.requestedby}</p>
+                  <p className="patientResult longResult">{record.department}</p>
+                  <p className="patientResult shortResult">{record.permission}</p>
+                  <p className="patientResult shortResult">{record.hospitalnumber}</p>
+                  <p className="patientResult shortResult">{record.patientsurname}</p>
+                  <p className="patientResult shortResult">{record.patientforename}</p>
+                  <p className="patientResult longerResult">{record.description}</p>
+                  <p className="patientResult shortResult">{record.photographer}</p>
+                  <p className="patientResult shortResult">{record.to_char}</p>
+                </div>
+                    )
+                })
+          : <p className="search-noResults">Results display here...</p>
+        }
                 </div>
     </div>
 </div>

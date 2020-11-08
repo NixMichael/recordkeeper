@@ -64,9 +64,10 @@
   }
 
   .resultContent {
-    height: 190px;
+    max-height: 260px;
     overflow-y: auto;
     overflow-x: hidden;
+    background: rgba(255,255,255,0.1);
 
     .resultRows {
       padding: 0.5rem 1rem 0;

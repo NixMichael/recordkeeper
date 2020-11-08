@@ -110,7 +110,7 @@ const Issues = () => {
               <p>{issue.date}</p>
               <p>{issue.notes}</p>
               <p>{issue.qty}</p>
-              <p>{issue.cost}</p>
+              <p>£{issue.cost}</p>
               <div className='delete-issue-button' onClick={(e) => !readOnly && deleteIssue(issue.id, issue.jobnumber)}><i className="fas fa-times-circle"></i></div>
             </div>
           )

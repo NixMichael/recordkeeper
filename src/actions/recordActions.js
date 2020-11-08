@@ -145,7 +145,9 @@ export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
     url: 'http://localhost:3004/searchrecs',
     headers: {'Content-Type': 'application/json'},
     data: {
-      ...data, dateFrom: dateA, dateTo: dateB
+      ...data,
+      dateFrom: dateA, 
+      dateTo: dateB
     }
 })
 

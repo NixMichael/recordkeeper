@@ -14,7 +14,7 @@ const SearchTech = () => {
   
   const [searchCriteria, setSearchCriteria] = useState({ 
     category: '',
-    user: '',
+    designer: '',
     referrer: '',
     department: '',
     description: '', 
@@ -26,7 +26,7 @@ const SearchTech = () => {
   
   const search = async () => {
 
-    const { department, user, category, referrer, description, dateFrom, dateTo } = searchCriteria
+    const { department, designer, category, referrer, description, dateFrom, dateTo } = searchCriteria
 
     let dateA = dateFrom
     let dateB = dateTo
@@ -51,7 +51,7 @@ const SearchTech = () => {
     const searchQueries = {
       type: 't',
       department: department,
-      designer: user,
+      designer: designer,
       category: category,
       referrer: referrer,
       description: description,
@@ -78,7 +78,7 @@ const SearchTech = () => {
   const reset = () => {
       setSearchCriteria({
         category: '',
-        user: '',
+        designer: '',
         referrer: '',
         department: '',
         description: '',
@@ -124,7 +124,7 @@ const SearchTech = () => {
     <div className="searchChoice__form">
     <div className="searchCriteria">
         <div className="searchBoxes">
-            <label>Designer: <input className="shortInput" type="text" id="designer" value={searchCriteria.user} name="user" onChange={(e) => handleChange(e.target)}/></label>
+            <label>Designer: <input className="shortInput" type="text" id="designer" value={searchCriteria.designer} name="designer" onChange={(e) => handleChange(e.target)}/></label>
             <label>Department: <input className="midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
             <label>Category: <input className="selectBoxSize" type="text" id="category" name="category" value={searchCriteria.category} onChange={(e) => handleChange(e.target)} /></label>
             <label>Referrer: <input className="shortInput" type="text" id="referrer" name="referrer" value={searchCriteria.referrer} onChange={(e) => handleChange(e.target)}/></label>

@@ -470,7 +470,7 @@ app.post('/searchrecs', async (req, res) => {
     job = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
       .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.cost')
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.cost', 'issued.id')
       .where('designer', 'like', `%${designer}%`)
       .where('category', 'like', `%${category}%`)
       .where('index.requestedby', 'like', `%${referrer}%`)
@@ -521,5 +521,6 @@ app.post('/fetchreport', async (req, res) => {
   const { reportName } = req.body
   console.log('name:', reportName)
   const result = await db('reports').select('*').where('name', reportName)
+  console.log('report fetch:', result[0])
   res.json(result[0])
 })

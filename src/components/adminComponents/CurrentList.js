@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../../styles/adminStyles.scss'
-import { deleteUsers } from '../../actions/adminActions'
+import { deleteItem } from '../../actions/adminActions'
 
 const CurrentList = () => {
 
@@ -56,7 +56,7 @@ const CurrentList = () => {
       return i.name
     })
 
-    dispatch(deleteUsers(screenRoute, toDelete))
+    dispatch(deleteItem(screenRoute, toDelete))
     setSelected([])
   }
 

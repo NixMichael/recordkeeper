@@ -25,7 +25,7 @@ const Report = () => {
               <div>{returned.jobnumber}</div>
               <div>{returned.requestedby}</div>
               <div>{returned.to_char}</div>
-              <div>£25.00</div>
+              <div>£{returned.cost}</div>
             </div>
           )
         })
@@ -33,7 +33,9 @@ const Report = () => {
       </div>
       <div className='report-figures'>
     <div>Total Jobs: {reportCriteria.length}</div>
-        <div>Total Cost: £{reportCriteria.length * 25}</div>
+        <div>Total Cost: £{
+          reportCriteria.reduce((tot, a) => tot + Number(a.cost), 0)
+          }</div>
       </div>
     </div>
   )

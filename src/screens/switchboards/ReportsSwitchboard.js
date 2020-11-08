@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { chooseRoute } from '../../actions/routeActions'
 import { fetchReport } from '../../actions/recordActions'
@@ -59,7 +58,6 @@ const AdminSwitchboard = () => {
         dateB = curDate
       }
       await dispatch(fetchReport(selectedReport, dateA, dateB))
-      // await dispatch(loadSearchResults(reportCriteria))
       dispatch(chooseRoute('report'))
     }
   }
@@ -68,8 +66,6 @@ const AdminSwitchboard = () => {
     <div className='switchboard'>
       <div>
         <h2>Reports</h2>
-        {/* <button className='menu-button' value='reportPrivate' onClick={(e) => handleChooseRoute(e.target.value)}>Private Charging</button>
-        <button className='menu-button' value='reportTech' onClick={(e) => handleChooseRoute(e.target.value)}>Tech Charging</button> */}
         <select className='record-input selectBoxSize' value={selectedReport} onChange={(e) => setSelectedReport(e.target.value)}>
           <option>--Please Select--</option>
           {
@@ -93,9 +89,6 @@ const AdminSwitchboard = () => {
         </div>
         <button className='menu-button' disabled={selectedReport === '--Please Select--'} onClick={loadReport}>View Report</button>
         <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button>
-        {/* <button className='menu-button' value='editDepartments' onClick={(e) => handleChooseRoute(e.target.value)}>Departments</button>
-        <button className='menu-button' value='editCategories' onClick={(e) => handleChooseRoute(e.target.value)}>Categories</button>
-        <button className='menu-button' value='switchboard' onClick={(e) => handleChooseRoute(e.target.value)}>Main Menu</button> */}
       </div>
     </div>
   )

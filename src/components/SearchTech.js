@@ -90,6 +90,23 @@ const SearchTech = () => {
       setSearchReturned(false)
   }
 
+  const save = async () => {
+    const reportName = prompt('Give the report a name:')
+
+    await axios({
+      method: 'post',
+      url: 'http://localhost:3004/addreport',
+      headers: { 'Content-Type': 'application/json' },
+      data: [
+        reportName,
+        searchCriteria,
+        't'
+      ]
+    })
+
+    alert('Report saved. Make use of this report in the Reports section from the main switchboard')
+  }
+
   const handleChange = (event) => {
       const { name, value } = event
 
@@ -121,6 +138,7 @@ const SearchTech = () => {
             <div className="search__buttons">
                 <button className="record-button search-button" onClick={search}>Search</button>
                 <button className="record-button search-button" onClick={reset}>Reset</button>
+                <button className="record-button search-button" onClick={save}>Save As Report</button>
             </div>
         </div>
     </div>

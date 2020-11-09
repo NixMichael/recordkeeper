@@ -142,7 +142,7 @@ export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
 
   const result = await axios({
     method: 'post',
-    url: 'http://localhost:3004/searchrecs',
+    url: 'http://localhost:3004/reportresults',
     headers: {'Content-Type': 'application/json'},
     data: {
       ...data,

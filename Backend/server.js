@@ -454,9 +454,7 @@ app.post('/searchrecs', async (req, res) => {
   if (type === 'p') {
     job = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
-      // .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description'
-      // , 'issued.cost'
       )
       .where('photographer', 'like', `%${photographer}%`)
       .where('permission', 'like', `%${permission}%`)
@@ -472,9 +470,52 @@ app.post('/searchrecs', async (req, res) => {
   } else {
     job = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
-      // .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer'
-      // , 'issued.cost', 'issued.id'
+      )
+      .where('designer', 'like', `%${designer}%`)
+      .where('category', 'like', `%${category}%`)
+      .where('index.requestedby', 'like', `%${referrer}%`)
+      .where('description', 'ilike', `%${description}%`)
+      .where('department', 'like', `%${department}%`)
+      .where('creationdate', '>=', dateFrom)
+      .where('creationdate', '<=', dateTo)
+      .orderBy('jobnumber', 'asc')
+  }
+
+  console.log(job)
+  res.json(job)
+})
+
+app.post('/reportresults', async (req, res) => {
+
+  console.log('searching for:', req.body)
+
+  const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
+
+  let job = []
+
+  if (type === 'p') {
+    job = await db('index')
+      .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
+      .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'issued.cost'
+      )
+      .where('photographer', 'like', `%${photographer}%`)
+      .where('permission', 'like', `%${permission}%`)
+      .where('hospitalnumber', 'like', `%${hospitalnumber}%`)
+      .where('patientsurname', 'ilike', `%${patientsurname}%`)
+      .where('patientforename', 'ilike', `%${patientforename}%`)
+      .where('index.requestedby', 'like', `%${referrer}%`)
+      .where('description', 'ilike', `%${description}%`)
+      .where('department', 'like', `%${department}%`)
+      .where('creationdate', '>=', dateFrom)
+      .where('creationdate', '<=', dateTo)
+      .orderBy('jobnumber', 'asc')
+  } else {
+    job = await db('index')
+      .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
+      .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.cost', 'issued.id'
       )
       .where('designer', 'like', `%${designer}%`)
       .where('category', 'like', `%${category}%`)

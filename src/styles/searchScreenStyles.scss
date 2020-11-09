@@ -32,19 +32,6 @@
   width: 280px;
 }
 
-// .returnedResults, .returnedResultsTech {
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .returnedResults div {
-//   width: 100%;
-//   display: flex;
-//   margin-bottom: 0.5rem;
-//   padding-bottom: 1rem;
-//   border-bottom: 1px solid white;
-// }
-
 .returnedResults {
   .resultTitles {
     padding: 0 1rem;
@@ -64,7 +51,7 @@
   }
 
   .resultContent {
-    max-height: 260px;
+    max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     background: rgba(255,255,255,0.1);
@@ -117,82 +104,8 @@
   margin: 1rem;
 }
 
-  // .shorterResult {
-  //   width: 100px;
-  // }
-  // .shortResult {
-  //   width: 150px;
-  // }
-  // .longResult {
-  //   width: 250px;
-  // }
-  // .longerResult {
-  //   width: 350px;
-  //   background: red;
-  // }
-
-
-// .returnedResults .resultContent {
-//   max-height: 50vh;
-//   overflow-y: auto;
-//   overflow-x: hidden;
-//   display: flex;
-//   flex-direction: column;
-//   border-bottom: none;
-// }
-
-// .returnedResults div p {
-//   padding: 0 1rem;
-//   margin: 0;
-//   text-align: left;
-//   min-width: 130px;
-//   font-size: 0.8rem;
-// }
-
 .selectBoxSize {
   border-radius: 4px;
   padding: 0.4rem;
   width: 140px;
 }
-
-// .resultTitles {
-//   width: 100%;
-//   padding: 0.3rem 0 0.1rem;
-//   background: rgba(0, 0, 20, 0.4);
-// }
-
-// .shorterResult {
-//   width: 8%;
-// }
-
-// .shortResult {
-//   width: 12%;
-// }
-
-// .longResult {
-//   width: 115px;
-//   background: red;
-// }
-
-// .shorterResultTech {
-//   width: 8%;
-// }
-
-// .shortResultTech {
-//   width: 12%;
-// }
-
-// .longResultTech {
-//   width: 15%;
-// }
-
-// .searchBoxes span {
-//   opacity: 80%;
-//   margin: 0 0.5rem;
-// }
-
-// .resultTitles {
-//   display: flex;
-//   justify-content: space-between;
-//   background: orange;
-// }

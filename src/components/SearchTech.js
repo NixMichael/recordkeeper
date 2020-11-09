@@ -121,7 +121,7 @@ const SearchTech = () => {
   }
 
   return (
-    <div className="searchChoice__form">
+    <div className="searchChoice-form">
     <div className="searchCriteria">
         <div className="searchBoxes">
             <label>Designer: <input className="shortInput" type="text" id="designer" value={searchCriteria.designer} name="designer" onChange={(e) => handleChange(e.target)}/></label>

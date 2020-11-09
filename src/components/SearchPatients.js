@@ -131,7 +131,7 @@ const SearchPatients = () => {
   }
 
   return (
-    <div className="searchChoice__form">
+    <div className="searchChoice-form">
     <div className="searchCriteria">
         <div className="searchBoxes">
             <label>Photographer: <input className="shortInput" type="text" id="photographer" value={searchCriteria.photographer} name="photographer" onChange={(e) => handleChange(e.target)}/></label>
@@ -197,7 +197,7 @@ const SearchPatients = () => {
                 })
           : <p className="search-noResults">Results display here...</p>
         }
-                </div>
+        </div>
     </div>
 </div>
   )

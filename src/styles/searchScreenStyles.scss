@@ -1,111 +1,115 @@
-.searchChoice__form {
+.searchChoice-form {
   width: 1200px;
   color: white;
-  flex-direction: column;
-  align-items: space-around;
-}
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr; // Set height of criteria area and results area
 
-.searchChoice__form .searchCriteria {
-  background: rgba(104, 135, 219, 0.3);
-  padding: 16px 16px 10px;
-}
+  .searchCriteria {
+    background: rgba(104, 135, 219, 0.3);
+    padding: 16px 16px 10px;
 
-.searchChoice__form .searchBoxes {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-}
+    .searchBoxes {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
 
-.searchChoice__form .searchBoxes .longInput {
-  width: 300px;
-}
+      .longInput {
+        width: 300px;
+      }
 
-.searchChoice__form .searchBoxes .shorterInput {
-  width: 100px;
-}
+      .shorterInput {
+        width: 100px;
+      }
 
-.searchChoice__form .searchBoxes .shortInput {
-  width: 140px;
-}
+      .shortInput {
+        width: 140px;
+      }
 
-.searchChoice__form .searchBoxes .midInput {
-  width: 280px;
-}
-
-.returnedResults {
-  .resultTitles {
-    padding: 0 1rem;
-    background: rgba(0, 0, 20, 0.4);
-    p {
-      margin: 0;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-    }
-  }
-  .resultTitles, .resultContent .resultRows {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid white;
-    cursor: pointer;
-  }
-
-  .resultContent {
-    max-height: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: rgba(255,255,255,0.1);
-
-    .resultRows {
-      padding: 0.5rem 1rem 0;
-      &:last-child {
-        border-bottom: 0;
+      .midInput {
+        width: 280px;
       }
     }
   }
 
-  .patientResult {
-    padding-left: 1rem;
-    width: 10%;
-    &:first-child {
-      width: 6%;
-      padding-left: 0;
+  .returnedResults {
+    display: grid;
+    grid-template-rows: auto 1fr; // Set height of results titles and results rows
+    overflow: hidden; // Prevent results expanding beyond bottom of results area
+
+    .resultTitles {
+      padding: 0 1rem;
+      background: rgba(0, 0, 20, 0.4);
+      p {
+        margin: 0;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
     }
-    &:nth-child(8) {
-      width: 12%;
+    .resultTitles, .resultContent .resultRows {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid white;
+      cursor: pointer;
     }
-    &:nth-child(9) {
-      width: 12%;
+  
+    .resultContent {
+      overflow-x: hidden;
+      background: rgba(255,255,255,0.1);
+  
+      .resultRows {
+        padding: 0.5rem 1rem 0;
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
     }
-    &:last-child {
-      border-bottom: 0;
+  
+    .patientResult {
+      padding-left: 1rem;
+      width: 10%;
+      &:first-child {
+        width: 6%;
+        padding-left: 0;
+      }
+      &:nth-child(8) {
+        width: 12%;
+      }
+      &:nth-child(9) {
+        width: 12%;
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  
+    .techResult {
+      padding-left: 1rem;
+      width: 10%;
+      &:first-child(1) {
+        padding-left: 0;
+      }
+      &:nth-child(3) {
+        width: 15%;
+      }
+      &:nth-child(5) {
+        width: 25%;
+      }
+      &:nth-child(6) {
+        width: 15%;
+      }
     }
   }
-
-  .techResult {
-    padding-left: 1rem;
-    width: 10%;
-    &:first-child(1) {
-      padding-left: 0;
-    }
-    &:nth-child(3) {
-      width: 15%;
-    }
-    &:nth-child(5) {
-      width: 25%;
-    }
-    &:nth-child(6) {
-      width: 15%;
-    }
+  
+  .search-noResults {
+    margin: 1rem;
   }
-}
-
-.search-noResults {
-  margin: 1rem;
-}
-
-.selectBoxSize {
-  border-radius: 4px;
-  padding: 0.4rem;
-  width: 140px;
+  
+  .selectBoxSize {
+    border-radius: 4px;
+    padding: 0.4rem;
+    width: 140px;
+  }
 }

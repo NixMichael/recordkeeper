@@ -198,6 +198,7 @@ const SearchPatients = () => {
           : <p className="search-noResults">Results display here...</p>
         }
         </div>
+        <div className='search-result-info'>{searchReturned ? searchResult.length : 0} results</div>
     </div>
 </div>
   )

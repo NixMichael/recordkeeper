@@ -143,36 +143,37 @@ const SearchTech = () => {
         </div>
     </div>
     <div className="returnedResults">
-        <div className="resultTitles">
-            <p className="techResult shorterResultTech">JOB NO</p>
-            <p className="techResult shortResultTech">REFERRER</p>
-            <p className="techResult longResultTech">DEPTARTMENT</p>
-            <p className="techResult shortResultTech">CATEGORY</p>
-            <p className="techResult longerResultTech">DESCRIPTION</p>
-            <p className="techResult shortResultTech">DESIGNER</p>
-            <p className="techResult shortResultTech">DATE</p>
-        </div>  
-        <div className="resultContent">
-        {(searchReturned) ?
-            searchResult.map(record => {
+      <div className="resultTitles">
+        <p className="techResult shorterResultTech">JOB NO</p>
+        <p className="techResult shortResultTech">REFERRER</p>
+        <p className="techResult longResultTech">DEPTARTMENT</p>
+        <p className="techResult shortResultTech">CATEGORY</p>
+        <p className="techResult longerResultTech">DESCRIPTION</p>
+        <p className="techResult shortResultTech">DESIGNER</p>
+        <p className="techResult shortResultTech">DATE</p>
+      </div>  
+      <div className="resultContent">
+      {(searchReturned) ?
+        searchResult.map(record => {
 
-                return (
-                    <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
-                        <p className="techResult shorterResultTech">{record.jobnumber}</p>
-                        <p className="techResult shortResultTech">{record.requestedby}</p>
-                        <p className="techResult longResultTech">{record.department}</p>
-                        <p className="techResult shortResultTech">{record.category}</p>
-                        <p className="techResult longerResultTech">{record.description}</p>
-                        <p className="techResult shortResultTech">{record.designer}</p>
-                        <p className="techResult shortResultTech">{record.to_char}</p>
-                    </div>
-                        )
-                    })
-                    :    
-                    <p className="search-noResults">Results display here...</p>
-                }
-                </div>
+          return (
+            <div className="resultRows" key={record.id} onClick={() => jumpToRecord(record.jobnumber)}>
+              <p className="techResult shorterResultTech">{record.jobnumber}</p>
+              <p className="techResult shortResultTech">{record.requestedby}</p>
+              <p className="techResult longResultTech">{record.department}</p>
+              <p className="techResult shortResultTech">{record.category}</p>
+              <p className="techResult longerResultTech">{record.description}</p>
+              <p className="techResult shortResultTech">{record.designer}</p>
+              <p className="techResult shortResultTech">{record.to_char}</p>
+            </div>
+          )
+        })
+        :    
+        <p className="search-noResults">Results display here...</p>
+      }
     </div>
+    <div className='search-result-info'>{searchReturned ? searchResult.length : 0} results</div>
+  </div>
 </div>
   )
 }

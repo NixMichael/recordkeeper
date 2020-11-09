@@ -37,6 +37,7 @@
     display: grid;
     grid-template-rows: auto 1fr; // Set height of results titles and results rows
     overflow: hidden; // Prevent results expanding beyond bottom of results area
+    margin-bottom: 1px;
 
     .resultTitles {
       padding: 0 1rem;
@@ -111,5 +112,12 @@
     border-radius: 4px;
     padding: 0.4rem;
     width: 140px;
+  }
+
+  .search-result-info {
+    font-size: 0.7rem;
+    text-align: right;
+    margin-right: 0.5rem;
+    padding: 2px 0;
   }
 }

@@ -287,8 +287,6 @@ app.delete('/deletecategory', async (req, res) => {
 app.delete('/deletereport', async (req, res) => {
   const { toDelete } = req.body
 
-  console.log('report', toDelete)
-
   for (c = 0; c < toDelete.length; c++) {
     await db('reports').where('name', toDelete[c]).select('*').del()
   }
@@ -445,8 +443,6 @@ app.get('/getRecord', async (req, res) => {
 
 app.post('/searchrecs', async (req, res) => {
 
-  console.log('searching for:', req.body)
-
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
   let job = []
@@ -482,13 +478,10 @@ app.post('/searchrecs', async (req, res) => {
       .orderBy('jobnumber', 'asc')
   }
 
-  console.log(job)
   res.json(job)
 })
 
 app.post('/reportresults', async (req, res) => {
-
-  console.log('searching for:', req.body)
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
@@ -527,14 +520,7 @@ app.post('/reportresults', async (req, res) => {
       .orderBy('jobnumber', 'asc')
   }
 
-  console.log(job)
   res.json(job)
-})
-
-const PORT = 3004
-
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
 })
 
 app.post('/addreport', async (req, res) => {
@@ -566,8 +552,12 @@ app.get('/fetchreports', async (req, res) => {
 
 app.post('/fetchreport', async (req, res) => {
   const { reportName } = req.body
-  console.log('name:', reportName)
   const result = await db('reports').select('*').where('name', reportName)
-  console.log('report fetch:', result[0])
   res.json(result[0])
+})
+
+const PORT = 3004
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`)
 })

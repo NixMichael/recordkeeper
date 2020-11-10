@@ -466,7 +466,7 @@ app.post('/searchrecs', async (req, res) => {
   } else {
     job = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer'
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer'
       )
       .where('designer', 'like', `%${designer}%`)
       .where('category', 'like', `%${category}%`)
@@ -491,7 +491,7 @@ app.post('/reportresults', async (req, res) => {
     job = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
       .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'issued.cost'
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'issued.id', 'issued.cost'
       )
       .where('photographer', 'like', `%${photographer}%`)
       .where('permission', 'like', `%${permission}%`)
@@ -508,7 +508,7 @@ app.post('/reportresults', async (req, res) => {
     job = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
       .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.cost', 'issued.id'
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.id', 'issued.cost'
       )
       .where('designer', 'like', `%${designer}%`)
       .where('category', 'like', `%${category}%`)

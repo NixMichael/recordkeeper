@@ -7,8 +7,6 @@ const Report = () => {
   const reportCriteria = useSelector(state => state.reportCriteria)
 
   return (
-    <>
-    <div className='report-title'>Report Title Here</div>
     <div className='report-screen'>
       <div className='report-results'>
         <div className='report-results-titles'>
@@ -20,7 +18,7 @@ const Report = () => {
         </div>
         <div className='report-results-list'>
         {
-          reportCriteria.map((returned, index) => {
+          reportCriteria[0].map((returned, index) => {
             return (
               
               <div className='report-result-item' key={returned.id}>
@@ -38,11 +36,10 @@ const Report = () => {
       <div className='report-figures'>
     <div>Total Jobs: {reportCriteria.length}</div>
         <div>Total Cost: £{
-          (reportCriteria.reduce((tot, a) => tot + Number(a.cost), 0)).toFixed(2)
+          (reportCriteria[0].reduce((tot, a) => tot + Number(a.cost), 0)).toFixed(2)
           }</div>
       </div>
     </div>
-    </>
   )
 }
 

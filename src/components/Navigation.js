@@ -11,6 +11,7 @@ const Navigation = () => {
   const dispatch = useDispatch()
 
   const screenRoute = useSelector(state => state.screenRoute)
+  const reportCriteria = useSelector(state => state.reportCriteria)
 
   const currentRec = useSelector(state => state.currentRec)
   const { recordType } = currentRec
@@ -44,7 +45,7 @@ const Navigation = () => {
       title = 'Search Tech Records'
       break
     case 'report':
-      title = 'Report'
+      title = `Report: ${reportCriteria[1]}`
       break
     default:
       title = ''

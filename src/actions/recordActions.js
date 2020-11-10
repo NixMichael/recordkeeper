@@ -153,6 +153,6 @@ export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
 
   dispatch({
     type: 'LOAD_REPORT_CRITERIA',
-    payload: result.data
+    payload: [result.data, reportName]
   })
 }

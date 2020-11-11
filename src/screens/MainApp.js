@@ -8,7 +8,6 @@ import ReferrersAdmin from './adminScreens/ReferrersAdmin'
 import DepartmentsAdmin from './adminScreens/DepartmentsAdmin'
 import CategoriesAdmin from './adminScreens/CategoriesAdmin'
 import ReportsAdmin from './adminScreens/ReportsAdmin'
-import Report from './Report'
 import Reports from './Report'
 import { fetchRecord } from '../actions/recordActions'
 

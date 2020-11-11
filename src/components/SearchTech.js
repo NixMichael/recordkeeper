@@ -20,6 +20,7 @@ const SearchTech = () => {
     description: '', 
     dateFrom: '', 
     dateTo: '',
+    onlyIssued: false,
     returned: false,
     dates: []
   })
@@ -84,6 +85,7 @@ const SearchTech = () => {
         description: '',
         dateFrom: '',
         dateTo: '',
+        onlyIssued: false,
         returned: false,
         dates: []
       })
@@ -110,10 +112,16 @@ const SearchTech = () => {
   const handleChange = (event) => {
       const { name, value } = event
 
-      setSearchCriteria({
-        ...searchCriteria,
-        [name]: value
-      })
+      if (event.type === 'checkbox') {
+        setSearchCriteria({
+          ...searchCriteria, [name]: !searchCriteria.onlyIssued
+        })
+      } else {
+        setSearchCriteria({
+          ...searchCriteria,
+          [name]: value
+        })
+      }
 
       if (event.keyCode === '13') {
           this.search()
@@ -126,8 +134,9 @@ const SearchTech = () => {
         <div className="searchBoxes">
             <label>Designer: <input className="shortInput" type="text" id="designer" value={searchCriteria.designer} name="designer" onChange={(e) => handleChange(e.target)}/></label>
             <label>Department: <input className="midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
-            <label>Category: <input className="selectBoxSize" type="text" id="category" name="category" value={searchCriteria.category} onChange={(e) => handleChange(e.target)} /></label>
+            <label>Category: <input className="shortInput" type="text" id="category" name="category" value={searchCriteria.category} onChange={(e) => handleChange(e.target)} /></label>
             <label>Referrer: <input className="shortInput" type="text" id="referrer" name="referrer" value={searchCriteria.referrer} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Only Issued: <input type='checkbox' id='onlyIssued' name='onlyIssued' value={searchCriteria.onlyIssued} onChange={(e) => handleChange(e.target)} /></label>
         </div>
         <div className="searchBoxes">
             <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>

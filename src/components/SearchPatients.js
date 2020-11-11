@@ -62,7 +62,8 @@ const SearchPatients = () => {
       referrer: referrer,
       description: description,
       dateFrom: dateA,
-      dateTo: dateB
+      dateTo: dateB,
+      onlyIssued: false
     }
 
     const { data } = await axios({
@@ -93,7 +94,8 @@ const SearchPatients = () => {
         department: '', 
         description: '', 
         dateFrom: '', 
-        dateTo: '', 
+        dateTo: '',
+        onlyIssued: false,
         returned: false,
         dates: []
       })
@@ -120,10 +122,16 @@ const SearchPatients = () => {
   const handleChange = (event) => {
       const { name, value } = event
 
-      setSearchCriteria({
-        ...searchCriteria,
-        [name]: value
-      })
+      if (event.type === 'checkbox') {
+        setSearchCriteria({
+          ...searchCriteria, [name]: !searchCriteria.onlyIssued
+        })
+      } else {
+        setSearchCriteria({
+          ...searchCriteria,
+          [name]: value
+        })
+      }
 
       if (event.keyCode === '13') {
           this.search()
@@ -151,7 +159,7 @@ const SearchPatients = () => {
 
             <label>Patient's Forename: <input className="midInput" type="text" id="patientForename" name="patientForename" value={searchCriteria.patientForename} onChange={(e) => handleChange(e.target)}/></label>
 
-            <label>Only Issued: <input type='checkbox' id='onlyIssued' name='onlyIssued' checked='true' /></label> 
+            <label>Only Issued: <input type='checkbox' id='onlyIssued' name='onlyIssued' value={searchCriteria.onlyIssued} onChange={(e) => handleChange(e.target)} /></label>
         </div>
         <div className="searchBoxes">
             <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>

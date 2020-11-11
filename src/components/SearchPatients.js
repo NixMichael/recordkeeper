@@ -150,6 +150,8 @@ const SearchPatients = () => {
             <label>Patient's Surname: <input className="midInput" type="text" id="patientSurname" name="patientSurname" value={searchCriteria.patientSurname} onChange={(e) => handleChange(e.target)}/></label>
 
             <label>Patient's Forename: <input className="midInput" type="text" id="patientForename" name="patientForename" value={searchCriteria.patientForename} onChange={(e) => handleChange(e.target)}/></label>
+
+            <label>Only Issued: <input type='checkbox' id='onlyIssued' name='onlyIssued' checked='true' /></label> 
         </div>
         <div className="searchBoxes">
             <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>

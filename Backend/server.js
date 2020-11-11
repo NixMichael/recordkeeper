@@ -30,7 +30,7 @@ app.post('/newuser', async (req,res) => {
 
     const newList = await db('users').returning('*').select('*').orderBy('name', 'asc')
 
-    res.status(200).json(newList)
+    res.status(200).send(newList)
 
       // .then((newList) => {
       //     res.status(200).json(newList)
@@ -49,7 +49,7 @@ app.post('/newreferrer', async (req,res) => {
     
     const newList = await db('referrer').returning('*').select('*').orderBy('name', 'asc')
 
-    res.status(200).json(newList)
+    res.status(200).send(newList)
 
     // .catch(err => console.log('Error', err))
 })
@@ -65,7 +65,7 @@ app.post('/newdepartment', async (req,res) => {
 
     const newList = await db('departments').select('*').returning('*').orderBy('name', 'asc')
 
-    res.status(200).json(newList)
+    res.status(200).send(newList)
 
     // .catch(err => console.log('Error', err))
 })
@@ -81,7 +81,7 @@ app.post('/newcategory', async (req,res) => {
   
   const newList = await db('categories').select('*').returning('*').orderBy('name', 'asc')
 
-  res.status(200).json(newList)
+  res.status(200).send(newList)
 
   // .catch(err => console.log('Error', err))
 })
@@ -155,12 +155,12 @@ app.post('/addissued', async (req,res) => {
         cost: cost
     })
 
+    await db('index').where('jobnumber', jobnumber).update({
+      issued: true
+    })
+
     const updatedIssues = await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
-    //     .then((updatedIssues) => {
-    res.status(200).json(updatedIssues)
-    //     })
-    //     .catch(err => console.log('Error', err))
-    // })
+    res.status(200).send(updatedIssues)
 })
 
 app.delete('/deleteissued', async (req, res) => {
@@ -169,11 +169,15 @@ app.delete('/deleteissued', async (req, res) => {
 
   await db('issued').where('id', id).del()
   const updatedIssues = await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
-      // .then(updatedIssues => {
-  res.status(200).json(updatedIssues)
-      // })
-      // .catch(err => console.log(err))
-  // })
+
+  console.log(updatedIssues)
+
+  if (updatedIssues.length === 0) {
+    await db('index').where('jobnumber', jobnumber).update({
+      issued: false
+    })
+  }
+  res.status(200).send(updatedIssues)
 })
 
 app.delete('/deletenewissues', async (req, res) => {
@@ -207,8 +211,6 @@ app.put('/editrecord', async (req, res) => {
               description: description,
               photographer: photographer
           })
-            // .then(() => res.status(200).json('Success'))
-            // .catch(err => console.log('Error', err))
     } else if (type === 't') {
                 await db('techjobs').where('jobnumber', job)
                   .update({
@@ -229,12 +231,11 @@ app.delete('/deleterecord', async (req, res) => {
 
     if (recordType === 'p') {
       const deleted = await db('patientjobs').select('*').where('jobnumber', job).del()
-      res.status(200).json(`Deleted: ${deleted}`)
-            // .catch(err => console.log(`Erroneous: ${err}`))
+      res.status(200).send(`Deleted: ${deleted}`)
     } else if (recordType === 't') {
       const deleted = await db('techjobs').select('*').where('jobnumber', job).del()
-      res.status(200).json(`Deleted: ${deleted}`)
-            // .catch(err => console.log(`Erroneous: ${err}`))
+      res.status(200).send(`Deleted: ${deleted}`)
+      // .catch(err => console.log(`Erroneous: ${err}`))
     }
 })
 
@@ -243,9 +244,6 @@ app.delete('/deleteuser', async (req,res) => {
 
   for (c = 0; c < toDelete.length; c++) {
     await db('users').select('*').where('name', toDelete[c]).del()
-
-    // if (c === toDelete.length) {
-      // }
   }
   const updatedList = await db('users').select('*').orderBy('name', 'asc')
   res.send(updatedList)
@@ -381,7 +379,7 @@ app.get('/search/:value', async (req, res) => {
       searchRes[1] = techRecord[0]
     }
 
-    res.json(searchRes)
+    res.send(searchRes)
 })
 
 // RETRIEVE ALL LISTS
@@ -445,10 +443,10 @@ app.post('/searchrecs', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
-  let job = []
+  let reportData = []
 
   if (type === 'p') {
-    job = await db('index')
+    reportData = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description'
       )
@@ -463,8 +461,8 @@ app.post('/searchrecs', async (req, res) => {
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
       .orderBy('jobnumber', 'asc')
-  } else {
-    job = await db('index')
+  } else if (type === 't') {
+    reportData = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer'
       )
@@ -478,17 +476,17 @@ app.post('/searchrecs', async (req, res) => {
       .orderBy('jobnumber', 'asc')
   }
 
-  res.json(job)
+  res.send(reportData)
 })
 
 app.post('/reportresults', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department } = req.body
 
-  let job = []
+  let reportData = []
 
   if (type === 'p') {
-    job = await db('index')
+    reportData = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
       .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'issued.id', 'issued.cost'
@@ -504,8 +502,8 @@ app.post('/reportresults', async (req, res) => {
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
       .orderBy('jobnumber', 'asc')
-  } else {
-    job = await db('index')
+  } else if (type === 't') {
+    reportData = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
       .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'issued.id', 'issued.cost'
@@ -520,7 +518,7 @@ app.post('/reportresults', async (req, res) => {
       .orderBy('jobnumber', 'asc')
   }
 
-  res.json(job)
+  res.send(reportData)
 })
 
 app.post('/addreport', async (req, res) => {
@@ -547,13 +545,13 @@ app.post('/addreport', async (req, res) => {
 
 app.get('/fetchreports', async (req, res) => {
   const reportList = await db('reports').select('name')
-  res.json(reportList)
+  res.send(reportList)
 })
 
 app.post('/fetchreport', async (req, res) => {
   const { reportName } = req.body
   const result = await db('reports').select('*').where('name', reportName)
-  res.json(result[0])
+  res.send(result[0])
 })
 
 const PORT = 3004

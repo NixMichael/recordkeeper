@@ -27,7 +27,7 @@ const SearchTech = () => {
   
   const search = async () => {
 
-    const { department, designer, category, referrer, description, dateFrom, dateTo } = searchCriteria
+    const { department, designer, category, referrer, description, dateFrom, dateTo, onlyIssued } = searchCriteria
 
     let dateA = dateFrom
     let dateB = dateTo
@@ -56,6 +56,7 @@ const SearchTech = () => {
       category: category,
       referrer: referrer,
       description: description,
+      onlyIssued: onlyIssued,
       dateFrom: dateA,
       dateTo: dateB
     }

@@ -23,16 +23,19 @@ const SearchPatients = () => {
     description: '', 
     dateFrom: '', 
     dateTo: '',
+    onlyIssued: false,
     returned: false,
     dates: []
   })
   
   const search = async () => {
 
-    const { department, photographer, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo } = searchCriteria
+    const { department, photographer, permission, hospitalNumber, patientForename, patientSurname, referrer, description, dateFrom, dateTo, onlyIssued } = searchCriteria
 
     let dateA = dateFrom
     let dateB = dateTo
+
+    console.log('onlyIssued?', onlyIssued)
 
     if (!searchCriteria.dateFrom) {
       dateA = '01-01-2000' // Set default from date
@@ -63,7 +66,7 @@ const SearchPatients = () => {
       description: description,
       dateFrom: dateA,
       dateTo: dateB,
-      onlyIssued: false
+      onlyIssued: onlyIssued
     }
 
     const { data } = await axios({
@@ -72,6 +75,8 @@ const SearchPatients = () => {
         headers: {'Content-Type': 'application/json'},
         data: searchQueries
     })
+
+    console.log(data)
 
     setSearchResult(data)
     setSearchReturned(true)
@@ -123,6 +128,7 @@ const SearchPatients = () => {
       const { name, value } = event
 
       if (event.type === 'checkbox') {
+        console.log(searchCriteria.onlyIssued)
         setSearchCriteria({
           ...searchCriteria, [name]: !searchCriteria.onlyIssued
         })
@@ -134,7 +140,7 @@ const SearchPatients = () => {
       }
 
       if (event.keyCode === '13') {
-          this.search()
+          search()
       }
   }
 

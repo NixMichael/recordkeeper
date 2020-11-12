@@ -443,15 +443,14 @@ app.post('/searchrecs', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department, onlyIssued } = req.body
 
-  console.log(onlyIssued)
+  console.log('onlyIssued?', onlyIssued)
 
-  const issuedCriteria = onlyIssued === true ? 't' : 'f'
   let reportData = []
 
   if (type === 'p') {
     reportData = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description'
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'index.issued'
       )
       .where('photographer', 'like', `%${photographer}%`)
       .where('permission', 'like', `%${permission}%`)
@@ -463,12 +462,11 @@ app.post('/searchrecs', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-      .where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   } else if (type === 't') {
     reportData = await db('index')
       .join('techjobs', 'index.jobnumber', '=', 'techjobs.jobnumber')
-      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer'
+      .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.id', 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'techjobs.category', 'techjobs.description', 'techjobs.designer', 'index.issued'
       )
       .where('designer', 'like', `%${designer}%`)
       .where('category', 'like', `%${category}%`)
@@ -476,12 +474,17 @@ app.post('/searchrecs', async (req, res) => {
       .where('description', 'ilike', `%${description}%`)
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
-      .where('creationdate', '<=', dateTo)
-      .where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   }
 
-  res.send(reportData)
+  if (onlyIssued) {
+    const filtered = reportData.filter(result => result.issued !== false)
+    res.send(filtered)
+  } else {
+    res.send(reportData)
+  }
+
+  console.log(reportData)
 })
 
 app.post('/reportresults', async (req, res) => {
@@ -508,7 +511,7 @@ app.post('/reportresults', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-      .where('index.issued', issuedCriteria)
+      .where('index.issued', 't').where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   } else if (type === 't') {
     reportData = await db('index')
@@ -523,7 +526,7 @@ app.post('/reportresults', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-      .where('index.issued', issuedCriteria)
+      .where('index.issued', 't').where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   }
 

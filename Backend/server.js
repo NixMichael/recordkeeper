@@ -443,8 +443,6 @@ app.post('/searchrecs', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department, onlyIssued } = req.body
 
-  console.log('onlyIssued?', onlyIssued)
-
   let reportData = []
 
   if (type === 'p') {
@@ -478,20 +476,16 @@ app.post('/searchrecs', async (req, res) => {
   }
 
   if (onlyIssued) {
-    const filtered = reportData.filter(result => result.issued !== false)
-    res.send(filtered)
+    const reportDataIssuedOnly = reportData.filter(result => result.issued !== false)
+    res.send(reportDataIssuedOnly)
   } else {
     res.send(reportData)
   }
-
-  console.log(reportData)
 })
 
 app.post('/reportresults', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department, onlyIssued } = req.body
-
-  const issuedCriteria = onlyIssued === true ? 't' : 'f'
 
   let reportData = []
 
@@ -511,7 +505,6 @@ app.post('/reportresults', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-      .where('index.issued', 't').where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   } else if (type === 't') {
     reportData = await db('index')
@@ -526,11 +519,14 @@ app.post('/reportresults', async (req, res) => {
       .where('department', 'like', `%${department}%`)
       .where('creationdate', '>=', dateFrom)
       .where('creationdate', '<=', dateTo)
-      .where('index.issued', 't').where('index.issued', issuedCriteria)
       .orderBy('jobnumber', 'asc')
   }
-
-  res.send(reportData)
+  if (onlyIssued) {
+    const reportDataIssuedOnly = reportData.filter(result => result.issued !== false)
+    res.send(reportDataIssuedOnly)
+  } else {
+    res.send(reportData)
+  }
 })
 
 app.post('/addreport', async (req, res) => {

@@ -26,7 +26,9 @@ const Report = () => {
                 <div>{returned.jobnumber}</div>
                 <div>{returned.requestedby}</div>
                 <div>{returned.to_char}</div>
-                <div>£{returned.cost}</div>
+                <div>
+                  £{!returned.cost ? (0).toFixed(2) : returned.cost}
+                </div>
               </div>
             )
           })

@@ -132,6 +132,10 @@ input:disabled, textarea:disabled {
 
 
 // Issues
+.issued-section {
+  width: 55%;
+}
+
 .issued {
   height: 165px;
   // max-height: 200px;
@@ -148,65 +152,61 @@ input:disabled, textarea:disabled {
       justify-content: space-between;
     }
 
-    .issued-button {
-      border: 1px solid white;
-      border-radius: 4px;
-      background: none;
-      margin-top: -0.5rem;
-      padding: 0 0.5rem;
-      color: white;
-      cursor: pointer;
+  }
+  &-button {
+    border: 1px solid white;
+    border-radius: 4px;
+    background: none;
+    margin-top: -0.5rem;
+    padding: 0 0.5rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  &-events {
+    max-height: 90px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    & > div {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+  
+      &:nth-child(2n) {
+        background: rgba(255,255,255,0.2);
+      }
+  
+      &:nth-child(2n + 1) {
+        background: rgba(255,255,255,0.1);
+      }
+  
+      p {
+        width: 12%;
+        margin: 0.5rem 0;
+        padding: 0;
+  
+        &:first-child {
+          width: 20%;
+        }
+  
+        &:nth-child(3) {
+          text-align: center;
+          width: 35%;
+        }
+  
+        &:nth-child(4) {
+          width: 5%;
+        }
+      }
+  
+      div {
+        width: 5%;
+      }
+  
+      .delete-issue-button {
+        cursor: pointer;
+      }
     }
   }
   
-}
-
-.issued-section {
-  width: 55%;
-}
-
-.issued-events {
-  max-height: 90px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  & > div {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    &:nth-child(2n) {
-      background: rgba(255,255,255,0.2);
-    }
-
-    &:nth-child(2n + 1) {
-      background: rgba(255,255,255,0.1);
-    }
-
-    p {
-      width: 12%;
-      margin: 0.5rem 0;
-      padding: 0;
-
-      &:first-child {
-        width: 20%;
-      }
-
-      &:nth-child(3) {
-        text-align: center;
-        width: 35%;
-      }
-
-      &:nth-child(4) {
-        width: 5%;
-      }
-    }
-
-    div {
-      width: 5%;
-    }
-
-    .delete-issue-button {
-      cursor: pointer;
-    }
-  }
 }

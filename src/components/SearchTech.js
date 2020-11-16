@@ -21,8 +21,7 @@ const SearchTech = () => {
     dateFrom: '', 
     dateTo: '',
     onlyIssued: false,
-    returned: false,
-    dates: []
+    returned: false
   })
   
   const search = async () => {
@@ -87,8 +86,7 @@ const SearchTech = () => {
         dateFrom: '',
         dateTo: '',
         onlyIssued: false,
-        returned: false,
-        dates: []
+        returned: false
       })
       setSearchReturned(false)
   }

@@ -170,8 +170,6 @@ app.delete('/deleteissued', async (req, res) => {
   await db('issued').where('id', id).del()
   const updatedIssues = await db('issued').returning('*').select('*').where('jobnumber', jobnumber).orderBy('id', 'asc')
 
-  console.log(updatedIssues)
-
   if (updatedIssues.length === 0) {
     await db('index').where('jobnumber', jobnumber).update({
       issued: false
@@ -443,6 +441,8 @@ app.post('/searchrecs', async (req, res) => {
 
   const { type, photographer, permission, hospitalnumber, patientsurname, patientforename, dateFrom, dateTo, designer, category, referrer, description, department, onlyIssued } = req.body
 
+  console.log(req.body)
+
   let reportData = []
 
   if (type === 'p') {
@@ -475,8 +475,10 @@ app.post('/searchrecs', async (req, res) => {
       .orderBy('jobnumber', 'asc')
   }
 
+  // Filter out records that haven't been issued if checkbox on search component was checked
   if (onlyIssued) {
     const reportDataIssuedOnly = reportData.filter(result => result.issued !== false)
+    console.log(reportDataIssuedOnly)
     res.send(reportDataIssuedOnly)
   } else {
     res.send(reportData)
@@ -492,7 +494,7 @@ app.post('/reportresults', async (req, res) => {
   if (type === 'p') {
     reportData = await db('index')
       .join('patientjobs', 'index.jobnumber', '=', 'patientjobs.jobnumber')
-      .join('issued', 'index.jobnumber', '=', 'issued.jobnumber')
+      .fullOuterJoin('issued', 'index.jobnumber', '=', 'issued.jobnumber')
       .select(db.raw('TO_CHAR("creationdate", \'DD-MM-YYYY\')'), 'index.jobnumber', 'index.department', 'index.requestedby', 'index.creationdate', 'patientjobs.photographer', 'patientjobs.hospitalnumber', 'patientjobs.patientsurname', 'patientjobs.patientforename', 'patientjobs.permission', 'patientjobs.description', 'issued.id', 'issued.cost'
       )
       .where('photographer', 'like', `%${photographer}%`)
@@ -521,6 +523,8 @@ app.post('/reportresults', async (req, res) => {
       .where('creationdate', '<=', dateTo)
       .orderBy('jobnumber', 'asc')
   }
+
+  // Filter out records that haven't been issued if checkbox on search component was checked
   if (onlyIssued) {
     const reportDataIssuedOnly = reportData.filter(result => result.issued !== false)
     res.send(reportDataIssuedOnly)

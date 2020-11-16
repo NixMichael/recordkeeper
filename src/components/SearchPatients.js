@@ -24,8 +24,7 @@ const SearchPatients = () => {
     dateFrom: '', 
     dateTo: '',
     onlyIssued: false,
-    returned: false,
-    dates: []
+    returned: false
   })
   
   const search = async () => {
@@ -34,8 +33,6 @@ const SearchPatients = () => {
 
     let dateA = dateFrom
     let dateB = dateTo
-
-    console.log('onlyIssued?', onlyIssued)
 
     if (!searchCriteria.dateFrom) {
       dateA = '01-01-2000' // Set default from date
@@ -76,8 +73,6 @@ const SearchPatients = () => {
         data: searchQueries
     })
 
-    console.log(data)
-
     setSearchResult(data)
     setSearchReturned(true)
   }
@@ -101,8 +96,7 @@ const SearchPatients = () => {
         dateFrom: '', 
         dateTo: '',
         onlyIssued: false,
-        returned: false,
-        dates: []
+        returned: false
       })
       setSearchReturned(false)
   }
@@ -128,7 +122,6 @@ const SearchPatients = () => {
       const { name, value } = event
 
       if (event.type === 'checkbox') {
-        console.log(searchCriteria.onlyIssued)
         setSearchCriteria({
           ...searchCriteria, [name]: !searchCriteria.onlyIssued
         })

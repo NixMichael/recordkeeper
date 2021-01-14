@@ -17,6 +17,9 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+app.get('/', (req, res) => {
+  res.send('It be working')
+})
 
 app.post('/newuser', async (req,res) => {
     const { usertype, initials, name } = req.body
@@ -566,8 +569,6 @@ app.post('/fetchreport', async (req, res) => {
   res.send(result[0])
 })
 
-const PORT = 3004
-
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
+app.listen(process.env.PORT || 3004, () => {
+    console.log(`Listening on port ${process.env.PORT}`)
 })

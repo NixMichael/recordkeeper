@@ -22,7 +22,7 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
     // dispatch({
     //   type: FETCH_RECORD_REQUEST
     // })
-    const { data } = await axios.get(`http://localhost:3004/${whichRecord}/${id}`)
+    const { data } = await axios.get(`https://morning-basin-38652.herokuapp.com/${whichRecord}/${id}`)
 
     dispatch({
       type: FETCH_RECORD_SUCCESS,
@@ -38,7 +38,7 @@ export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 }
 
 export const fetchRecordByJobNumber = (jobnumber) => async (dispatch) => {
-    const { data } = await axios.get(`http://localhost:3004/search/${jobnumber}`)
+    const { data } = await axios.get(`https://morning-basin-38652.herokuapp.com/${jobnumber}`)
     dispatch({
       type: SEARCH_BY_JOB_NUMBER,
       payload: data
@@ -58,7 +58,7 @@ export const fetchFieldData = () => async (dispatch) => {
       type: FIELD_DATA_REQUEST
     })
 
-    const { data } = await axios.get('http://localhost:3004/fetchFields')
+    const { data } = await axios.get('https://morning-basin-38652.herokuapp.com/fetchFields')
 
     const fieldData = [data[0], data[1], data[2], data[3], data[4]]
     dispatch({
@@ -121,7 +121,7 @@ export const deleteRecord = (job, recordType) => {
 
     axios({
       method: 'delete',
-      url: 'http://localhost:3004/deleterecord',
+      url: 'https://morning-basin-38652.herokuapp.com/deleterecord',
       headers: {'Content-Type': 'application/json'},
       data: {
         job, recordType
@@ -135,14 +135,14 @@ export const deleteRecord = (job, recordType) => {
 export const fetchReport = (reportName, dateA, dateB) => async (dispatch) => {
   const { data } = await axios({
     method: 'post',
-    url: 'http://localhost:3004/fetchreport',
+    url: 'https://morning-basin-38652.herokuapp.com/fetchreport',
     headers: { 'Content-Type': 'application/json' },
     data: { reportName }
   })
 
   const result = await axios({
     method: 'post',
-    url: 'http://localhost:3004/reportresults',
+    url: 'https://morning-basin-38652.herokuapp.com/reportresults',
     headers: {'Content-Type': 'application/json'},
     data: {
       ...data,

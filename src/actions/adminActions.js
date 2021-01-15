@@ -3,8 +3,6 @@ import { NEW_CATEGORY, NEW_DEPARTMENT, NEW_REFERRER, NEW_USER, UPDATE_CATEGORIES
 
 export const deleteItem = (screenRoute, arr) => async (dispatch) => {
 
-  console.log(screenRoute)
-
   let adminType = ''
   let dispatchType = ''
   switch (screenRoute) {
@@ -34,7 +32,7 @@ export const deleteItem = (screenRoute, arr) => async (dispatch) => {
 
   const { data } = await axios({
     method: 'delete',
-    url: `http://localhost:3004/${adminType}`,
+    url: `https://morning-basin-38652.herokuapp.com/${adminType}`,
     headers: { 'Content-Type': 'application/json'},
     data: {
       toDelete: arr
@@ -74,7 +72,7 @@ export const addUser = (screenRoute, { role, initials, name, departmentName, cat
 
   const { data } = await axios({
     method: 'post',
-    url: `http://localhost:3004/${adminType}`,
+    url: `https://morning-basin-38652.herokuapp.com/${adminType}`,
     headers: { 'Content-Type': 'application/json'},
     data: {
       usertype: role,

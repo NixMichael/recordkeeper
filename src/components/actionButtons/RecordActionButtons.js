@@ -43,7 +43,7 @@ const RecordActionButtons = ({buttonOption}) => {
 
   const createNewRecord = async (recordType) => {
 
-    const { data } = await axios.get(`http://localhost:3004/lastrec/0`)
+    const { data } = await axios.get(`https://morning-basin-38652.herokuapp.com/lastrec/0`)
 
     let seqNumber = 1
 
@@ -68,7 +68,7 @@ const RecordActionButtons = ({buttonOption}) => {
   const submitNewRecord = async () => {
     const newRecordCount = await axios({
       method: 'post',
-      url: 'http://localhost:3004/',
+      url: 'https://morning-basin-38652.herokuapp.com/',
       headers: {'Content-Type': 'application/json'},
       data: {
         seqNum: sequenceNumber,
@@ -94,7 +94,7 @@ const RecordActionButtons = ({buttonOption}) => {
   const editRecord = () => {
     axios({
       method: 'put',
-      url: 'http://localhost:3004/editrecord',
+      url: 'https://morning-basin-38652.herokuapp.com/editrecord',
       headers: { 'Content-Type': 'application/json'},
       data: {
         job: jobNumber,
@@ -117,7 +117,7 @@ const RecordActionButtons = ({buttonOption}) => {
     const job = jobNumber
     await axios({
       method: 'delete',
-      url: 'http://localhost:3004/deleterecord',
+      url: 'https://morning-basin-38652.herokuapp.com/deleterecord',
       headers: {'Content-Type': 'application/json'},
       data: {
         job, recordType
@@ -136,7 +136,7 @@ const RecordActionButtons = ({buttonOption}) => {
     const count = newIssues
       await axios({
         method: 'delete',
-        url: 'http://localhost:3004/deletenewissues',
+        url: 'https://morning-basin-38652.herokuapp.com/deletenewissues',
         headers: { 'Content-Type': 'application/json'},
         data: { jobnumber, count }
       })

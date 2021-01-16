@@ -68,7 +68,7 @@ const SearchPatients = () => {
 
     const { data } = await axios({
         method: 'post',
-        url: 'http://localhost:3004/searchrecs',
+        url: 'https://morning-basin-38652.herokuapp.com/searchrecs',
         headers: {'Content-Type': 'application/json'},
         data: searchQueries
     })
@@ -106,7 +106,7 @@ const SearchPatients = () => {
 
     await axios({
       method: 'post',
-      url: 'http://localhost:3004/addreport',
+      url: 'https://morning-basin-38652.herokuapp.com/addreport',
       headers: { 'Content-Type': 'application/json' },
       data: [
         reportName,

@@ -7,21 +7,17 @@ const db = knex({
     connection: {
         connectionString: process.env.DATABASE_URL,
         ssl: {
-          rejectUnauthorised: false
+          rejectUnauthorized: false
         }
     }
 })
+
+console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`)
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
-
-// Unnecessary
-app.get('/', (req, res) => {
-  res.send('It be working')
-})
-// ***********
 
 app.post('/newuser', async (req,res) => {
     const { usertype, initials, name } = req.body
@@ -389,15 +385,29 @@ app.get('/search/:value', async (req, res) => {
 app.get('/fetchFields', async (req, res) => {
   let dropDownContents = []
 
+  try {
   const referrers = await db('referrer').select('*').orderBy('name', 'asc')
   const users = await db('users').select('*').orderBy('name', 'asc')
   const categories = await db('categories').select('*').orderBy('name', 'asc')
   const departments = await db('departments').select('*').orderBy('name', 'asc')
   const reports = await db('reports').select('*').orderBy('name', 'asc')
 
-  dropDownContents = [referrers, users, categories, departments, reports]
+  console.log(`referrers: ${referrers[0].name}`)
 
+  dropDownContents = [referrers, users, categories, departments, reports]
   res.send(dropDownContents)
+  }
+  catch (error) {
+    dropDownContents = [
+      {name: 'bob'},
+      {name: 'bob'},
+      {name: 'bob'},
+      {name: 'bob'},
+      {name: 'bob'}
+    ]
+    res.send(dropDownContents)
+  }
+
 })
 
 app.get('/getRecord', async (req, res) => {

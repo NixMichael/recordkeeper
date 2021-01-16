@@ -53,6 +53,7 @@ export const updateRecordNumber = (position) => {
 }
 
 export const fetchFieldData = () => async (dispatch) => {
+  console.log('blahhhh')
   try {
     dispatch({
       type: FIELD_DATA_REQUEST
@@ -61,7 +62,6 @@ export const fetchFieldData = () => async (dispatch) => {
     const { data } = await axios.get('https://morning-basin-38652.herokuapp.com/fetchFields')
 
     const fieldData = [data[0], data[1], data[2], data[3], data[4]]
-    console.log('blahhhh')
     dispatch({
       type: FIELD_DATA_SUCCESS,
       payload: fieldData

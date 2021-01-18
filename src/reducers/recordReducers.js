@@ -31,6 +31,7 @@ export const updateCurrentRecordReducer = (state = {
     case FETCH_RECORD_REQUEST:
       return { loading: true }
     case FETCH_RECORD_SUCCESS:
+      console.log(action.payload[1])
       // Set user to result from patientjobs, otherwise set to result from techjobs
       const user = action.payload[1].photographer ? action.payload[1].photographer : action.payload[1].designer
 

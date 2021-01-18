@@ -38,7 +38,7 @@ const Issues = () => {
         quantity = Number(prompt('Quantity:'))
         if (quantity === 0 || quantity === '') { quantity = 1 }
   
-        const costResult = await axios.get(`http://localhost:3004/gettechcost/${category}`)
+        const costResult = await axios.get(`https://morning-basin-38652.herokuapp.com/gettechcost/${category}`)
         totalCost = costResult.data * quantity
       }
 
@@ -53,7 +53,7 @@ const Issues = () => {
 
       const newIssueList = await axios({
         method: 'post',
-        url: 'http://localhost:3004/addissued',
+        url: 'https://morning-basin-38652.herokuapp.com/addissued',
         headers: { 'Content-Type': 'application/json' },
         data: {
           jobnumber: jobNumber,
@@ -72,7 +72,7 @@ const Issues = () => {
   const deleteIssue = async (id, jobnumber) => {
     const newIssueList = await axios({
       method: 'delete',
-      url: 'http://localhost:3004/deleteissued',
+      url: 'https://morning-basin-38652.herokuapp.com/deleteissued',
       headers: { 'Content-Type': 'application/json'},
       data: { id, jobnumber }
     })

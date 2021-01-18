@@ -53,7 +53,6 @@ export const updateRecordNumber = (position) => {
 }
 
 export const fetchFieldData = () => async (dispatch) => {
-  console.log('blahhhh')
   try {
     dispatch({
       type: FIELD_DATA_REQUEST

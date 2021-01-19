@@ -1,16 +1,17 @@
 .record-fields-container {
-  height: 440px;
+  min-height: 440px;
   width: 1200px;
+  min-width: 80vw;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .record-fields-background {
-  width: 1200px;
+  min-height: 450px;
+  min-width: 1200px;
   margin: 3rem auto 0;
   background-color: var(--feature-element-color);
-  height: 450px;
   position: relative;
 }
 
@@ -48,10 +49,12 @@
 
 .record-mid {
   padding-top: 1rem;
-  height: 140px;
 
   .patient-record-component {
     padding: 0 2rem;
+    &:first-child {
+      margin-bottom: 1rem;
+    }
   }
 
   .patient-record-component:last-child {
@@ -209,4 +212,33 @@ input:disabled, textarea:disabled {
     }
   }
   
+}
+
+@media screen and (min-width: 1800px) {
+  .record-input {
+    width: 300px;
+  }
+
+  .input-text-number {
+    max-width: 200px;
+  }
+
+
+  .record-fields-background {
+    min-width: 1800px;
+  }
+
+  .record-fields-container {
+    min-width: 1800px;
+  }
+}
+
+@media screen and (min-width: 2600px) {
+  .record-fields-background {
+    min-width: 2200px;
+  }
+
+  .record-fields-container {
+    min-width: 2200px;
+  }
 }

@@ -195,7 +195,12 @@ input:disabled, textarea:disabled {
         padding: 0;
   
         &:first-child {
-          width: 20%;
+          margin-left: 0.5em;
+          width: 24%;
+        }
+
+        &:nth-child(2) {
+          width: 18%;
         }
   
         &:nth-child(3) {

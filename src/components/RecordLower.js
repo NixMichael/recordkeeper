@@ -23,7 +23,7 @@ const RecordLower = () => {
 
   return (
     <div className='patient-record-component record-lower'>
-      <div id='description'>
+      <div class='description'>
           <label>Description: </label>
           <textarea id="description" name="description" disabled={readOnly} value={description} onChange={(e) => handleChange(e.target)}/>
       </div>

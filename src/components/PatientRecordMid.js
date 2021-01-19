@@ -58,11 +58,11 @@ const PatientRecordMid = () => {
       </div>
       <div>
         <label>Patient's surname: </label>
-        <input type='text' name='patientsurname' disabled={readOnly} value={patientsurname} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='patientsurname' className='record-input' disabled={readOnly} value={patientsurname} onChange={(e) => handleChange(e.target)} />
       </div>
       <div>
         <label>Patient's forename: </label>
-        <input type='text' name='patientforename' disabled={readOnly} value={patientforename} onChange={(e) => handleChange(e.target)} />
+        <input type='text' name='patientforename' className='record-input' disabled={readOnly} value={patientforename} onChange={(e) => handleChange(e.target)} />
       </div>
     </div>
     </div>

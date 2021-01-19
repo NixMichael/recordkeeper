@@ -4,7 +4,8 @@
   min-width: 80vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  // height: 70vh;
 }
 
 .record-fields-background {
@@ -49,6 +50,8 @@
 
 .record-mid {
   padding-top: 1rem;
+  max-height: 25%;
+  margin-bottom: 2rem;
 
   .patient-record-component {
     padding: 0 2rem;
@@ -64,22 +67,24 @@
 
 .record-lower {
   display: flex;
-  #description {
+  min-height: 20vh;
+  .description {
     display: flex;
+    height: 100%;
   }
 }
 
 .record-title {
   // width: 90%;
   // min-width: 1200px;
-  font-size: 2rem;
+  font-size: 2em;
   color: white;
   margin-left: 2rem;
   // margin: 1rem auto 0.5rem;
   // border-bottom: 1px solid white;
 }
 
-#description label {
+.description label {
   margin-top: 0.5rem;
 }
 
@@ -136,23 +141,23 @@ input:disabled, textarea:disabled {
 
 // Issues
 .issued-section {
-  width: 55%;
+  min-width: 50%;
 }
 
 .issued {
-  height: 165px;
-  // max-height: 200px;
+  min-height: 165px;
+  height: 100%;
   background: rgba(0,0,0,0.2);
   padding: 1rem;
   & > div:first-child {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 1rem;
 
     div {
       width: 60%;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
     }
 
   }
@@ -161,13 +166,14 @@ input:disabled, textarea:disabled {
     border-radius: 4px;
     background: none;
     margin-top: -0.5rem;
+    margin-left: 2rem;
     padding: 0 0.5rem;
     color: white;
     cursor: pointer;
   }
 
   &-events {
-    max-height: 90px;
+    max-height: 20vh;
     overflow-y: auto;
     overflow-x: hidden;
     & > div {
@@ -223,22 +229,39 @@ input:disabled, textarea:disabled {
     max-width: 200px;
   }
 
-
   .record-fields-background {
     min-width: 1800px;
   }
 
   .record-fields-container {
     min-width: 1800px;
+  }
+
+  textarea {
+    width: 600px;
+    height: 215px;
   }
 }
 
 @media screen and (min-width: 2600px) {
   .record-fields-background {
-    min-width: 2200px;
+    min-width: 2800px;
   }
 
   .record-fields-container {
-    min-width: 2200px;
+    min-width: 2800px;
+  }
+
+  .record-input {
+    width: 350px;
+  }
+
+  .input-text-number {
+    min-width: 350px;
+  }
+
+  textarea {
+    width: 750px;
+    height: 265px;
   }
 }

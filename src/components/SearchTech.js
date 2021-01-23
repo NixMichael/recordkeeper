@@ -32,7 +32,7 @@ const SearchTech = () => {
     let dateB = dateTo
 
     if (!searchCriteria.dateFrom) {
-      dateA = '2000-01-01'
+      dateA = '01-01-2000'
     }
 
     if (!searchCriteria.dateTo) {
@@ -42,7 +42,7 @@ const SearchTech = () => {
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      let curDate = `${year}-${month}-${day}`
+      let curDate = `${day}-${month}-${year}`
       
       dateB = curDate
     }

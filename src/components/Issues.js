@@ -39,6 +39,7 @@ const Issues = () => {
         if (quantity === 0 || quantity === '') { quantity = 1 }
   
         const costResult = await axios.get(`https://morning-basin-38652.herokuapp.com/gettechcost/${category}`)
+        console.log(costResult)
         totalCost = costResult.data * quantity
       }
 

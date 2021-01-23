@@ -32,7 +32,7 @@ const SearchTech = () => {
     let dateB = dateTo
 
     if (!searchCriteria.dateFrom) {
-      dateA = '01-01-2000'
+      dateA = '2000-01-01'
     }
 
     if (!searchCriteria.dateTo) {
@@ -42,7 +42,7 @@ const SearchTech = () => {
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      let curDate = `${day}-${month}-${year}`
+      let curDate = `${year}-${month}-${day}`
       
       dateB = curDate
     }
@@ -146,7 +146,7 @@ const SearchTech = () => {
             <div className="search__buttons">
                 <button className="record-button search-button" onClick={search}>Search</button>
                 <button className="record-button search-button" onClick={reset}>Reset</button>
-                <button className="record-button search-button" onClick={save}>Save As Report</button>
+                <button className="record-button search-button" onClick={save}>Save</button>
             </div>
         </div>
     </div>

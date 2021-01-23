@@ -16,7 +16,7 @@ const AdminSwitchboard = () => {
   const loadReportList = async () => {
     const { data } = await axios({
       method: 'get',
-      url: 'http://localhost:3004/fetchreports',
+      url: 'https://morning-basin-38652.herokuapp.com/fetchreports',
       headers: { 'Content-Type': 'application/json' }
     })
     const reportList = data.map(report => report.name)

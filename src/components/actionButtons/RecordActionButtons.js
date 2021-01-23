@@ -91,8 +91,8 @@ const RecordActionButtons = ({buttonOption}) => {
     await dispatch(updateRecordNumber(newRecordCount.data - 1))
   }
 
-  const editRecord = () => {
-    axios({
+  const editRecord = async () => {
+    await axios({
       method: 'put',
       url: 'https://morning-basin-38652.herokuapp.com/editrecord',
       headers: { 'Content-Type': 'application/json'},

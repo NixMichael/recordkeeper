@@ -42,7 +42,7 @@ const SearchTech = () => {
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      let curDate = `${day}-${month}-${year}`
+      let curDate = `${year}-${month}-${day}`
       
       dateB = curDate
     }

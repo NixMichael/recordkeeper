@@ -45,7 +45,7 @@ const SearchPatients = () => {
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      let curDate = `${month}-${day}-${year}`
+      let curDate = `${year}-${month}-${day}`
       
       dateB = curDate
     }

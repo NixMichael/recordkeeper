@@ -45,7 +45,7 @@ const SearchPatients = () => {
 
       month = month < 10 ? `0${month}` : month;
       day = day < 10 ? `0${day}` : day;
-      let curDate = `${day}-${month}-${year}`
+      let curDate = `${month}-${day}-${year}`
       
       dateB = curDate
     }
@@ -162,9 +162,9 @@ const SearchPatients = () => {
         </div>
         <div className="searchBoxes">
             <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>
-            <label>Date Range: <input className="shortInput" type="text" id="dateFrom" name="dateFrom" placeholder="DD-MM-YYYY" value={searchCriteria.dateFrom} onChange={(e) => handleChange(e.target)}/>
+            <label>Date Range: <input className="shortInput" type="text" id="dateFrom" name="dateFrom" placeholder="MM-DD-YYYY" value={searchCriteria.dateFrom} onChange={(e) => handleChange(e.target)}/>
                 <span> to </span>
-                <input className="shortInput" type="text" id="dateTo" name="dateTo" placeholder="DD-MM-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
+                <input className="shortInput" type="text" id="dateTo" name="dateTo" placeholder="MM-DD-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
                 </label>
             <div className="search__buttons">
                 <button className="record-button search-button" onClick={search}>Search</button>
@@ -200,7 +200,7 @@ const SearchPatients = () => {
                   <p className="patientResult shortResult">{record.patientforename}</p>
                   <p className="patientResult longerResult">{record.description}</p>
                   <p className="patientResult shortResult">{record.photographer}</p>
-                  <p className="patientResult shortResult">{record.to_char}</p>
+                  <p className="patientResult shortResult">{record.fdate}</p>
                 </div>
                     )
                 })

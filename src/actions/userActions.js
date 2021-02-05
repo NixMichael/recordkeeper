@@ -11,11 +11,11 @@ export const loginUser = (email, password) => async(dispatch) => {
     }
   })
 
-  console.log('Accepted:', accepted)
+  console.log('Accepted:', accepted.data)
 
   return {
     type: 'LOGIN_USER',
-    payload: accepted
+    payload: accepted.data
   }
 }
 

@@ -11,6 +11,8 @@ export const loginUser = (email, password) => async(dispatch) => {
     }
   })
 
+  console.log(`Accepted: ${accepted}`)
+
   return {
     type: 'LOGIN_USER',
     payload: accepted

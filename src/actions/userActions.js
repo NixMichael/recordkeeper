@@ -13,10 +13,10 @@ export const loginUser = (email, password) => async(dispatch) => {
 
   console.log('Accepted:', accepted.data)
 
-  return {
+  dispatch({
     type: 'LOGIN_USER',
     payload: accepted.data
-  }
+  })
 }
 
 export const logoutUser = () => {

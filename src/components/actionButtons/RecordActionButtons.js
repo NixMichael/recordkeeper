@@ -234,7 +234,7 @@ const RecordActionButtons = ({buttonOption}) => {
       </>
       :
     buttonBoard === 'main' ?
-      <>
+      <div>
         <button className='record-button' name='firstRecord' onClick={(e) => handleClick(e.target)}>{`|<`}</button>
         <button className='record-button' name='previousRecord' onClick={(e) => handleClick(e.target)}>{`<`}</button>
         <button className='record-button' name='newRecord' onClick={(e) => handleClick(e.target)}>New</button>
@@ -243,7 +243,7 @@ const RecordActionButtons = ({buttonOption}) => {
         <button className='record-button' name='search' onClick={(e) => handleClick(e.target)}>Search</button>
         <button className='record-button' name='nextRecord' onClick={(e) => handleClick(e.target)}>{`>`}</button>
         <button className='record-button' name='lastRecord' onClick={(e) => handleClick(e.target)}>{`>|`}</button>
-      </>
+      </div>
     : buttonBoard === 'newRecordChoice' ?
       <>
         <button className='record-button' name='createPatientRecord' onClick={(e) => handleClick(e.target)}>Patient</button>

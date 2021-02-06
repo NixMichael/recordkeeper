@@ -45,7 +45,7 @@ const AddNew = () => {
       cost: cost
     }
 
-    if (screenRoute === 'editUsers' & (role === '--Please Select--' || initials === '' || name === '')) {
+    if (screenRoute === 'editUsers' & (role === '--Please Select--' || name === '')) {
       alert('Please enter a value for all fields')
     } else if (screenRoute === 'editDepartments' && departmentName === '') {
       alert('Please enter a value for all fields')
@@ -72,13 +72,13 @@ const AddNew = () => {
           <option value='Designer' key='2'>Designer</option>
         </select>
         </label>
-        <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
-        </label>
+        {/* <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
+        </label> */}
         <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
         </label>
-        <label>Email: <input id="email" type="text" name="newEmail" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <label>Email: <input id="email" type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
         </label>
-        <label>Administrator?: <input id="isAdmin" type="checkbox" name="isAdmin" value={isAdmin} onChange={(e) => setIsAdmin(e.target.value)}/>
+        <label>Administrator? <input id="isAdmin" type="checkbox" name="isAdmin" checked={isAdmin} onClick={(e) => setIsAdmin(!isAdmin)}/>
         </label>
       </>
       : screenRoute === 'editDepartments' ?

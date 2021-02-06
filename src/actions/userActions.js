@@ -2,6 +2,7 @@ import axios from 'axios'
 export const loginUser = (email, password) => async(dispatch) => {
 
   let accepted = false
+  let admin = false
 
   try {
     const response = await axios({
@@ -13,8 +14,10 @@ export const loginUser = (email, password) => async(dispatch) => {
       }
     })
 
-    accepted = response.data
-    
+    accepted = response.data[0]
+    admin = response.data[1]
+    console.log(response.data)
+
     if (accepted && password === '') {
       let newPassword = prompt('Set a password')
       let confirmPassword = prompt('Confirm password')
@@ -41,7 +44,7 @@ export const loginUser = (email, password) => async(dispatch) => {
 
     dispatch({
       type: 'LOGIN_USER',
-      payload: accepted
+      payload: [accepted, admin]
     })
 
   } catch (error) {

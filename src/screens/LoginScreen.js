@@ -6,8 +6,8 @@ const LoginScreen = () => {
 
   const dispatch = useDispatch()
   
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('admin@trust.org')
+  const [password, setPassword] = useState('admin')
 
   const handleClick = () => {
     dispatch(loginUser(username, password))

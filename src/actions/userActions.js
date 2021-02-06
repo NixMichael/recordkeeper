@@ -11,21 +11,30 @@ export const loginUser = (email, password) => async(dispatch) => {
       }
     })
 
-    let passwordA = ''
-    // let passwordB = ''
-
+    
     if (password === '') {
-      passwordA = prompt('Set a password')
-      // passwordB = prompt('Confirm password')
+      let newPassword = prompt('Set a password')
+      let confirmPassword = prompt('Confirm password')
 
-      await axios({
-        method: 'post',
-        url: 'https://morning-basin-38652.herokuapp.com/register',
-        headers: {'Content-Type': 'application/json'},
-        data: {
-          email, passwordA
-        }
-      })
+      if (newPassword === confirmPassword) {
+        await axios({
+          method: 'post',
+          url: 'https://morning-basin-38652.herokuapp.com/register',
+          headers: {'Content-Type': 'application/json'},
+          data: {
+            email, newPassword
+          }
+        })
+      } else {
+        alert('Passwords do not match')
+        dispatch({
+          type: 'LOGIN_FAILED',
+          payload: false
+        })
+      }
+
+
+      alert('Thank you. Your password has been set.')
     }
 
     dispatch({

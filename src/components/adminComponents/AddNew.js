@@ -70,6 +70,10 @@ const AddNew = () => {
         </label>
         <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
         </label>
+        {/* <label>Email: <input id="email" type="text" name="newEmail" value={email} onChange={(e) => setName(e.target.value)}/>
+        </label> */}
+        {/* <label>Name: <input id="isAdmin" type="checkbox" name="isAdmin" value={isAdmin} onChange={(e) => setName(e.target.value)}/>
+        </label> */}
       </>
       : screenRoute === 'editDepartments' ?
       <>

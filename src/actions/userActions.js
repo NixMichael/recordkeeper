@@ -11,6 +11,23 @@ export const loginUser = (email, password) => async(dispatch) => {
       }
     })
 
+    let passwordA = ''
+    // let passwordB = ''
+
+    if (password === '') {
+      passwordA = prompt('Set a password')
+      // passwordB = prompt('Confirm password')
+
+      await axios({
+        method: 'post',
+        url: 'https://morning-basin-38652.herokuapp.com/register',
+        headers: {'Content-Type': 'application/json'},
+        data: {
+          email, passwordA
+        }
+      })
+    }
+
     dispatch({
       type: 'LOGIN_USER',
       payload: accepted.data

@@ -12,6 +12,7 @@ export const loginUser = (email, password) => async(dispatch) => {
     })
 
     if (password === '') {
+      console.log('ask for a password')
       const setPassword = prompt('Choose a password:')
       await axios({
         method: 'post',

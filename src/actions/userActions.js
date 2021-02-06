@@ -11,18 +11,18 @@ export const loginUser = (email, password) => async(dispatch) => {
       }
     })
 
-    if (password === '') {
-      console.log('ask for a password')
-      const setPassword = prompt('Choose a password:')
-      await axios({
-        method: 'post',
-        url: 'https://morning-basin-38652.herokuapp.com/register',
-        headers: {'Content-Type': 'application/json'},
-        data: {
-          email, setPassword
-        }
-      })
-    }
+    // if (password === '') {
+    //   console.log('ask for a password')
+    //   const setPassword = prompt('Choose a password:')
+    //   await axios({
+    //     method: 'post',
+    //     url: 'https://morning-basin-38652.herokuapp.com/register',
+    //     headers: {'Content-Type': 'application/json'},
+    //     data: {
+    //       email, setPassword
+    //     }
+    //   })
+    // }
 
     dispatch({
       type: 'LOGIN_USER',

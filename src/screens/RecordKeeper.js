@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import '../styles/mainAppStyles.scss'
-import '../styles/recordKeeperStyles.scss'
 import Switchboard from './switchboards/Switchboard'
 import AdminSwitchboard from './switchboards/AdminSwitchboard'
 import ReportsSwitchboard from './switchboards/ReportsSwitchboard'

@@ -10,14 +10,14 @@ const BrowseRecords = () => {
   const { recordType } = currentRec
 
   return (
-    <div class="browse-records">
+    <>
       {recordType === 'p' ?
         <PatientRecord />
       :
         <TechRecord />
       }
       <RecordActionButtons />
-    </div>
+    </>
   )
 }
 

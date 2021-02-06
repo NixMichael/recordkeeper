@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser } from '../../actions/adminActions'
+import { addNewAdminEntry } from '../../actions/adminActions'
 
 const AddNew = () => {
 
@@ -9,6 +9,8 @@ const AddNew = () => {
   const [role, setRole] = useState('--Please Select--')
   const [initials, setInitials] = useState('')
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
   const [departmentName, setDepartmentName] = useState('')
   const [categoryName, setCategoryName] = useState('')
   const [cost, setCost] = useState(null)
@@ -18,11 +20,13 @@ const AddNew = () => {
   let currentTitle = screenRoute === 'editUsers' ? 'User' : screenRoute === 'editDepartments' ? 'Department' : screenRoute === 'editReferrers' ? 'Referrer' : 'Category'
 
   const submitNewListItem = async (data) => {
-    await dispatch(addUser(screenRoute, data))
+    await dispatch(addNewAdminEntry(screenRoute, data))
 
     setRole('--Please Select--')
     setInitials('')
     setName('')
+    setEmail('')
+    setIsAdmin(false)
     setDepartmentName('')
     setCategoryName('')
     setCost(0)
@@ -34,6 +38,8 @@ const AddNew = () => {
       role: role,
       initials: initials,
       name: name,
+      email: email,
+      isAdmin: isAdmin,
       departmentName: departmentName,
       categoryName: categoryName,
       cost: cost
@@ -70,10 +76,10 @@ const AddNew = () => {
         </label>
         <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
         </label>
-        {/* <label>Email: <input id="email" type="text" name="newEmail" value={email} onChange={(e) => setName(e.target.value)}/>
-        </label> */}
-        {/* <label>Name: <input id="isAdmin" type="checkbox" name="isAdmin" value={isAdmin} onChange={(e) => setName(e.target.value)}/>
-        </label> */}
+        <label>Email: <input id="email" type="text" name="newEmail" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        </label>
+        <label>Administrator?: <input id="isAdmin" type="checkbox" name="isAdmin" value={isAdmin} onChange={(e) => setIsAdmin(e.target.value)}/>
+        </label>
       </>
       : screenRoute === 'editDepartments' ?
       <>

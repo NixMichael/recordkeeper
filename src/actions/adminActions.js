@@ -45,7 +45,7 @@ export const deleteItem = (screenRoute, arr) => async (dispatch) => {
   })
 }
 
-export const addUser = (screenRoute, { role, initials, name, departmentName, categoryName, cost }) => async (dispatch) => {
+export const addNewAdminEntry = (screenRoute, { role, initials, name, email, isAdmin, departmentName, categoryName, cost }) => async (dispatch) => {
 
   let adminType = ''
   let dispatchType = ''
@@ -78,6 +78,8 @@ export const addUser = (screenRoute, { role, initials, name, departmentName, cat
       usertype: role,
       initials: initials,
       name: name,
+      email: email,
+      administrator: isAdmin,
       department: departmentName,
       category: categoryName,
       cost: cost

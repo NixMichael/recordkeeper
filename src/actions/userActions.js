@@ -18,7 +18,7 @@ export const loginUser = (email, password) => async(dispatch) => {
         url: 'https://morning-basin-38652.herokuapp.com/register',
         headers: {'Content-Type': 'application/json'},
         data: {
-          email, password
+          email, setPassword
         }
       })
     }

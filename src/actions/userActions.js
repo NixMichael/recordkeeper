@@ -1,8 +1,10 @@
 import axios from 'axios'
 export const loginUser = (email, password) => async(dispatch) => {
 
+  let accepted = false
+
   try {
-    const accepted = await axios({
+    const response = await axios({
       method: 'post',
       url: 'https://morning-basin-38652.herokuapp.com/signin',
       headers: {'Content-Type': 'application/json'},
@@ -11,8 +13,9 @@ export const loginUser = (email, password) => async(dispatch) => {
       }
     })
 
+    accepted = response.data
     
-    if (password === '') {
+    if (accepted && password === '') {
       let newPassword = prompt('Set a password')
       let confirmPassword = prompt('Confirm password')
 
@@ -25,23 +28,24 @@ export const loginUser = (email, password) => async(dispatch) => {
             email, newPassword
           }
         })
+
+        alert('Thank you. Your password has been set.')
+
       } else {
         alert('Passwords do not match')
-        dispatch({
-          type: 'LOGIN_FAILED',
-          payload: false
-        })
+        accepted = false
       }
-
-
-      alert('Thank you. Your password has been set.')
+    } else if (!accepted) {
+      alert('Incorrect login details')
     }
 
     dispatch({
       type: 'LOGIN_USER',
-      payload: accepted.data
+      payload: accepted
     })
+
   } catch (error) {
+    alert('Please try again')
     dispatch({
       type: 'LOGIN_FAILED',
       payload: error.message

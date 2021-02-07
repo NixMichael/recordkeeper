@@ -62,7 +62,7 @@ const AddNew = () => {
 
     <div className="admin-components">
       <h3>Add a new {currentTitle}</h3>
-      <div className="new_user_boxes">
+      <div className="new_list_item_boxes">
       {
       screenRoute === 'editUsers' ?
       <>
@@ -74,28 +74,28 @@ const AddNew = () => {
         </label>
         {/* <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
         </label> */}
-        <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
+        <label>Name: <input id="name" type="text" class="record-input" name="newUserName" value={name} onChange={(e) => setName(e.target.value)}/>
         </label>
-        <label>Email: <input id="email" type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <label>Email: <input id="email" type="text" class="record-input" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
         </label>
         <label>Administrator? <input id="isAdmin" type="checkbox" name="isAdmin" checked={isAdmin} onClick={(e) => setIsAdmin(!isAdmin)}/>
         </label>
       </>
       : screenRoute === 'editDepartments' ?
       <>
-          <label>New department name:</label><input id="departmentName" type="text" name="department" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)}/>
+          <label>New department name:</label><input id="departmentName" type="text" class="record-input" name="department" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)}/>
       </>
       : screenRoute === 'editReferrers' ?
       <>
-        <label>Initials: <input id="initials" type="text" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
+        <label>Initials: <input id="initials" type="text" class="record-input" name="newUserInitials" value={initials} onChange={(e) => setInitials(e.target.value)}/>
         </label>
-        <label>Name: <input id="name" type="text" name="newUserName" value={name} onChange={(e) => setName(e.target.value)} />
+        <label>Name: <input id="name" type="text" class="record-input" name="newUserName" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
       </>
       :
         <>
-          <label>Category: <input id="category" type="text" name="category" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} /></label>
-          <label>Cost (0.00): <input id="cost" type="text" name="cost" value={cost} onChange={(e) => setCost(e.target.value)} /></label>
+          <label>Category: <input id="category" type="text" class="record-input" name="category" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} /></label>
+          <label>Cost (0.00): <input id="cost" type="text" class="record-input" name="cost" value={cost} onChange={(e) => setCost(e.target.value)} /></label>
         </>
       }
       </div>

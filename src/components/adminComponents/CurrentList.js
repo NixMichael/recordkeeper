@@ -61,7 +61,7 @@ const CurrentList = () => {
   }
 
   return (
-    <div className="admin-components">
+    <div className="admin-components admin-list">
       <h3>Current {currentTitle}</h3>
       <ul>
         {

@@ -141,30 +141,30 @@ const SearchPatients = () => {
     <div className="searchChoice-form">
     <div className="searchCriteria">
         <div className="searchBoxes">
-            <label>Photographer: <input className="shortInput" type="text" id="photographer" value={searchCriteria.photographer} name="photographer" onChange={(e) => handleChange(e.target)}/></label>
-            <label>Department: <input className="midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Photographer: <input className="record-input shortInput" type="text" id="photographer" value={searchCriteria.photographer} name="photographer" onChange={(e) => handleChange(e.target)}/></label>
+            <label>Department: <input className="record-input midInput" type="text" id="department" name="department" value={searchCriteria.department} onChange={(e) => handleChange(e.target)}/></label>
             <label>Permission: <select className="record-input selectBoxSize" id="permission" name="permission" value={searchCriteria.permission} onChange={(e) => handleChange(e.target)}>
                 <option value=""></option>
                 <option value="Records">Records</option>
                 <option value="Teaching">Teaching</option>
                 <option value="Publication">Publication</option>
                 </select></label>
-            <label>Referrer: <input className="shortInput" type="text" id="referrer" name="referrer" value={searchCriteria.referrer} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Referrer: <input className="record-input shortInput" type="text" id="referrer" name="referrer" value={searchCriteria.referrer} onChange={(e) => handleChange(e.target)}/></label>
         </div>
         <div className="searchBoxes">
-            <label>Hospital No: <input className="shorterInput" type="text" id="hospital-numer" name="hospitalNumber" value={searchCriteria.hospitalNumber} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Hospital No: <input className="record-input shorterInput" type="text" id="hospital-numer" name="hospitalNumber" value={searchCriteria.hospitalNumber} onChange={(e) => handleChange(e.target)}/></label>
 
-            <label>Patient's Surname: <input className="midInput" type="text" id="patientSurname" name="patientSurname" value={searchCriteria.patientSurname} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Patient's Surname: <input className="record-input midInput" type="text" id="patientSurname" name="patientSurname" value={searchCriteria.patientSurname} onChange={(e) => handleChange(e.target)}/></label>
 
-            <label>Patient's Forename: <input className="midInput" type="text" id="patientForename" name="patientForename" value={searchCriteria.patientForename} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Patient's Forename: <input className="record-input midInput" type="text" id="patientForename" name="patientForename" value={searchCriteria.patientForename} onChange={(e) => handleChange(e.target)}/></label>
 
             <label>Only Issued: <input type='checkbox' id='onlyIssued' name='onlyIssued' value={searchCriteria.onlyIssued} onChange={(e) => handleChange(e.target)} /></label>
         </div>
         <div className="searchBoxes">
-            <label>Description: <input className="longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>
-            <label>Date Range: <input className="shortInput" type="text" id="dateFrom" name="dateFrom" placeholder="MM-DD-YYYY" value={searchCriteria.dateFrom} onChange={(e) => handleChange(e.target)}/>
+            <label>Description: <input className="record-input longInput" type="text" id="desc" name="description" value={searchCriteria.description} onChange={(e) => handleChange(e.target)}/></label>
+            <label>Date Range: <input className="record-input shortInput" type="text" id="dateFrom" name="dateFrom" placeholder="MM-DD-YYYY" value={searchCriteria.dateFrom} onChange={(e) => handleChange(e.target)}/>
                 <span> to </span>
-                <input className="shortInput" type="text" id="dateTo" name="dateTo" placeholder="MM-DD-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
+                <input className="record-input shortInput" type="text" id="dateTo" name="dateTo" placeholder="MM-DD-YYYY" value={searchCriteria.dateTo} onChange={(e) => handleChange(e.target)}/>
                 </label>
             <div className="search__buttons">
                 <button className="record-button search-button" onClick={search}>Search</button>

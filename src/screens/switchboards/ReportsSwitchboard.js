@@ -80,11 +80,11 @@ const AdminSwitchboard = () => {
         <div className='date-range-inputs'>
           <div>
             <h5>Date From:</h5>
-            <input type='text' title='Leave blank for default start date' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='DD-MM-YYYY' />
+            <input type='text' class="record-input" title='Leave blank for default start date' value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} placeholder='DD-MM-YYYY' />
           </div>
           <div>
             <h5>Date To:</h5>
-            <input type='text' title='Leave blank for default end date' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='DD-MM-YYYY' />
+            <input type='text' class="record-input" title='Leave blank for default end date' value={dateTo} onChange={(e) => setDateTo(e.target.value)} placeholder='DD-MM-YYYY' />
           </div>
         </div>
         <button className='menu-button' disabled={selectedReport === '--Please Select--'} onClick={loadReport}>View Report</button>

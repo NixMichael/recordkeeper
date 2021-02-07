@@ -49,7 +49,7 @@
 
 .record-mid {
   padding-top: 1rem;
-  max-height: 25%;
+  height: 10em;
   margin-bottom: 2rem;
 
   .patient-record-component {
@@ -145,7 +145,6 @@ input:disabled, textarea:disabled {
 
 .issued {
   min-height: 165px;
-  height: 100%;
   background: rgba(0,0,0,0.2);
   padding: 1rem;
   & > div:first-child {
@@ -172,7 +171,7 @@ input:disabled, textarea:disabled {
   }
 
   &-events {
-    max-height: 20vh;
+    height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
     & > div {

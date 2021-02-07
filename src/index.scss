@@ -17,11 +17,6 @@ body {
     border-color: var(--feature-element-color-faded);
     box-shadow: 0 0 0 3px var(--feature-element-color-faded), 0 0 0 4px white;
   }
-
-  input[type='text'] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
 }
 
 .loginScreen {

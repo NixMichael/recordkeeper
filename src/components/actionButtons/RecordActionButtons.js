@@ -8,8 +8,9 @@ import { chooseRoute } from '../../actions/routeActions'
 const RecordActionButtons = ({buttonOption}) => {
   
   const currentRec = useSelector(state => state.currentRec)
- const { recordCount, currentRecordNumber, recordType, sequenceNumber, jobNumber, record, newIssues } = currentRec
-  const { permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user } = record
+  
+  const {recordCount, currentRecordNumber, recordType, sequenceNumber, jobNumber, record, newIssues, record: {permission, description, referrer, hospitalnumber, patientsurname, patientforename, department, category, user} = {}} = currentRec
+
   const lastRec = recordCount - 1
 
   const dispatch = useDispatch()

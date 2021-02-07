@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {
-  // FETCH_RECORD_REQUEST,
+  FETCH_RECORD_REQUEST,
   FETCH_RECORD_SUCCESS,
   FETCH_RECORD_FAIL,
   FIELD_DATA_REQUEST,
@@ -19,9 +19,9 @@ import {
 export const fetchRecord = (whichRecord, id = 0) => async (dispatch) => {
 
   try {
-    // dispatch({
-    //   type: FETCH_RECORD_REQUEST
-    // })
+    dispatch({
+      type: FETCH_RECORD_REQUEST
+    })
     const { data } = await axios.get(`https://morning-basin-38652.herokuapp.com/${whichRecord}/${id}`)
 
     dispatch({

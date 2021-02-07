@@ -1,5 +1,5 @@
 import {
-  FETCH_RECORD_REQUEST,
+  // FETCH_RECORD_REQUEST,
   FETCH_RECORD_SUCCESS,
   FETCH_RECORD_FAIL,
   FIELD_DATA_REQUEST,
@@ -28,8 +28,8 @@ import {
 export const updateCurrentRecordReducer = (state = { 
   loading: true, record: {}, recordType: '', recordCount: 0, readOnly: true }, action) => {
   switch (action.type) {
-    case FETCH_RECORD_REQUEST:
-      return { loading: true }
+    // case FETCH_RECORD_REQUEST:
+    //   return { loading: true }
     case FETCH_RECORD_SUCCESS:
       console.log(action.payload[1])
       // Set user to result from patientjobs, otherwise set to result from techjobs
@@ -107,8 +107,7 @@ export const updateCurrentRecordReducer = (state = {
           patientforename: '',
           permission: '--Please Select--',
           description: '',
-          photographer: '--Please Select--',
-          designer: '--Please Select--',
+          user: '--Please Select--',
           department: '--Please Select--',
           referrer: '--Please Select--',
           category: '--Please Select--',

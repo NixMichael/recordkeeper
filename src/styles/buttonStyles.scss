@@ -45,8 +45,9 @@
   background-color: var(--feature-element-color);
   color: white;
 
-  &:hover {
+  &:hover, &:focus {
     background-color: var(--feature-element-color-faded);
+    outline: none;
   }
 
   &:disabled {

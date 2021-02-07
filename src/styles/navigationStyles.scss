@@ -11,4 +11,11 @@
     display: flex;
     margin-right: 2rem;
   }
+
+  .nav-button:focus, .nav-button:hover {
+    color: black;
+    outline: none;
+    border-color: var(--feature-element-color-faded);
+    box-shadow: 0 0 0 3px var(--feature-element-color-faded);
+  }
 }
